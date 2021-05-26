@@ -1,4 +1,5 @@
-#pragma once
+#ifndef Login_h
+#define Login_h
 #include <iostream>
 #include "windows.h"
 #include <iomanip>
@@ -13,4 +14,4 @@ void LoginInterface(User &user);
 void repeatLogin(User &user);
 
 int CheckLogin(string& ID, string& password);
-
+#endif
