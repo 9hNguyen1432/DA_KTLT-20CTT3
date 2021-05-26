@@ -75,8 +75,8 @@ void LoginInterface(User &user){
 
 int CheckLogin(string& ID, string& password) {
     fstream file1,file2;
-    file1.open("login_info.csv",ios::in);
-    file2.open("login_info.csv",ios::in);
+    file1.open("file_save/login_info.csv",ios::in);
+    file2.open("file_save/login_info.csv",ios::in);
 
     if (!file1.is_open() || !file2.is_open())    
    	    cout << "Error File Open";
