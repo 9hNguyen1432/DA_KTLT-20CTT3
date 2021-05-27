@@ -14,7 +14,7 @@ void LoginInterface(User &user);
 
 void repeatLogin(User &user);
 
-int CheckLogin(string& ID, string& password);
+int CheckLogin(User& user);
 
 void insertUserName(string& username);
 
