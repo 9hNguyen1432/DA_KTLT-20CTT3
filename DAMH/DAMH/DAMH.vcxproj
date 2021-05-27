@@ -150,6 +150,7 @@
     <ClInclude Include="Header.h" />
     <ClInclude Include="login.h" />
     <ClInclude Include="Menu.h" />
+    <ClInclude Include="read_data.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -41,6 +41,7 @@ struct MarkNode {
 };
 //struct thông tin học sinh hoặc giáo viên, nếu là giáo viên thì 1 số thông tin bỏ trống
 struct Data {
+	int NO_inclass;
 	string IDstd;
 	string name;
 	string sex;// 0 là nam, 1 là nữ.

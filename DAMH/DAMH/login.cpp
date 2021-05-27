@@ -58,62 +58,40 @@ void LoginInterface(User &user){
     user.ID=user.Password="";
 
     
-    gotoxy(2, 15);
-    cout << "  _   _   ____  __  __  _   _  ____";
-    gotoxy(2, 16);
-    cout << " | | | | / ___||  \\/  || | | |/ ___|";
-    gotoxy(2, 17);
-    cout << " | |_| || |    | |\\/| || | | |\\___ \\";
-    gotoxy(2, 18);
-    cout << " |  _  || |___ | |  | || |_| | ___) |";
-    gotoxy(2, 19);
-    cout << " |_| |_| \\____||_|  |_| \\___/ |____/" ;
+    printtext("  _   _   ____  __  __  _   _  ____", 2, 15);
+    printtext(" | | | | / ___||  \\/  || | | |/ ___|", 2, 16);
+    printtext(" | |_| || |    | |\\/| || | | |\\___ \\", 2, 17);
+    printtext(" |  _  || |___ | |  | || |_| | ___) |", 2, 18);
+    printtext(" |_| |_| \\____||_|  |_| \\___/ |____/",2, 19);
 
 
-    gotoxy(86, 15);
-    cout << "  _____  ___  _____" ;
-    gotoxy(86, 16);
-    cout << " |  ___||_ _||_   _|" ;
-    gotoxy(86, 17);
-    cout << " | |_    | |   | |" ;
-    gotoxy(86, 18);
-    cout << " |  _|   | |   | |" ;
-    gotoxy(86, 19);
-    cout << " |_|    |___|  |_|" ;
+    printtext("  _____  ___  _____", 86, 15);
+    printtext(" |  ___||_ _||_   _|", 86, 16);
+    printtext(" | |_    | |   | |", 86, 17);
+    printtext(" |  _|   | |   | |", 86, 18);
+    printtext(" |_|    |___|  |_|", 86, 19);
+    printtext(" __  __    _    _   _    _    ____ _____ ____", 38, 0);
+    printtext("|  \\/  |  / \\  | \\ | |  / \\  / ___| ____|  _ \\ ", 38, 1);
+    printtext("| |\\/| | / _ \\ |  \\| | / _ \\| |  _|  _| | |_) |", 38, 2);
+    printtext("| |  | |/ ___ \\| |\\  |/ ___ \\ |_| | |___|  _ <", 38, 3);
+    printtext("|_|  |_/_/   \\_\\_| \\_/_/   \\_\\____|_____|_| \\_\\ ", 38, 4);
 
-    gotoxy(38, 0);
-    cout << " __  __    _    _   _    _    ____ _____ ____";
-    gotoxy(38, 1);
-    cout << "|  \\/  |  / \\  | \\ | |  / \\  / ___| ____|  _ \\ ";
-    gotoxy(38, 2);
-    cout << "| |\\/| | / _ \\ |  \\| | / _ \\| |  _|  _| | |_) |";
-    gotoxy(38, 3);
-    cout << "| |  | |/ ___ \\| |\\  |/ ___ \\ |_| | |___|  _ <";
-    gotoxy(38, 4);
-    cout << "|_|  |_/_/   \\_\\_| \\_/_/   \\_\\____|_____|_| \\_\\ ";
 
-    gotoxy(40, 6);
-    cout << " ____ _____ _   _ ____  _____ _   _ _____";
-    gotoxy(40, 7);
-    cout << "/ ___|_   _| | | |  _ \\| ____| \\ | |_   _|";
-    gotoxy(40, 8);
-    cout << "\\___ \\ | | | | | | | | |  _| |  \\| | | |";
-    gotoxy(40, 9);
-    cout << " ___) || | | |_| | |_| | |___| |\\  | | |";
-    gotoxy(40, 10);
-    cout << "|____/ |_|  \\___/|____/|_____|_| \\_| |_|";
-    
+    printtext(" ____ _____ _   _ ____  _____ _   _ _____", 40, 6);
+    printtext("/ ___|_   _| | | |  _ \\| ____| \\ | |_   _|", 40, 7);
+    printtext("\\___ \\ | | | | | | | | |  _| |  \\| | | |", 40, 8);
+    printtext(" ___) || | | |_| | |_| | |___| |\\  | | |", 40, 9);
+    printtext("|____/ |_|  \\___/|____/|_____|_| \\_| |_|", 40, 10);
+
     textColor(0);
     drawRectangle(47, 15, 27, 10, 11);
-    gotoxy(48, 16);
-    cout<<"USERNAME : ";
-    gotoxy(48,19);
-    cout<<"PASSWORD : ";
-    
+    printtext("USERNAME : ", 48, 16);
+    printtext("PASSWORD : ", 48, 19);
+
     drawRectangle(48, 17, 25, 1, 15);
-	drawRectangle(48, 20, 25, 1, 15);
-	gotoxy(48, 22);
-	cout<<"ENTER TO LOGIN";
+    drawRectangle(48, 20, 25, 1, 15);
+    gotoxy(48, 22);
+    cout << "ENTER TO LOGIN";
 
     gotoxy(48,17);
     insertUserName(user.ID);
@@ -185,13 +163,12 @@ void repeatLogin(User &user){
 		}
 	} 
     while (CheckLogin(user) == -1);
-    
     gotoxy(48, 24);
     cout<<"LOGIN SUCCESSFUL";
     hidePointer();
     Sleep(900);
     system("cls");
-    if (CheckLogin(user) == 1) menuStudent(user);
+    if (user.role==1) menuStudent(user);
     else menuStaff(user);
 }
 

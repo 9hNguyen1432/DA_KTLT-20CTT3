@@ -87,4 +87,9 @@ void showPointer()
 	Info.dwSize=20;
 	SetConsoleCursorInfo (GetStdHandle (STD_OUTPUT_HANDLE), &Info);
 }
+void printtext(string str, int x, int y) {
+	gotoxy(x, y);
+	cout << str << endl;
+	void Output_info(User A);
+}
 

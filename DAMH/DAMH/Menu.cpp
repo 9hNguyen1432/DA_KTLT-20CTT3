@@ -1,13 +1,16 @@
 #include"Menu.h"
 #include"Login.h"
 #include"ConsoleProcess.h"
+#include "read_data.h"
 void menuStaff(User &user)
 {	
 	showPointer();
 	bool isExit = false;
+	read_info(user);
 	int option;
 	do
 	{	
+		system("cls");
 		std::cout << "==================MENU============\n"
 			<< "1. Profile info\n"
 			<< "2. Change password\n"
@@ -32,6 +35,7 @@ void menuStaff(User &user)
 		{
 		case 1:
 			// lenh show thong tin 
+			Output_info(user);
 			break;
 		case 2:
 			// lenh thay mat khau
@@ -80,16 +84,18 @@ void menuStaff(User &user)
 		default: std::cout << "your choice is invalid!!!\n";
 		}
 	} while (!isExit);
-	cin.ignore();
+	std::cin.ignore();
 	repeatLogin(user);
 }
 void menuStudent(User &user)
 {
 	showPointer();
+	read_info(user);
 	bool isExit = false;
 	int option;
 	do
 	{
+		system("cls");
 		std::cout << "==================MENU============\n"
 			<< "1. Profile info\n"
 			<< "2. Change password\n"
@@ -107,7 +113,7 @@ void menuStudent(User &user)
 		switch (option)
 		{
 		case 1:
-			// lenh show thong tin
+			Output_info(user);
 			break;
 		case 2:
 			// lenh thay doi mat khau
@@ -140,6 +146,6 @@ void menuStudent(User &user)
 
 		}
 	} while (!isExit);
-	cin.ignore();
+	std::cin.ignore();
 	repeatLogin(user);
 }
