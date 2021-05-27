@@ -16,3 +16,5 @@ void repeatLogin(User &user);
 int CheckLogin(string& ID, string& password);
 
 void insertUserName(string& username);
+
+void insertPassword(string& password);

@@ -7,7 +7,6 @@
 
 void insertUserName(string& username) {
     showPointer();
-    int x = ReturnX(), y = ReturnY();
     char index=getch();
     while (index != 13) {
         //Backspace
@@ -23,6 +22,28 @@ void insertUserName(string& username) {
         else if (index >= 33 && index <= 126 && username.size()<=15) {
             cout << index;
             username.push_back(index);
+        }
+        index = getch();
+    }
+}
+
+void insertPassword(string& password) {
+    showPointer();
+    char index = getch();
+    while (index != 13) {
+        //Backspace
+        if (index == 8) {
+            if (password.size() > 0) {
+                password.pop_back();
+                gotoxy(ReturnX() - 1, ReturnY());
+                cout << " ";
+                gotoxy(ReturnX() - 1, ReturnY());
+            }
+        }
+        //Other index
+        else if (index >= 33 && index <= 126 && password.size() <= 15) {
+            cout << "*";
+            password.push_back(index);
         }
         index = getch();
     }
@@ -98,7 +119,7 @@ void LoginInterface(User &user){
     insertUserName(user.ID);
 
     gotoxy(48,20);
-    insertUserName(user.Password);
+    insertPassword(user.Password);
 }
 
 int CheckLogin(string& ID, string& password) {
