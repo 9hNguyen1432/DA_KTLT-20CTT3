@@ -1,3 +1,5 @@
+#ifndef menu_h
+#define menu_h
 #include<iostream>
 #include <iostream>
 #include "windows.h"
@@ -12,3 +14,4 @@
 void menuStaff(User &user);
 
 void menuStudent(User &user);
+#endif

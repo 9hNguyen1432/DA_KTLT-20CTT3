@@ -1,4 +1,5 @@
-#pragma once
+#ifndef CSP_H
+#define CSP_H
 #include <iostream>
 #include "windows.h"
 #include <iomanip>
@@ -44,3 +45,4 @@ void showPointer();
 void DrawAppName(int TextColor, int BgColor);
 
 void drawBoder(int positionX, int positionY, int width, int height, int color);
+#endif
