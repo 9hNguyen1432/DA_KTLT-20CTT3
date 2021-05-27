@@ -122,7 +122,7 @@ void LoginInterface(User &user){
     insertPassword(user.Password);
 }
 
-int CheckLogin(string& ID, string& password) {
+int CheckLogin(User& user) {
     fstream file1,file2;
     file1.open("file_save/login_info.csv",ios::in);
     file2.open("file_save/login_info.csv",ios::in);
@@ -139,9 +139,9 @@ int CheckLogin(string& ID, string& password) {
         while (!file2.eof())
         {
             getline(file2,column,',');
-            if (column.compare(ID)==0) {
+            if (column.compare(user.ID)==0) {
                 getline(file2,column,',');
-                if (column.compare(password)==0) {
+                if (column.compare(user.Password)==0) {
                     check=true;
                     getline(file2, column, ',');
                     caseUser = stoi(column, 0, 10);
@@ -153,10 +153,19 @@ int CheckLogin(string& ID, string& password) {
         }
         if (check==true) break;    
     }
+    
+    if (check==false) return -1;
+    
+    user.role = caseUser;
+    if (caseUser == 1) {
+        getline(file2, column, '\n');
+        user.info.Class = column;
+    }
+
     file1.close();
     file2.close();
-    if (check==false) return -1;
-    else return caseUser;
+    
+    return caseUser;
 }
 
 void repeatLogin(User &user){
@@ -167,7 +176,7 @@ void repeatLogin(User &user){
         system("cls");
 		LoginInterface(user);
         
-		if (CheckLogin(user.ID, user.Password) ==-1)
+		if (CheckLogin(user) ==-1)
 		{   
 			gotoxy(48, 24);
 			cout<<"LOGIN FAIL";
@@ -175,16 +184,15 @@ void repeatLogin(User &user){
 			Sleep(900);
 		}
 	} 
-    while (CheckLogin(user.ID, user.Password) == -1);
+    while (CheckLogin(user) == -1);
     
     gotoxy(48, 24);
     cout<<"LOGIN SUCCESSFUL";
     hidePointer();
     Sleep(900);
     system("cls");
-    if (CheckLogin(user.ID, user.Password) == 1) menuStudent(user);
+    if (CheckLogin(user) == 1) menuStudent(user);
     else menuStaff(user);
-
 }
 
 
