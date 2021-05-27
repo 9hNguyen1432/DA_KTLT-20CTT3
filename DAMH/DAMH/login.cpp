@@ -1,6 +1,53 @@
 #include"ConsoleProcess.h"
 #include "login.h"
 #include "Menu.h"
+#include"Header.h"
+#include<stdio.h> 
+#include<conio.h> 
+
+void insertUserName(string& username) {
+    showPointer();
+    char index=getch();
+    while (index != 13) {
+        //Backspace
+        if (index == 8) {
+            if (username.size() > 0) {
+                username.pop_back();
+                gotoxy(ReturnX() - 1, ReturnY());
+                cout << " ";
+                gotoxy(ReturnX() - 1, ReturnY());
+            }
+        }
+        //Other index
+        else if (index >= 33 && index <= 126 && username.size()<=15) {
+            cout << index;
+            username.push_back(index);
+        }
+        index = getch();
+    }
+}
+
+void insertPassword(string& password) {
+    showPointer();
+    char index = getch();
+    while (index != 13) {
+        //Backspace
+        if (index == 8) {
+            if (password.size() > 0) {
+                password.pop_back();
+                gotoxy(ReturnX() - 1, ReturnY());
+                cout << " ";
+                gotoxy(ReturnX() - 1, ReturnY());
+            }
+        }
+        //Other index
+        else if (index >= 33 && index <= 126 && password.size() <= 15) {
+            cout << "*";
+            password.push_back(index);
+        }
+        index = getch();
+    }
+}
 
 void LoginInterface(User &user){
     
@@ -67,10 +114,12 @@ void LoginInterface(User &user){
 	drawRectangle(48, 20, 25, 1, 15);
 	gotoxy(48, 22);
 	cout<<"ENTER TO LOGIN";
+
     gotoxy(48,17);
-    getline(cin,user.ID);
+    insertUserName(user.ID);
+
     gotoxy(48,20);
-    getline(cin,user.Password);
+    insertPassword(user.Password);
 }
 
 int CheckLogin(string& ID, string& password) {
