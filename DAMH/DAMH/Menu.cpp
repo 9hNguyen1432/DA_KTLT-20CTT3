@@ -86,6 +86,7 @@ void menuStaff(User &user)
 			break;
 		case 2:
 			// lenh thay mat khau
+			change_password(user);
 			break;
 		case 3:
 			// lenh them nam hoc
@@ -143,8 +144,8 @@ void menuStudent(User &user)
 	do
 	{
 		system("cls");
-		std::cout << "==================MENU============\n"
-			<< "1. Profile info\n"
+		printtext("==================MENU============\n", 1, 8);
+		std::cout << "1. Profile info\n"
 			<< "2. Change password\n"
 			<< "3. List of classes\n"
 			<< "4. List of student in class\n"
@@ -155,8 +156,6 @@ void menuStudent(User &user)
 			<< "9. Remove courses\n"
 			<< "0. Log out\n"
 			<< " ---------------------\n";
-		textColor(10);
-
 		printtext("           ___", 50, 1);
 		printtext("          /  /\\     ___  ", 50, 2);
 		printtext("         /  /::\\   /__/\\   ", 50, 3);
@@ -200,7 +199,6 @@ void menuStudent(User &user)
 		printtext("                  /  /:/__\\/", 50, 41);
 		printtext("                 /__/:/     ", 50, 42);
 		printtext("                 \\__\\/     ", 50, 43);
-		textColor(14);
 		printtext("       ___          ___  ", 85, 1);
 		printtext("      /  /\\        /  /\\", 85, 2);
 		printtext("     /  /::|      /  /::\\ ", 85, 3);
