@@ -30,6 +30,9 @@
     <ClCompile Include="read_data.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="change_info.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ConsoleProcess.h">
@@ -45,6 +48,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="read_data.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="change_info.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

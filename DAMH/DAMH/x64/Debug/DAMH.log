@@ -1,0 +1,9 @@
+﻿  ConsoleProcess.cpp
+  Menu.cpp
+D:\OneDrive - VNU-HCMUS\Desktop\DA_KTLT-20CTT3\DAMH\DAMH\change_info.h(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  change_info.cpp
+  login.cpp
+  main.cpp
+  read_data.cpp
+  Generating Code...
+  DAMH.vcxproj -> D:\OneDrive - VNU-HCMUS\Desktop\DA_KTLT-20CTT3\DAMH\x64\Debug\DAMH.exe

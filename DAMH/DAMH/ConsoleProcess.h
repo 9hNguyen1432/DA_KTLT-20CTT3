@@ -46,4 +46,5 @@ void DrawAppName(int TextColor, int BgColor);
 
 void drawBoder(int positionX, int positionY, int width, int height, int color);
 void printtext(string str, int x, int y);
+void FixConsoleWindow();
 #endif

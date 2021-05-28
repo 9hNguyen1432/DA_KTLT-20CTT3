@@ -29,6 +29,7 @@ void insertUserName(string& username) {
 
 void insertPassword(string& password) {
     showPointer();
+    password = "";
     char index = getch();
     while (index != 13) {
         //Backspace
