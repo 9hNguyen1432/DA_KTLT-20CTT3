@@ -144,85 +144,33 @@ void menuStudent(User &user)
 	do
 	{
 		system("cls");
-		printtext("==================MENU============\n", 1, 8);
-		std::cout << "1. Profile info\n"
-			<< "2. Change password\n"
-			<< "3. List of classes\n"
-			<< "4. List of student in class\n"
-			<< "5. List of student in a course\n"
-			<< "6. Score board\n"
-			<< "7. Enroll courses\n"
-			<< "8. List of enrolled courses\n"
-			<< "9. Remove courses\n"
-			<< "0. Log out\n"
-			<< " ---------------------\n";
-		printtext("           ___", 50, 1);
-		printtext("          /  /\\     ___  ", 50, 2);
-		printtext("         /  /::\\   /__/\\   ", 50, 3);
-		printtext("        /__/:/\\:\\  \\  \\:\\   ", 50, 4);
-		printtext("       _\\_ \\:\\ \\:\\  \\__\\:\\  ", 50, 5);
-		printtext("      /__/\\ \\:\\ \\:\\ /  /::\\ ", 50, 6);
-		printtext("      \\  \\:\\ \\:\\_\\//  /:/\\:\\", 50, 7);
-		printtext("       \\  \\:\\_\\:\\ /  /:/__\\/", 50, 8);
-		printtext("        \\  \\:\\/://__/:/    ", 50, 9);
-		printtext("         \\  \\::/ \\__\\/      ", 50, 10);
-		printtext("          \\__\\/             ", 50, 11);
-		printtext("       ___          ___     ", 50, 12);
-		printtext("      /  /\\        /  /\\    ", 50, 13);
-		printtext("     /  /:/       /  /::\\   ", 50, 14);
-		printtext("    /  /:/       /  /:/\\:\\  ", 50, 15);
-		printtext("   /  /:/       /  /:/  \\:\\ ", 50, 16);
-		printtext("  /__/:/     /\\/__/:/ \\__\\:|", 50, 17);
-		printtext("  \\  \\:\\    /:/\\  \\:\\ /  /:/", 50, 18);
-		printtext("   \\  \\:\\  /:/  \\  \\:\\  /:/ ", 50, 19);
-		printtext("    \\  \\:\\/:/    \\  \\:\\/:/  ", 50, 20);
-		printtext("     \\  \\::/      \\__\\::/   ", 50, 21);
-		printtext("      \\__\\/           ~~    ", 50, 22);
-		printtext("       ___          ___     ", 50, 23);
-		printtext("      /  /\\        /  /\\    ", 50, 24);
-		printtext("     /  /::\\      /  /::|   ", 50, 25);
-		printtext("    /  /:/\\:\\    /  /:|:|   ", 50, 26);
-		printtext("   /  /::\\ \\:\\  /  /:/|:|__ ", 50, 27);
-		printtext("  /__/:/\\:\\ \\:\\/__/:/ |:| /\\", 50, 28);
-		printtext("  \\  \\:\\ \\:\\_\\/\\__\\/  |:|/:/", 50, 29);
-		printtext("   \\  \\:\\ \\:\\      |  |:/:/ ", 50, 30);
-		printtext("    \\  \\:\\_\\/      |__|::/  ", 50, 31);
-		printtext("     \\  \\:\\        /__/:/   ", 50, 32);
-		printtext("      \\__\\/        \\__\\/    ", 50, 85);
-
-		printtext("                    ___     ", 50, 35);
-		printtext("                   /__/\\    ", 50, 36);
-		printtext("                   \\  \\:\\   ", 50, 37);
-		printtext("                    \\__\\:\\  ", 50, 38);
-		printtext("                    /  /::\\ ", 50, 39);
-		printtext("                   /  /:/\\:\\", 50, 2);
-		printtext("                  /  /:/__\\/", 50, 41);
-		printtext("                 /__/:/     ", 50, 42);
-		printtext("                 \\__\\/     ", 50, 43);
-		printtext("       ___          ___  ", 85, 1);
-		printtext("      /  /\\        /  /\\", 85, 2);
-		printtext("     /  /::|      /  /::\\ ", 85, 3);
-		printtext("    /  /:|:|     /  /:/\\:\\ ", 85, 4);
-		printtext("   /  /:/|:|__  /  /::\\ \\:\\", 85, 5);
-		printtext("  /__/:/_|::::\\/__/:/\\:\\ \\:\\", 85, 6);
-		printtext("  \\__\\/  /~~/:/\\  \\:\\ \\:\\_\\/", 85, 7);
-		printtext("        /  /:/  \\  \\:\\ \\:\\  ", 85, 8);
-		printtext("       /  /:/    \\  \:\\_\\/  ", 85, 9);
-		printtext("      /__/:/      \\  \\:\\    ", 85, 10);
-		printtext("      \\__\\/        \\__\/    ", 85, 11);
-		printtext("       ___          ___    ", 85, 12);
-		printtext("      /  /\\        /  /\\    ", 85, 13);
-		printtext("     /  /::|      /  /:/   ", 85, 14);
-		printtext("    /  /:|:|     /  /:/    ", 85, 15);
-		printtext("   /  /:/|:|__  /  /:/     ", 85, 16);
-		printtext("  /__/:/ |:| /\\/__/:/     /\\", 85, 17);
-		printtext("  \\__\\/  |:|/:/\\  \\:\\    /:/", 85, 18);
-		printtext("      |  |:/:/  \\  \\:\\  /:/ ", 85, 19);
-		printtext("      |__|::/    \\  \\:\\/:/  ", 85, 20);
-		printtext("      /__/:/      \\  \\::/  ", 85, 21);
-		printtext("      \\__\\/        \\__\\/  ", 85, 22);
-		std::cout	<< " your choice: ";
+		gotoxy(45, 8);
+		std::cout << "==================MENU============\n";
+		gotoxy(45, 9); std::cout << "1. Profile info\n";
+		gotoxy(45, 10); std::cout << "2. Change password\n";
+		gotoxy(45, 11); std::cout << "3. List of classes\n";
+		gotoxy(45, 12); std::cout << "4. List of student in class\n";
+		gotoxy(45, 13); std::cout << "5. List of student in a course\n";
+		gotoxy(45, 14); std::cout << "6. Score board\n";
+		gotoxy(45, 15); std::cout << "7. Enroll courses\n";
+		gotoxy(45, 16); std::cout << "8. List of enrolled courses\n";
+		gotoxy(45, 17); std::cout << "9. Remove courses\n";
+		gotoxy(45, 18); std::cout << "0. Log out\n";
+		gotoxy(45, 19); std::cout << " ---------------------\n";
+		
+		gotoxy(45, 20); std::cout << " your choice: ";
+		printtext(" ______     ______   __  __     _____     ______     __   __     ______  ", 20, 1);
+		printtext("/\\  ___\\   /\\__  _\\ /\\ \\/\\ \\   /\\  __-.  /\\  ___\\   /\\ \"-.\\ \\   /\\__  _\\ ", 20, 2);
+		printtext("\\ \\___  \\  \\/_/\\ \\/ \\ \\ \\_\\ \\  \\ \\ \\/\\ \\ \\ \\  __\\   \\ \\ \\-.  \\  \\/_/\\ \\/ ", 20, 3);
+		printtext(" \\/\\_____\\    \\ \\_\\  \\ \\_____\\  \\ \\____-  \\ \\_____\\  \\ \\_\\\\\"\\_\\    \\ \\_\\ ", 20, 4);
+		printtext("  \\/_____/     \\/_/   \\/_____/   \\/____/   \\/_____/   \\/_/ \\/_/     \\/_/", 20, 5);
+		printtext(" __    __     ______     __   __     __  __    ", 30, 23);
+		printtext("/\\ \"-./  \\   /\\  ___\\   /\\ \"-.\\ \\   /\\ \\/\\ \\", 30, 24);   
+		printtext("\\ \\ \\-./\\ \\  \\ \\  __\\   \\ \\ \\-.  \\  \\ \\ \\_\\ \\ ", 30, 25);
+		printtext(" \\ \\_\\ \\ \\_\\  \\ \\_____\\  \\ \\_\\\\\"\\_\\  \\ \\_____\\ ", 30, 26);
+		printtext("  \\/_/  \\/_/   \\/_____/   \\/_/ \\/_/   \\/_____/ ", 30, 27);
 		std::cin >> option;
+		
 		switch (option)
 		{
 		case 1:
