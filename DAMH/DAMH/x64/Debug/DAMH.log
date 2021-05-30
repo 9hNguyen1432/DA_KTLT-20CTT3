@@ -1,7 +1,0 @@
-﻿  Menu.cpp
-D:\OneDrive - VNU-HCMUS\Desktop\DA_KTLT-20CTT3\DAMH\DAMH\change_info.h(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-D:\OneDrive - VNU-HCMUS\Desktop\DA_KTLT-20CTT3\DAMH\DAMH\Menu.cpp(64,13): warning C4129: ':': unrecognized character escape sequence
-D:\OneDrive - VNU-HCMUS\Desktop\DA_KTLT-20CTT3\DAMH\DAMH\Menu.cpp(66,13): warning C4129: '/': unrecognized character escape sequence
-D:\OneDrive - VNU-HCMUS\Desktop\DA_KTLT-20CTT3\DAMH\DAMH\Menu.cpp(211,13): warning C4129: ':': unrecognized character escape sequence
-D:\OneDrive - VNU-HCMUS\Desktop\DA_KTLT-20CTT3\DAMH\DAMH\Menu.cpp(213,13): warning C4129: '/': unrecognized character escape sequence
-  DAMH.vcxproj -> D:\OneDrive - VNU-HCMUS\Desktop\DA_KTLT-20CTT3\DAMH\x64\Debug\DAMH.exe
