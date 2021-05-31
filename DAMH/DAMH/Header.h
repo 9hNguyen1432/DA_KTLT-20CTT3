@@ -32,7 +32,7 @@ using namespace std;
 */
 // struct điểm 1 môn của 1 sinh viên
 struct MarkNode {
-	int ID;// linh hoạt trong điểm của sinh viên thì là id môn học, còn trong môn học thì là id sinh viên
+	string ID;// linh hoạt trong điểm của sinh viên thì là id môn học, còn trong môn học thì là id sinh viên
 	float Total_Mark;
 	float Final_Mark;
 	float Midterm_Mark;
