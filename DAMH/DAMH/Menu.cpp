@@ -3,6 +3,7 @@
 #include"ConsoleProcess.h"
 #include "read_data.h"
 #include "change_info.h"
+#include"staffFunction.h"
 void menuStaff(User &user)
 {	
 	showPointer();
@@ -90,6 +91,8 @@ void menuStaff(User &user)
 			break;
 		case 3:
 			// lenh them nam hoc
+			cin.ignore();
+			addSchoolYear();
 			break;
 		case 4:
 			// lenh them lop hoc
@@ -170,7 +173,6 @@ void menuStudent(User &user)
 		printtext(" \\ \\_\\ \\ \\_\\  \\ \\_____\\  \\ \\_\\\\\"\\_\\  \\ \\_____\\ ", 30, 26);
 		printtext("  \\/_/  \\/_/   \\/_____/   \\/_/ \\/_/   \\/_____/ ", 30, 27);
 		std::cin >> option;
-		
 		switch (option)
 		{
 		case 1:
