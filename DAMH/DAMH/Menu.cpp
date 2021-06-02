@@ -2,6 +2,7 @@
 #include"Login.h"
 #include"ConsoleProcess.h"
 #include "read_data.h"
+#include "change_info.h"
 void menuStaff(User &user)
 {	
 	showPointer();
@@ -85,6 +86,7 @@ void menuStaff(User &user)
 			break;
 		case 2:
 			// lenh thay mat khau
+			change_password(user);
 			break;
 		case 3:
 			// lenh them nam hoc
@@ -175,7 +177,7 @@ void menuStudent(User &user)
 			Output_info(user);
 			break;
 		case 2:
-			// lenh thay doi mat khau
+			change_password(user);
 			break;
 		case 3:
 			// lenh show danh sach cac lop
