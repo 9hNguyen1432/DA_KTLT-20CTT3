@@ -59,6 +59,75 @@ void Output_info(User A) {
 	textBgColor(0, 15);
 	system("pause");
 }
+
+void read_course(User& A, MarkNode* &view)
+{
+	string fileName, flag;
+	fileName = "file_save/Class/" + A.info.Class + csv_tail;
+	ifstream courseFile;
+	courseFile.open(fileName, ios::in);
+	
+	MarkNode* temp = new MarkNode;
+	temp = view;
+	
+	while (!courseFile.eof())
+	{
+		getline(courseFile, temp->ID, ',');
+		if (temp->ID.compare(A.ID) == 0)
+		{
+			getline(courseFile, temp->ID, ',');
+			while (courseFile.peek() != '\n')
+			{
+				MarkNode* clone = new MarkNode;
+				getline(courseFile, clone->ID, ',');
+				temp->pNext = clone;
+				temp = temp->pNext;
+			}
+			break;
+		}
+		getline(courseFile, temp->ID);
+	}
+	temp->pNext = NULL;
+	courseFile.close();
+	fileName = "file_save/course_infor.csv";
+	ifstream courseInfor;
+	courseFile.open(fileName, ios::in);
+	getline(courseFile, flag);
+	int i = 0;
+	while (view->pNext != NULL)
+	{
+		i++;
+		while (!courseFile.eof())
+		{
+			Course course;
+			getline(courseFile, flag, ',');
+			read1CourseInfor(course, courseFile);
+			getline(courseFile, flag, ',');
+			if (view->ID.compare(flag) == 0)
+			{
+				gotoxy(5, 0 + i);std::cout<<
+			}
+
+		}
+	}
+}
+
+void read1CourseInfor(Course& A, ifstream& f)
+{
+	string flag;//luu tru thong tin dang int tam thoi;
+	getline(f, flag,',');
+	getline(f, flag, ',');
+	A.ID_course = stoi(flag, 0, 10);
+	getline(f, A.name, ',');
+	getline(f, A.teacher, ',');
+	getline(f, flag, ',');
+	A.Num_of_std_now= stoi(flag, 0, 10);
+	getline(f, flag, ',');
+	A.Max_student = stoi(flag, 0, 10);
+	getline(f, A.Schedule, ',');
+	getline(f, A.date_star, ',');
+	getline(f, A.date_end, ',');
+}
 void init_List_Mark(MarkNode*& head) {
 	head = NULL;
 }
@@ -109,3 +178,4 @@ void read_course(User& A) {
 		}
 	}
 }
+
