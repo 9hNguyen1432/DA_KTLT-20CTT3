@@ -59,6 +59,7 @@ void Output_info(User A) {
 	textBgColor(0, 15);
 	system("pause");
 }
+
 void read_course(User& A, MarkNode* &view)
 {
 	string fileName, flag;
@@ -127,3 +128,54 @@ void read1CourseInfor(Course& A, ifstream& f)
 	getline(f, A.date_star, ',');
 	getline(f, A.date_end, ',');
 }
+void init_List_Mark(MarkNode*& head) {
+	head = NULL;
+}
+void add_Tail_List_Mark(MarkNode*& head, string A) {
+	//khởi tạo 1 node
+	MarkNode* n1 = new MarkNode;
+	n1->ID = A;
+	n1->pNext = NULL;
+	MarkNode* temp = head;
+	if (head == NULL) {
+		head = n1;
+		return;
+	}
+	else {
+		while (temp->pNext != NULL) {
+			temp = temp->pNext;
+		}
+		temp->pNext = n1;
+	}
+}
+void read_course(User& A) {
+	ifstream f;
+	string fileName = "file_save/Class/" + A.info.Class + "_1_2020" + csv_tail;// chỉ là thử nghiệm, sau khi có hàm đọc học kì sẽ thay đổi.
+	f.open(fileName, ios::in);
+	init_List_Mark(A.info.phead);
+	while (f.eof() == false) {
+		string temp;
+		getline(f, temp, ',');
+		if (temp.compare(A.ID) != 0) {
+			getline(f, temp);
+		}
+		else {
+			getline(f, temp);
+			string IDtemp = "";
+			for (int i = 0; i < temp.length(); i++) {
+				if (temp[i] == ',' || i == temp.length() - 1)
+				{
+					if (i == temp.length() - 1) {
+						IDtemp += temp[i];
+					}
+					add_Tail_List_Mark(A.info.phead, IDtemp);
+					IDtemp = "";
+				}
+				else if (temp[i] != ',') {
+					IDtemp += temp[i];
+				}
+			}
+		}
+	}
+}
+

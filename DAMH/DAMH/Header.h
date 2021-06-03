@@ -13,22 +13,22 @@ using namespace std;
 
 /*
 	Color:
-        0 black
-        1 blue
-        2 green
-        3 aqua
-        4 red
-        5 purple
-        6 yellow
-        7 white
-        8 gray
-        9 light blue
-        10 light green
-        11 light aqua
-        12 light red
-        13 light purple
-        14 light yellow
-        15 bright white
+		0 black
+		1 blue
+		2 green
+		3 aqua
+		4 red
+		5 purple
+		6 yellow
+		7 white
+		8 gray
+		9 light blue
+		10 light green
+		11 light aqua
+		12 light red
+		13 light purple
+		14 light yellow
+		15 bright white
 */
 // struct điểm 1 môn của 1 sinh viên
 struct MarkNode {
@@ -52,7 +52,7 @@ struct Data {
 };
 //
 // struct 1 khóa học, 1 số thông tin có thể trống
-struct Course{
+struct Course {
 	int ID_course;
 	string name;
 	string teacher;
@@ -64,6 +64,31 @@ struct Course{
 	string date_end;
 	MarkNode* pHead;
 };
+
+struct Class {
+	string name;
+	string MajorClass;
+	int Num_of_std_now;
+	int Year;//Năm vào trường
+};
+
+struct Semester {
+	string Name;
+	int Num_of_std_now;
+	string date_star;
+	string date_end;
+	Course Course;
+	Class Class;
+};
+
+struct SchoolYear {
+	Semester semester[3];
+	string year;//VD:2020-2021
+	int Num_of_std_now;
+	string date_star;
+	string date_end;
+};
+
 //
 struct User {
 	string ID;
