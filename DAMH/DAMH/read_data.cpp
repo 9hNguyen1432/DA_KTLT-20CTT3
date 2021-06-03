@@ -68,7 +68,7 @@ void add_Tail_List_Mark(MarkNode*& head, string A) {
 	n1->ID = A;
 	n1->pNext = NULL;
 	MarkNode* temp = head;
-	if (head = NULL) {
+	if (head == NULL) {
 		head = n1;
 		return;
 	}
