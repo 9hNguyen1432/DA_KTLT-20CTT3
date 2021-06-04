@@ -33,6 +33,15 @@
     <ClCompile Include="change_info.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ListClass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="staffFunction.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Course_function.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ConsoleProcess.h">
@@ -51,6 +60,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="change_info.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ListClass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="staffFunction.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Course_function.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
