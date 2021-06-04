@@ -8,7 +8,7 @@ void menuStaff(User &user)
 {	
 	showPointer();
 	bool isExit = false;
-	read_info(user);
+	read_info(user);			
 	int option;
 	do
 	{	
@@ -105,6 +105,8 @@ void menuStaff(User &user)
 			break;
 		case 7:
 			//lenh them hoc ki
+			cin.ignore();
+			addSemester();
 			break;
 		case 8: 
 			//lenh chinh thong tin sinh vien

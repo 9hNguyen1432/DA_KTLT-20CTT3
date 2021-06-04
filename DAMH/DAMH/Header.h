@@ -75,6 +75,7 @@ struct Class {
 struct Semester {
 	string Name;
 	int Num_of_std_now;
+	string schoolyear;
 	string date_star;
 	string date_end;
 	Course Course;
@@ -96,4 +97,6 @@ struct User {
 	int role;// 0 là giáo viên quản trị. 1 là học sinh
 	Data info;
 };
+
+
 #endif
