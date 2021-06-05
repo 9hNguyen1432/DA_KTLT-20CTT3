@@ -37,4 +37,10 @@ int checkDate(string Date);
 
 char* gettime();
 
-void updateFileRegistration();
+//void updateFileRegistration();
+
+void addCourse();
+
+void insertNum(int& n);
+
+int countLine(string filename);

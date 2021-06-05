@@ -12,6 +12,8 @@ void menuStaff(User &user)
 	int option;
 	do
 	{	
+		showPointer();
+
 		system("cls");
 		std::cout << "==============================\n";
 		printtext(" 1. Profile info\n", 1, 8);
@@ -100,6 +102,8 @@ void menuStaff(User &user)
 			break;
 		case 5:
 			// lenh them khoa hoc
+			cin.ignore();
+			addCourse();
 			break;
 		case 6:
 			// Create course registration session

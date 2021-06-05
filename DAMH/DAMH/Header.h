@@ -53,15 +53,17 @@ struct Data {
 //
 // struct 1 khóa học, 1 số thông tin có thể trống
 struct Course {
-	int ID_course;
+	string ID_course;
 	string name;
 	string teacher;
 	int Num_of_creadit;
 	int Num_of_std_now;
 	int Max_student;
-	string Schedule;// thời khóa biểu môn học
 	string date_star;
 	string date_end;
+	string Schedule;// thời khóa biểu môn học
+	string session[2];//thời gian mỗi tiết học (mỗi môn đều có 2 tiết)
+	string DayOfWeek;
 	MarkNode* pHead;
 };
 
