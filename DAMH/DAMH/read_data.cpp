@@ -105,7 +105,7 @@ void read_course(User& A, MarkNode* &view)
 			getline(courseFile, flag, ',');
 			if (view->ID.compare(flag) == 0)
 			{
-				gotoxy(5, 0 + i);std::cout<<
+				gotoxy(5, 0 + i);//std::cout<<
 			}
 
 		}

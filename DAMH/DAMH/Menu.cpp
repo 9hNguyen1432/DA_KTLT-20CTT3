@@ -15,20 +15,21 @@ void menuStaff(User &user)
 		system("cls");
 		std::cout << "==============================\n";
 		printtext(" 1. Profile info\n", 1, 8);
-		std::cout	<< "2. Change password\n"
+		std::cout << "2. Change password\n"
 			<< "3. Create school-year\n"
 			<< "4. Create class\n"
 			<< "5. Create course\n"
-			<< "6. Add student to class\n"
-			<< "7. Create semester\n "
-			<< " 8. Edit student's information\n"
-			<< "9. Edit student's marks"
-			<< "10. view list of course\n"
-			<< "11. Delete a course\n"
-			<< "12. Update course information\n"
-			<< "13. Export student list"
-			<< "14. View score board of a course\n"
-			<< "15. View score board of a class\n"
+			<< "6. Create course registration session\n"
+			<< "7. Add student to class\n"
+			<< "8. Create semester\n "
+			<< "9. Edit student's information\n"
+			<< "10. Edit student's marks"
+			<< "11. View list of course\n"
+			<< "12. Delete a course\n"
+			<< "13. Update course information\n"
+			<< "14. Export student list"
+			<< "15. View score board of a course\n"
+			<< "16. View score board of a class\n"
 			<< "0. Log out\n"
 			<< " ---------------------\n";
 		std::cout << " your choice: ";
@@ -101,35 +102,39 @@ void menuStaff(User &user)
 			// lenh them khoa hoc
 			break;
 		case 6:
-			//lenh them hoc snh vao lop
+			// Create course registration session
+			createRegistrationCourse();
 			break;
 		case 7:
+			//them sinh vien vao lop
+			break;
+		case 8: 
 			//lenh them hoc ki
 			cin.ignore();
 			addSemester();
 			break;
-		case 8: 
-			//lenh chinh thong tin sinh vien
-			break;
 		case 9:
-			//edit diem sinh vien
+			//lenh dieu chinh thong tin sinh vien
 			break;
 		case 10:
-			//view danh sachs hoc phan
+			//edit diem sinh vien
 			break;
 		case 11:
-			//xoa hoc phan
+			//view danh sachs hoc phan
 			break;
 		case 12:
-			//update thong tin hoc phan
+			//xoa hoc phan
 			break;
 		case 13:
-			//xuat thong tin hoc sinh vao file
+			//update thong tin hoc phan
 			break;
 		case 14:
-			//view diem cua khoa hoc
+			//xuat thong tin hoc sinh vao file
 			break;
 		case 15:
+			//view diem cua khoa hoc
+			break;
+		case 16:
 			//view diem cua lop hoc
 		case 0:
 			isExit = true;
