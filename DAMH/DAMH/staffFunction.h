@@ -8,6 +8,7 @@
 #include<stdio.h> 
 #include<conio.h> 
 #include <sys/stat.h>
+#include <ctime>
 #pragma warning(disable : 4996)
 
 using namespace std;
@@ -29,3 +30,17 @@ int checkSchoolYear(Semester semester);
 void UpDatefileInfo(Semester semester);
 
 void UpDatefileCSV(Semester semester);
+
+void createRegistrationCourse();
+
+int checkDate(string Date);
+
+char* gettime();
+
+//void updateFileRegistration();
+
+void addCourse();
+
+void insertNum(int& n);
+
+int countLine(string filename);
