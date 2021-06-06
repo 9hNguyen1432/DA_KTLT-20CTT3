@@ -59,92 +59,64 @@ void Output_info(User A) {
 	textBgColor(0, 15);
 	system("pause");
 }
-void read_course(User& A)
+void read_course(User& A, MarkNode* &view)
 {
-	system("cls");
-	string fileName,fileName2, flag,flag2;
-	Course co;
-	fileName = "file_save/Class/20CTT3_course_1_2020.csv";
+	string fileName, flag;
+	fileName = "file_save/Class/" + A.info.Class + csv_tail;
 	ifstream courseFile;
-	int i = 1;
 	courseFile.open(fileName, ios::in);
 	
-	if (!courseFile.is_open() )
-		std::cout << "reading file error!";
-	gotoxy(1, 5); std::cout << "Order";
-	gotoxy(8, 5 ); std::cout << "Id course";
-	gotoxy(19, 5 ); std::cout << "Course name";
-	gotoxy(35, 5 ); std::cout << "Lecturer";
-	gotoxy(50, 5 ); std::cout << "Max student";
-	gotoxy(63, 5); std::cout << "Student";
-	gotoxy(72, 5 ); std::cout <<"Schedule";
-	gotoxy(88, 5); std::cout << "Start date";
-	gotoxy(105, 5); std::cout << "End date" << std::endl;
-	
-
+	MarkNode* temp = new MarkNode;
+	temp = view;
 	
 	while (!courseFile.eof())
 	{
-		
-		getline(courseFile, flag, ',');
-		if (flag.size() > 8)
-			flag.erase(0, 3); 
-		
-		if (flag.compare(A.ID) == 0)
+		getline(courseFile, temp->ID, ',');
+		if (temp->ID.compare(A.ID) == 0)
 		{
-			getline(courseFile, flag, ',');
-			while (true)
+			getline(courseFile, temp->ID, ',');
+			while (courseFile.peek() != '\n')
 			{
-			//toi day van chay
-				fileName2 = "file_save/course_info.csv";
-				ifstream courseInfor;
-				courseInfor.open(fileName2, ios::in);
-				if (!courseInfor.is_open())
-					std::cout << "reading error!" << std::endl;
-				getline(courseInfor, flag2);
-				while (!courseInfor.eof())
-				{
-					
-					
-				
-					read1CourseInfor(co, courseInfor);
-					
-					if (flag.compare(co.ID_course) == 0)
-					{
-						
-						gotoxy(1, 5 + i); std::cout << i;
-						gotoxy(8, 5 + i); std::cout << co.ID_course;
-						gotoxy(19, 5 + i); std::cout << co.name;
-						gotoxy(35, 5+ i); std::cout << co.teacher;
-						gotoxy(50, 5 + i); std::cout << co.Max_student;
-						gotoxy(63, 5 + i); std::cout << co.Num_of_std_now;
-						gotoxy(72, 5 + i); std::cout << co.Schedule;
-						gotoxy(88, 5 + i); std::cout << co.date_star;
-						gotoxy(105, 5 + i); std::cout << co.date_end;
-						i++;
-						break;
-					}
-					
-				}
-				courseInfor.close();
-				if (courseFile.peek() == '\n')
-					break;
+				MarkNode* clone = new MarkNode;
+				getline(courseFile, clone->ID, ',');
+				temp->pNext = clone;
+				temp = temp->pNext;
 			}
 			break;
 		}
-		getline(courseFile, flag2);
+		getline(courseFile, temp->ID);
 	}
+	temp->pNext = NULL;
 	courseFile.close();
-	
-	system("pause");
+	fileName = "file_save/course_infor.csv";
+	ifstream courseInfor;
+	courseFile.open(fileName, ios::in);
+	getline(courseFile, flag);
+	int i = 0;
+	while (view->pNext != NULL)
+	{
+		i++;
+		while (!courseFile.eof())
+		{
+			Course course;
+			getline(courseFile, flag, ',');
+			read1CourseInfor(course, courseFile);
+			getline(courseFile, flag, ',');
+			if (view->ID.compare(flag) == 0)
+			{
+				gotoxy(5, 0 + i);std::cout<<
+			}
+
+		}
+	}
 }
 
 void read1CourseInfor(Course& A, ifstream& f)
 {
 	string flag;//luu tru thong tin dang int tam thoi;
 	getline(f, flag,',');
-	getline(f, A.ID_course, ',');
-	
+	getline(f, flag, ',');
+	A.ID_course = stoi(flag, 0, 10);
 	getline(f, A.name, ',');
 	getline(f, A.teacher, ',');
 	getline(f, flag, ',');

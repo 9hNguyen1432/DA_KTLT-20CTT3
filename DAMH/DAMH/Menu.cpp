@@ -161,7 +161,7 @@ void menuStudent(User &user)
 		gotoxy(45, 18); std::cout << "0. Log out\n";
 		gotoxy(45, 19); std::cout << " ---------------------\n";
 		
-		gotoxy(45, 20); std::cout << "your choice: ";
+		gotoxy(45, 20); std::cout << " your choice: ";
 		printtext(" ______     ______   __  __     _____     ______     __   __     ______  ", 20, 1);
 		printtext("/\\  ___\\   /\\__  _\\ /\\ \\/\\ \\   /\\  __-.  /\\  ___\\   /\\ \"-.\\ \\   /\\__  _\\ ", 20, 2);
 		printtext("\\ \\___  \\  \\/_/\\ \\/ \\ \\ \\_\\ \\  \\ \\ \\/\\ \\ \\ \\  __\\   \\ \\ \\-.  \\  \\/_/\\ \\/ ", 20, 3);
@@ -172,7 +172,6 @@ void menuStudent(User &user)
 		printtext("\\ \\ \\-./\\ \\  \\ \\  __\\   \\ \\ \\-.  \\  \\ \\ \\_\\ \\ ", 30, 25);
 		printtext(" \\ \\_\\ \\ \\_\\  \\ \\_____\\  \\ \\_\\\\\"\\_\\  \\ \\_____\\ ", 30, 26);
 		printtext("  \\/_/  \\/_/   \\/_____/   \\/_/ \\/_/   \\/_____/ ", 30, 27);
-		gotoxy(58, 20);
 		std::cin >> option;
 		switch (option)
 		{
@@ -198,7 +197,7 @@ void menuStudent(User &user)
 			//lenh dang ki khoa hoc
 			break;
 		case 8:
-			read_course(user);
+			//lenh show danh sach khoa hoc da dang ki
 			break;
 		case 9:
 			//lenh xoa bot khoa hoc da dang ki

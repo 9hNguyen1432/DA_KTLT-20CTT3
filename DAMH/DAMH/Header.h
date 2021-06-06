@@ -53,7 +53,7 @@ struct Data {
 //
 // struct 1 khóa học, 1 số thông tin có thể trống
 struct Course{
-	string ID_course;
+	int ID_course;
 	string name;
 	string teacher;
 	int Num_of_creadit;

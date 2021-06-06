@@ -1,2 +1,9 @@
-﻿  read_data.cpp
+﻿  ConsoleProcess.cpp
+  login.cpp
+  main.cpp
+  Menu.cpp
+D:\Đồ án HK2\DA_KTLT-20CTT3\DAMH\DAMH\Menu.cpp(63,13): warning C4129: ':': unrecognized character escape sequence
+D:\Đồ án HK2\DA_KTLT-20CTT3\DAMH\DAMH\Menu.cpp(65,13): warning C4129: '/': unrecognized character escape sequence
+  read_data.cpp
+  Generating Code...
   DAMH.vcxproj -> D:\Đồ án HK2\DA_KTLT-20CTT3\DAMH\Debug\DAMH.exe
