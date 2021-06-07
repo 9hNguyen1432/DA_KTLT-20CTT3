@@ -65,10 +65,31 @@ struct Course{
 	MarkNode* pHead;
 };
 //
+
+struct Semester {
+	string Name;
+	int Num_of_std_now;
+	string schoolyear;
+	string date_star;
+	string date_end;
+	Course Course;
+	Class Class;
+};
+
+struct SchoolYear {
+	string semester;
+	string year;//VD:2020-2021
+	int Num_of_std_now;
+	string date_star;
+	string date_end;
+};
+
+//
 struct User {
 	string ID;
 	string Password;
 	int role;// 0 là giáo viên quản trị. 1 là học sinh
 	Data info;
 };
+
 #endif
