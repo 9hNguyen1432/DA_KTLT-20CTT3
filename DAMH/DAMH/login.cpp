@@ -1,7 +1,6 @@
 #include"ConsoleProcess.h"
 #include "login.h"
 #include "Menu.h"
-#include "ListClass.h"
 #include"Header.h"
 #include<stdio.h> 
 #include<conio.h> 
@@ -150,7 +149,7 @@ int CheckLogin(User& user) {
 
 void repeatLogin(User &user){
     textColor(0);
-    ListClass();
+    
     do
 	{   
         system("cls");
