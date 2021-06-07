@@ -141,24 +141,18 @@
   <ItemGroup>
     <ClCompile Include="change_info.cpp" />
     <ClCompile Include="ConsoleProcess.cpp" />
-    <ClCompile Include="Course_function.cpp" />
-    <ClCompile Include="ListClass.cpp" />
     <ClCompile Include="login.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="read_data.cpp" />
-    <ClCompile Include="staffFunction.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="change_info.h" />
     <ClInclude Include="ConsoleProcess.h" />
-    <ClInclude Include="Course_function.h" />
     <ClInclude Include="Header.h" />
-    <ClInclude Include="ListClass.h" />
     <ClInclude Include="login.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="read_data.h" />
-    <ClInclude Include="staffFunction.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
