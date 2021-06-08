@@ -185,6 +185,7 @@ void menuStudent(User &user)
 		printtext("\\ \\ \\-./\\ \\  \\ \\  __\\   \\ \\ \\-.  \\  \\ \\ \\_\\ \\ ", 30, 25);
 		printtext(" \\ \\_\\ \\ \\_\\  \\ \\_____\\  \\ \\_\\\\\"\\_\\  \\ \\_____\\ ", 30, 26);
 		printtext("  \\/_/  \\/_/   \\/_____/   \\/_/ \\/_/   \\/_____/ ", 30, 27);
+		gotoxy(60, 20);
 		std::cin >> option;
 		switch (option)
 		{
@@ -210,7 +211,7 @@ void menuStudent(User &user)
 			//lenh dang ki khoa hoc
 			break;
 		case 8:
-			//lenh show danh sach khoa hoc da dang ki
+			read_course(user);
 			break;
 		case 9:
 			//lenh xoa bot khoa hoc da dang ki
