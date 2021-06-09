@@ -48,3 +48,5 @@ void insertNum(int& n);
 int countLine(string filename);
 
 void viewCourse();
+
+void getLineInfo(string filename, int line, string column[]);
