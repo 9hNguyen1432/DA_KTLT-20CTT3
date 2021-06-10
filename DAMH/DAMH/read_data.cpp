@@ -19,7 +19,7 @@ void read_info(User& A) {
 		fileName = "file_save/Class/"+A.info.Class + csv_tail;
 	}
 	else {
-		fileName = "file_save/Class/staff.csv";
+		fileName = "file_save/SchoolYear/2020-2021/staff.csv";
 	}
 	ifstream info_file;
 	info_file.open(fileName, ios::in);
@@ -60,10 +60,10 @@ void Output_info(User A) {
 	system("pause");
 }
 
-void read_course(User& A)
+void read_course(User& A, SchoolYear y)
 {
 	system("cls");
-	string fileName, fileName2, flag, flag2;
+	/*string fileName, fileName2, flag, flag2;
 	Course co;
 	fileName = "file_save/Class/20CTT3_course_1_2020.csv";
 	ifstream courseFile;
@@ -71,7 +71,7 @@ void read_course(User& A)
 	courseFile.open(fileName, ios::in);
 
 	if (!courseFile.is_open())
-		std::cout << "reading file error!";
+		std::cout << "reading file error!";*/
 	gotoxy(1, 5); std::cout << "Order";
 	gotoxy(8, 5); std::cout << "Id course";
 	gotoxy(19, 5); std::cout << "Course name";
@@ -82,70 +82,78 @@ void read_course(User& A)
 	gotoxy(88, 5); std::cout << "Start date";
 	gotoxy(105, 5); std::cout << "End date" << std::endl;
 
-
-
-	while (!courseFile.eof())
-	{
-
-		getline(courseFile, flag, ',');
-		if (flag.size() > 8)
-			flag.erase(0, 3);
-
-		if (flag.compare(A.ID) == 0)
-		{
-			getline(courseFile, flag, ',');
-			while (true)
-			{
-				//toi day van chay
-				fileName2 = "file_save/course_info.csv";
-				ifstream courseInfor;
-				courseInfor.open(fileName2, ios::in);
-				if (!courseInfor.is_open())
-					std::cout << "reading error!" << std::endl;
-				getline(courseInfor, flag2);
-				while (!courseInfor.eof())
-				{
-
-
-
-					read1CourseInfor(co, courseInfor);
-
-					if (flag.compare(co.ID_course) == 0)
-					{
-
-						gotoxy(1, 5 + i); std::cout << i;
-						gotoxy(8, 5 + i); std::cout << co.ID_course;
-						gotoxy(19, 5 + i); std::cout << co.name;
-						gotoxy(35, 5 + i); std::cout << co.teacher;
-						gotoxy(50, 5 + i); std::cout << co.Max_student;
-						gotoxy(63, 5 + i); std::cout << co.Num_of_std_now;
-						gotoxy(72, 5 + i); std::cout << co.Schedule;
-						gotoxy(88, 5 + i); std::cout << co.date_star;
-						gotoxy(105, 5 + i); std::cout << co.date_end;
-						i++;
-						break;
-					}
-
-				}
-				courseInfor.close();
-				if (courseFile.peek() == '\n')
-					break;
-			}
-			break;
+	ifstream f;
+	string fileName = "file_save/Class/" + A.info.Class + "_1_2020" + csv_tail;// chỉ là thử nghiệm, sau khi có hàm đọc học kì sẽ thay đổi.
+	f.open(fileName, ios::in);
+	init_List_Mark(A.info.phead);
+	while (f.eof() == false) {
+		string temp;
+		getline(f, temp, ',');
+		if (temp.compare(A.ID) != 0) {
+			getline(f, temp);
 		}
-		getline(courseFile, flag2);
+		else {
+			getline(f, temp);
+			string IDtemp = "";
+			for (int i = 0; i < temp.length(); i++) {
+				if (temp[i] == ',' || i == temp.length() - 1)
+				{
+					if (i == temp.length() - 1) {
+						IDtemp += temp[i];
+					}
+					add_Tail_List_Mark(A.info.phead, IDtemp);
+					IDtemp = "";
+				}
+				else if (temp[i] != ',') {
+					IDtemp += temp[i];
+				}
+			}
+		}
 	}
-	courseFile.close();
+	f.close();
+	ifstream fi;
+	fileName = "file_save/Class/SchoolYear/" + y.year + "/" + y.semester->Name + "/course_info.csv";
+	MarkNode* tempo = new MarkNode;
+	tempo = A.info.phead;
+	string fl;	
+	Course co;
+	int i = 1;
+	while (tempo != NULL)
+	{
+		fi.open(fileName, ios::in);
+		getline(fi, fl);
+		while (!fi.eof())
+		{
+			getline(fi, fl, ','); 
+			read1CourseInfor(co, fi);
+			if (co.ID_course.compare(tempo->ID) == 0)
+			{
+				gotoxy(1, 5 + i); std::cout << i;
+				gotoxy(8, 5 + i); std::cout << co.ID_course;
+				gotoxy(19, 5 + i); std::cout << co.name;
+				gotoxy(35, 5 + i); std::cout << co.teacher;
+				gotoxy(50, 5 + i); std::cout << co.Max_student;
+				gotoxy(63, 5 + i); std::cout << co.Num_of_std_now;
+				gotoxy(72, 5 + i); std::cout << co.Schedule;
+				gotoxy(88, 5 + i); std::cout << co.date_star;
+				gotoxy(105, 5 + i); std::cout << co.date_end;
+				i++;
+				tempo = tempo->pNext;
+				break;
+			}
+		}
+		fi.close();
+	}
 
-	system("pause");
+		system("pause");
 }
 
 void read1CourseInfor(Course& A, ifstream& f)
 {
 	string flag;//luu tru thong tin dang int tam thoi;
 	getline(f, flag,',');
-	getline(f, flag, ',');
-	A.ID_course = stoi(flag, 0, 10);
+	getline(f, A.ID_course, ',');
+
 	getline(f, A.name, ',');
 	getline(f, A.teacher, ',');
 	getline(f, flag, ',');

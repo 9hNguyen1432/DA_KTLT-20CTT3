@@ -125,6 +125,8 @@ void menuStaff(User &user)
 			break;
 		case 11:
 			//view danh sachs hoc phan
+			cin.ignore();
+			viewCourse();
 			break;
 		case 12:
 			//xoa hoc phan
@@ -209,7 +211,7 @@ void menuStudent(User &user)
 			//lenh dang ki khoa hoc
 			break;
 		case 8:
-			read_course(user);
+		
 			break;
 		case 9:
 			//lenh xoa bot khoa hoc da dang ki
