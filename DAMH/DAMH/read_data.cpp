@@ -19,7 +19,7 @@ void read_info(User& A) {
 		fileName = "file_save/Class/"+A.info.Class + csv_tail;
 	}
 	else {
-		fileName = "file_save/Class/staff.csv";
+		fileName = "file_save/SchoolYear/2020-2021/staff.csv";
 	}
 	ifstream info_file;
 	info_file.open(fileName, ios::in);

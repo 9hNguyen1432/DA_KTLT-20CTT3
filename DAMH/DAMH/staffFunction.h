@@ -39,8 +39,14 @@ char* gettime();
 
 //void updateFileRegistration();
 
+void determineYearSemesterNow(string& Year, string& semester);
+
 void addCourse();
 
 void insertNum(int& n);
 
 int countLine(string filename);
+
+void viewCourse();
+
+void getLineInfo(string filename, int line, string column[]);
