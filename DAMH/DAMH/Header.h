@@ -85,7 +85,7 @@ struct Semester {
 };
 
 struct SchoolYear {
-	Semester semester[3];
+	Semester semester;
 	string year;//VD:2020-2021
 	int Num_of_std_now;
 	string date_star;
@@ -99,6 +99,5 @@ struct User {
 	int role;// 0 là giáo viên quản trị. 1 là học sinh
 	Data info;
 };
-
 
 #endif
