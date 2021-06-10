@@ -209,7 +209,7 @@ void menuStudent(User &user)
 			//lenh dang ki khoa hoc
 			break;
 		case 8:
-			read_course(user);
+		
 			break;
 		case 9:
 			//lenh xoa bot khoa hoc da dang ki
