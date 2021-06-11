@@ -112,7 +112,7 @@ void read_course(User& A, SchoolYear y)
 	}
 	f.close();
 	ifstream fi;
-	fileName = "file_save/Class/SchoolYear/" + y.year + "/" + y.semester->Name + "/course_info.csv";
+	fileName = "file_save/Class/SchoolYear/" + y.year + "/" + y.semester.Name + "/course_info.csv";
 	MarkNode* tempo = new MarkNode;
 	tempo = A.info.phead;
 	string fl;	
