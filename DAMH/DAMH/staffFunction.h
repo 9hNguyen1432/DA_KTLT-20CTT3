@@ -47,7 +47,7 @@ void insertNum(int& n);
 
 int countLine(string filename);
 
-void viewCourse();
+void listCourse();
 
 //void getLineInfo(int line, string column[]);
 
@@ -64,3 +64,5 @@ void insertNum2(string& data, int limit);
 void insertString(string& data, int limit);
 
 void deleteCourse(string filename, int currentLine);
+
+void viewCourse();

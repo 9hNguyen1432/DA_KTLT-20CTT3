@@ -126,7 +126,7 @@ void menuStaff(User &user)
 		case 11:
 			//view danh sachs hoc phan
 			cin.ignore();
-			viewCourse();
+			listCourse();
 			break;
 		case 12:
 			//xoa hoc phan
