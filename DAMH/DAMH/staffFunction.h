@@ -49,4 +49,18 @@ int countLine(string filename);
 
 void viewCourse();
 
-void getLineInfo(string filename, int line, string column[]);
+//void getLineInfo(int line, string column[]);
+
+void updateFileCourse(int currentColumn,int currentLine, string column[]);
+
+void editInforCourse(int y, int currentLine, string column[]);
+
+void insertSession(string& data, int limit);
+
+void insertDay(string& data, int limit);
+
+void insertNum2(string& data, int limit);
+
+void insertString(string& data, int limit);
+
+void deleteCourse(string filename, int currentLine);
