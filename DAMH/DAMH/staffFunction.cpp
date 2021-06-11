@@ -919,6 +919,42 @@ void editInforCourse(int y,int currentLine,string column[]) {
 }
 
 
+void deleteCourse(string filename, int currentLine) {
+    fstream file_be, file_af;
+    string newdata, line;
+    string year, semester;
+    determineYearSemesterNow(year, semester);
+    int numLine = countLine(filename) - 1;
+    file_be.open(filename, ios::in);
+    file_af.open("file_save//SchoolYear//" + year + "//" + semester + "//course_info_new.csv", ios::app);
+    getline(file_be, line);
+    file_af << line << endl;
+    int i = 1;
+    while (!file_be.eof()) {
+        if (i == currentLine) {
+            getline(file_be, line);
+        }
+        else {
+            getline(file_be, line);
+            if (i == numLine) file_af << line;
+            else file_af << line << endl;
+        }
+        i++;
+    }
+    char* a = new char[filename.size() + 1];
+    strcpy(a, filename.c_str());
+    a[filename.size()] = '\0';
+    string filename_new = "file_save/SchoolYear/" + year + "/" + semester + "/course_info_new.csv";
+    char* b = new char[filename_new.size() + 1];
+    strcpy(b, filename_new.c_str());
+    b[filename_new.size()] = '\0';
+    file_be.close();
+    file_af.close();
+    remove(a);
+    rename(b, a);
+
+}
+
 void editCourse() {
     char ch;
     string year, semester;
@@ -1027,7 +1063,71 @@ void editCourse() {
                 printtext(column[6], 98, y + currentLine);
                 printtext(column[7], 108, y + currentLine);
             }
-            
+
+            if (ch == 'x') {
+                deleteCourse("file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv", currentLine);
+
+                drawRectangle(0, 10, 120, countLine("file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv") + 2, 11);
+
+                textBgColor(4, 11);
+                fstream file;
+                file.open("file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv", ios::in);
+                string data;
+                getline(file, data, ',');
+                printtext(data, 2, 11);
+                getline(file, data, ',');
+                printtext(data, 13, 11);
+                getline(file, data, ',');
+                printtext(data, 35, 11);
+                getline(file, data, ',');
+                printtext(data, 52, 11);
+                getline(file, data, ',');
+                printtext(data, 73, 11);
+                getline(file, data, ',');
+                printtext(data, 88, 11);
+                getline(file, data, ',');
+                printtext(data, 95, 11);
+                getline(file, data);
+                printtext(data, 105, 11);
+                textBgColor(0, 11);
+                int k = 12;
+                while (!file.eof()) {
+                    getline(file, data, ',');
+                    printtext(data, 1, k);
+                    getline(file, data, ',');
+                    printtext(data, 9, k);
+                    getline(file, data, ',');
+                    printtext(data, 34, k);
+                    getline(file, data, ',');
+                    printtext(data, 60, k);
+                    getline(file, data, ',');
+                    printtext(data, 76, k);
+                    getline(file, data, ',');
+                    printtext(data, 88, k);
+                    getline(file, data, ',');
+                    printtext(data, 98, k);
+                    getline(file, data);
+                    printtext(data, 108, k);
+                    k++;
+                }
+                file.close();
+                if (currentLine == line) {
+
+                    currentLine = line - 1;
+                }
+                line--;
+                drawRectangle(1, y + currentLine, 115, 1, 14);
+                textBgColor(0, 14);
+                getLineInfo("file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv", currentLine + 1, column);
+                printtext(column[0], 1, y + currentLine);
+                printtext(column[1], 9, y + currentLine);
+                printtext(column[2], 34, y + currentLine);
+                printtext(column[3], 60, y + currentLine);
+                printtext(column[4], 76, y + currentLine);
+                printtext(column[5], 88, y + currentLine);
+                printtext(column[6], 98, y + currentLine);
+                printtext(column[7], 108, y + currentLine);
+            }
         }
     } while (true);
 }

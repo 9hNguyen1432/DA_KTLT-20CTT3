@@ -63,3 +63,4 @@ void insertNum2(string& data, int limit);
 
 void insertString(string& data, int limit);
 
+void deleteCourse(string filename, int currentLine);
