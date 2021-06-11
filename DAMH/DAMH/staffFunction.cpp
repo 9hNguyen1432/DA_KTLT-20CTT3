@@ -434,7 +434,6 @@ void createRegistrationCourse() {
     file << "Date start: " << DateStart << endl;
     file << "Date end:" << DateEnd << endl;
     file.close();
-
     textBgColor(9, 15);
     printtext("CREATE COURSE REGISTRATION SESSION SUCCESSFUL !!! ,PRESS ENTER TO BACK TO MENU",20,28);
     ch = getch();
@@ -1112,7 +1111,6 @@ void editCourse() {
                 }
                 file.close();
                 if (currentLine == line) {
-
                     currentLine = line - 1;
                 }
                 line--;
@@ -1132,8 +1130,7 @@ void editCourse() {
     } while (true);
 }
 
-
-void viewCourse() {
+void listCourse() {
     char ch;
     do {
         system("cls");
@@ -1222,4 +1219,68 @@ void viewCourse() {
     }while (ch != 27);
 }
 
+void viewCourse() {
+    char ch;
+    system("cls");
+    textBgColor(13, 15);
+    printtext(" _     ___ ____ _____    ____ ___  _   _ ____  ____  _____", 30, 2);
+    printtext("| |   |_ _/ ___|_   _|  / ___/ _ \\| | | |  _ \\/ ___|| ____|", 30, 3);
+    printtext("| |    | |\\___ \\ | |   | |  | | | | | | | |_) \\___ \\|  _|", 30, 4);
+    printtext("| |___ | | ___) || |   | |__| |_| | |_| |  _ < ___) | |___", 30, 5);
+    printtext("|_____|___|____/ |_|    \\____\\___/ \\___/|_| \\_\\____/|_____|", 30, 6);
+        
+    string year, semester;
+    determineYearSemesterNow(year, semester);
+    drawRectangle(0, 10, 120, countLine("file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv") + 2, 11);
+    if (stoi(semester.substr(8, 1), 0, 10) == 0) {
+        textBgColor(4, 15);
+        printtext("YOU HAVEN'T CREATED SEMESTER YET, PRESS ENTER TO BACK TO MENU.", 30, 14);
+        ch = getch();
+        exit(1);
+    }
+
+    textBgColor(4, 11);
+    fstream file;
+    file.open("file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv", ios::in);
+    string data;
+    getline(file, data, ',');
+    printtext(data, 2, 11);
+    getline(file, data, ',');
+    printtext(data, 13, 11);
+    getline(file, data, ',');
+    printtext(data, 35, 11);
+    getline(file, data, ',');
+    printtext(data, 52, 11);
+    getline(file, data, ',');
+    printtext(data, 73, 11);
+    getline(file, data, ',');
+    printtext(data, 88, 11);
+    getline(file, data, ',');
+    printtext(data, 95, 11);
+    getline(file, data);
+    printtext(data, 105, 11);
+    textBgColor(0, 11);
+    int y = 12;
+    while (!file.eof()) {
+        getline(file, data, ',');
+        printtext(data, 1, y);
+        getline(file, data, ',');
+        printtext(data, 9, y);
+        getline(file, data, ',');
+        printtext(data, 34, y);
+        getline(file, data, ',');
+        printtext(data, 60, y);
+        getline(file, data, ',');
+        printtext(data, 76, y);
+        getline(file, data, ',');
+        printtext(data, 88, y);
+        getline(file, data, ',');
+        printtext(data, 98, y);
+        getline(file, data);
+        printtext(data, 108, y);
+        y++;
+    }
+    file.close();
+    ch = getch();
+}
 
