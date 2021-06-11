@@ -646,7 +646,7 @@ void addCourse() {
     file.close();
 
     file.open("file_save/SchoolYear/" + year + "/" + semester + "/Course/" + course.name+".csv", ios::out);
-    file << "MSSV,TEN,LOP,GIOI TINH,DIEM GIUA KI,DIEM CUOI KI,DIEM KHAC,TONG KET" << endl;
+    file << "MSSV,TEN,LOP,GIOI TINH,DIEM GIUA KI,DIEM CUOI KI,DIEM KHAC,TONG KET";
     file.close();
     printtext("CREATE COURSE SUCCESSFUL !!!, PRESS ENTER TO BACK TO MENU.", 25, 27);
     ch = getch();
@@ -1281,6 +1281,6 @@ void viewCourse() {
         y++;
     }
     file.close();
-    ch = getch();
+    textBgColor(0, 15);
 }
 

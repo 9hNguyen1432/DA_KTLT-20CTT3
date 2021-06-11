@@ -1,3 +1,6 @@
-﻿stt,ID course,Name,Number of student,Maximum of student,Time,date,date
-1,MTH0007,toan roi rac,40,45,7:30-thurday,10/5/21,10/8/21
-2,hp1000,
+﻿ID,COURSE NAME,TEACHER NAME,NUMBER OF CREDITS,MAX STUDENT,DAY,SESSION1,SESSION2
+MTH007,toan roi rac,johnny tran,4,50,TUS,S1,S3
+HP1000,hoc phan moi,nguyen van a,3,20,MON,S2,S4
+HP3,hoc phan 3, Nguyen Thi D,2,40,WED,S1,S4
+ABC2,Nhap mon lap trinh 2,Le van chanh 2,3,100,WED,S2,S5
+ABC4,Nhap mon lap trinh 4,Le van chanh 4,3,100,FRI,S4,S7

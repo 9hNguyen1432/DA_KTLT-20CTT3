@@ -3,6 +3,7 @@
 #include"ConsoleProcess.h"
 #include "read_data.h"
 #include "login.h"
+#include "staffFunction.h"
 // hàm tổng quát, command_flag >=0, thì thêm data vào file, <0 xóa data khỏi file
 void rewrite_course_of_student_file(User user, string fileName, string data, int command_flag) {
 	fstream file_prv, file_aft;
@@ -197,9 +198,11 @@ void enroll_course(User& A, SchoolYear s_y, int command_flag) {
 	//hàm hiện danh sách các môn học.
 	string ID_course_input;
 	if (command_flag >= 0) {
+		viewCourse();
 		cout << "\nEnter ID course you want to enroll: ";
 	}
 	else {
+		read_course(A, s_y);
 		cout << "\nEnter ID course you want to delete: ";
 	}
 	insertUserName(ID_course_input);
@@ -208,7 +211,6 @@ void enroll_course(User& A, SchoolYear s_y, int command_flag) {
 	string temp;
 	bool realine_flag = false, delete_flag = false;
 	while (file_course_info.eof() == false) {
-		getline(file_course_info, temp, ',');//đọc stt
 		getline(file_course_info, temp, ',');//đọc mã môn học
 		//nếu so sánh được mã môn nhập vào có trong danh sách lớp học, cho phép ghi danh:
 		if (_strcmpi(temp.c_str(), ID_course_input.c_str()) == 0) {

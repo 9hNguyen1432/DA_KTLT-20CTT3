@@ -64,6 +64,12 @@ void Output_info(User A) {
 void read_course(User& A, SchoolYear y)
 {
 	system("cls");
+	textBgColor(4, 10);
+	printtext(".-.  .-. .----. .-. .-..----.     .---.  .----. .-. .-..----.  .----..----.", 20, 4);
+	printtext(" \\ \\/ / /  {}  \\| { } || {}  }   /  ___\}/  {}  \\| { } || {}  \}{ {__  | {_  ", 20, 5);
+	printtext("  }  {  \\      /| {_} || .-. \\   \\     }\\      /| {_} || .-. \\.-._} }| {__ ", 20, 6);
+	printtext("  `--'   `----' `-----'`-' `-'    `---'  `----' `-----'`-' `-'`----' `----'", 20, 7);
+	textBgColor(0, 15);
 	/*string fileName, fileName2, flag, flag2;
 	Course co;
 	fileName = "file_save/Class/20CTT3_course_1_2020.csv";
@@ -73,71 +79,36 @@ void read_course(User& A, SchoolYear y)
 
 	if (!courseFile.is_open())
 		std::cout << "reading file error!";*/
-	gotoxy(1, 5); std::cout << "Order";
-	gotoxy(8, 5); std::cout << "Id course";
-	gotoxy(19, 5); std::cout << "Course name";
-	gotoxy(35, 5); std::cout << "Lecturer";
-	gotoxy(50, 5); std::cout << "Max student";
-	gotoxy(63, 5); std::cout << "Student";
-	gotoxy(72, 5); std::cout << "Schedule";
-	gotoxy(88, 5); std::cout << "Start date";
-	gotoxy(105, 5); std::cout << "End date" << std::endl;
-
-	ifstream f;
-	string fileName = "file_save/Class/" + A.info.Class + "_1_2020" + csv_tail;// chỉ là thử nghiệm, sau khi có hàm đọc học kì sẽ thay đổi.
-	f.open(fileName, ios::in);
-	init_List_Mark(A.info.phead);
-	while (f.eof() == false) {
-		string temp;
-		getline(f, temp, ',');
-		if (temp.compare(A.ID) != 0) {
-			getline(f, temp);
-		}
-		else {
-			getline(f, temp);
-			string IDtemp = "";
-			for (int i = 0; i < temp.length(); i++) {
-				if (temp[i] == ',' || i == temp.length() - 1)
-				{
-					if (i == temp.length() - 1) {
-						IDtemp += temp[i];
-					}
-					add_Tail_List_Mark(A.info.phead, IDtemp);
-					IDtemp = "";
-				}
-				else if (temp[i] != ',') {
-					IDtemp += temp[i];
-				}
-			}
-		}
-	}
-	f.close();
+	gotoxy(1, 15); std::cout << "N.o";
+	gotoxy(8, 15); std::cout << "Id course";
+	gotoxy(19, 15); std::cout << "Course name";
+	gotoxy(45, 15); std::cout << "Lecturer";
+	gotoxy(70, 15); std::cout << "Number of credits";
+	gotoxy(90, 15); std::cout << "Max student";
+	gotoxy(102, 15); std::cout << "Schedule";
 	ifstream fi;
-	fileName = "file_save/Class/SchoolYear/" + y.year + "/" + y.semester.Name + "/course_info.csv";
+	string fileName = "file_save/SchoolYear/" + y.year + "/" + y.semester.Name + "/course_info.csv";
 	MarkNode* tempo = new MarkNode;
 	tempo = A.info.phead;
-	string fl;	
-	Course co;
 	int i = 1;
 	while (tempo != NULL)
 	{
+		string fl;
+		Course co;
 		fi.open(fileName, ios::in);
 		getline(fi, fl);
 		while (!fi.eof())
 		{
-			getline(fi, fl, ','); 
 			read1CourseInfor(co, fi);
-			if (co.ID_course.compare(tempo->ID) == 0)
+			if (_strcmpi(co.ID_course.c_str(),tempo->ID.c_str()) == 0)
 			{
-				gotoxy(1, 5 + i); std::cout << i;
-				gotoxy(8, 5 + i); std::cout << co.ID_course;
-				gotoxy(19, 5 + i); std::cout << co.name;
-				gotoxy(35, 5 + i); std::cout << co.teacher;
-				gotoxy(50, 5 + i); std::cout << co.Max_student;
-				gotoxy(63, 5 + i); std::cout << co.Num_of_std_now;
-				gotoxy(72, 5 + i); std::cout << co.Schedule;
-				gotoxy(88, 5 + i); std::cout << co.date_star;
-				gotoxy(105, 5 + i); std::cout << co.date_end;
+				gotoxy(1, 15 + i); std::cout << i;
+				gotoxy(8, 15 + i); std::cout << co.ID_course;
+				gotoxy(19, 15 + i); std::cout << co.name;
+				gotoxy(45, 15 + i); std::cout << co.teacher;
+				gotoxy(78, 15 + i); std::cout << co.Num_of_creadit;
+				gotoxy(94, 15 + i); std::cout << co.Max_student;
+				gotoxy(102, 15 + i); std::cout << co.Schedule;
 				i++;
 				tempo = tempo->pNext;
 				break;
@@ -145,25 +116,22 @@ void read_course(User& A, SchoolYear y)
 		}
 		fi.close();
 	}
-
-		system("pause");
 }
 
 void read1CourseInfor(Course& A, ifstream& f)
 {
-	string flag;//luu tru thong tin dang int tam thoi;
-	getline(f, flag,',');
+	string flag;
 	getline(f, A.ID_course, ',');
-
 	getline(f, A.name, ',');
 	getline(f, A.teacher, ',');
 	getline(f, flag, ',');
-	A.Num_of_std_now= stoi(flag, 0, 10);
+	A.Num_of_creadit= stoi(flag, 0, 10);
 	getline(f, flag, ',');
 	A.Max_student = stoi(flag, 0, 10);
-	getline(f, A.Schedule, ',');
-	getline(f, A.date_star, ',');
-	getline(f, A.date_end, ',');
+	getline(f, A.DayOfWeek, ',');
+	getline(f, A.session[0], ',');
+	getline(f, A.session[1]);
+	A.Schedule = A.session[0] + ';' + A.session[1] + '-' + A.DayOfWeek;
 }
 void init_List_Mark(MarkNode*& head) {
 	head = NULL;
@@ -218,6 +186,7 @@ void get_course(User& A, SchoolYear s_y) {
 			}
 		}
 	}
+	f.close();
 }
 void delete_Mark_node(MarkNode*& head, string ID) {
 	MarkNode** Dp = &head;

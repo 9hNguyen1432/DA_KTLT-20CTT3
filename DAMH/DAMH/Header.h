@@ -57,10 +57,7 @@ struct Course {
 	string name;
 	string teacher;
 	int Num_of_creadit;
-	int Num_of_std_now;
 	int Max_student;
-	string date_star;
-	string date_end;
 	string Schedule;// thời khóa biểu môn học
 	string session[2];//thời gian mỗi tiết học (mỗi môn đều có 2 tiết)
 	string DayOfWeek;

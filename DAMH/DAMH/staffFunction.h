@@ -66,3 +66,5 @@ void insertString(string& data, int limit);
 void deleteCourse(string filename, int currentLine);
 
 void viewCourse();
+
+void listCourse();
