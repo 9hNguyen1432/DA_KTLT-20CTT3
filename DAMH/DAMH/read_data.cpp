@@ -13,13 +13,14 @@ void read_1_info(User& A, ifstream &f) {
 	getline(f, A.info.IDsocial);
 }
 //
-void read_info(User& A) {
+void read_info(User& A,SchoolYear SY) {
+	string year_path = "file_save/SchoolYear/" + SY.year + '/';
 	string fileName;
 	if (A.role == 1) {
-		fileName = "file_save/Class/"+A.info.Class + csv_tail;
+		fileName = year_path+A.info.Class + csv_tail;
 	}
 	else {
-		fileName = "file_save/SchoolYear/2020-2021/staff.csv";
+		fileName = year_path + "staff.csv";
 	}
 	ifstream info_file;
 	info_file.open(fileName, ios::in);
@@ -112,7 +113,7 @@ void read_course(User& A, SchoolYear y)
 	}
 	f.close();
 	ifstream fi;
-	fileName = "file_save/Class/SchoolYear/" + y.year + "/" + y.semester->Name + "/course_info.csv";
+	fileName = "file_save/Class/SchoolYear/" + y.year + "/" + y.semester.Name + "/course_info.csv";
 	MarkNode* tempo = new MarkNode;
 	tempo = A.info.phead;
 	string fl;	
@@ -184,4 +185,49 @@ void add_Tail_List_Mark(MarkNode*& head, string A) {
 		temp->pNext = n1;
 	}
 }
-
+void get_course(User& A, SchoolYear s_y) {
+	ifstream f;
+	string semester_path = "file_save/SchoolYear/" + s_y.year + '/' + s_y.semester.Name + '/';
+	string class_path = semester_path + "Class/";
+	string course_path = semester_path + "Course/";
+	string fileName = class_path + A.info.Class + csv_tail;// chỉ là thử nghiệm, sau khi có hàm đọc học kì sẽ thay đổi.
+	f.open(fileName, ios::in);
+	init_List_Mark(A.info.phead);
+	while (f.eof() == false) {
+		string temp;
+		getline(f, temp, ',');
+		if (temp.compare(A.ID) != 0) {
+			getline(f, temp);
+		}
+		else {
+			string temp1;
+			getline(f, temp1);
+			string IDtemp = "";
+			for (int i = 0; i < temp1.length(); i++) {
+				if (temp1[i] == ',' || i == temp1.length() - 1)
+				{
+					if (i == temp1.length() - 1) {
+						IDtemp += temp1[i];
+					}
+					add_Tail_List_Mark(A.info.phead, IDtemp);
+					IDtemp = "";
+				}
+				else if (temp1[i] != ',') {
+					IDtemp += temp1[i];
+				}
+			}
+		}
+	}
+}
+void delete_Mark_node(MarkNode*& head, string ID) {
+	MarkNode** Dp = &head;
+	while (*Dp != NULL) {
+		MarkNode* temp = *Dp;
+		if (_strcmpi(temp->ID.c_str(), ID.c_str()) == 0) {
+			*Dp = temp->pNext;
+			delete (temp);
+		}
+		else
+			Dp = &(temp->pNext);
+	}
+}

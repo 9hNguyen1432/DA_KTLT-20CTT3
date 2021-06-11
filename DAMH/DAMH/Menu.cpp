@@ -4,11 +4,14 @@
 #include "read_data.h"
 #include "change_info.h"
 #include"staffFunction.h"
+#include "Course_function.h"
 void menuStaff(User &user)
 {	
 	showPointer();
 	bool isExit = false;
-	read_info(user);			
+	SchoolYear SY;
+	determineYearSemesterNow(SY.year, SY.semester.Name);
+	read_info(user, SY);			
 	int option;
 	do
 	{	
@@ -154,7 +157,10 @@ void menuStaff(User &user)
 void menuStudent(User &user)
 {
 	showPointer();
-	read_info(user);
+	SchoolYear SY;
+	determineYearSemesterNow(SY.year, SY.semester.Name);
+	read_info(user,SY);
+	get_course(user,SY);
 	bool isExit = false;
 	int option;
 	do
@@ -208,13 +214,16 @@ void menuStudent(User &user)
 			// lenh show bang diem
 			break;
 		case 7:
-			//lenh dang ki khoa hoc
+			enroll_course(user, SY,1);
+			system("pause");
 			break;
 		case 8:
 		
 			break;
 		case 9:
 			//lenh xoa bot khoa hoc da dang ki
+			enroll_course(user, SY, -1);
+			system("pause");
 			break;
 		case 0:
 			isExit = true;
