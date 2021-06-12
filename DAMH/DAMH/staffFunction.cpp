@@ -331,34 +331,16 @@ void addSemester() {
     file.open("file_save//SchoolYear//" + semester.schoolyear + "//Semester" + semester.Name + "//course_info.csv", ios::out);
     file << "ID,COURSE NAME,TEACHER NAME,NUMBER OF CREDITS,MAX STUDENT,DAY,SESSION1,SESSION2" << endl;
     file.close();
+    fstream fileCourse;
+    fileCourse.open("file_save//SchoolYear//" + semester.schoolyear + "//Semester" + semester.Name + "//RegistrationCourseSession.txt", ios::out);
+    fileCourse << 0 << endl;
+    fileCourse.close();
     hidePointer();
     textBgColor(10,11);
     printtext("CREATE SEMESTER SUCCESSFUL,PRESS ENTER BACK TO MENU !!!", 35, 19);
     ch = getch();
     textBgColor(0, 15);
 }
-
-char* gettime() {
-    time_t now = time(0);
-    char* dt = ctime(&now);
-    return dt;
-}
-//12-21
-/*
-void updateFileRegistration() {
-    fstream file,temp;
-    string data, month[12] = { "Jan", "Feb", "Mar", "Apr", "May","Jun", "Jul", "Aug", "Sep", "Oct", "Nov","Dec" };
-    file.open("file_save/RegistrationCourseSession.txt",ios::in);
-    getline(file, data);
-    if (stoi(data, 0, 10) == 1) {
-        getline(file, data);
-        string dt=gettime(),date;
-        if (data.substr(18, 4).compare(dt.substr(20, 4)) =  = 0) {
-
-        }
-    }
-}
-*/
 
 void createRegistrationCourse() {
     system("cls");
@@ -389,7 +371,9 @@ void createRegistrationCourse() {
     printtext("END DATE (DD/MM/YYYY):", 35, 24);
     drawRectangle(35, 22, 40, 1, 15);
     drawRectangle(35, 25, 40, 1, 15);
-
+    string year, semester;
+    determineYearSemesterNow(year, semester);
+    string filename = "file_save//SchoolYear//" + year + "//" + semester + "//RegistrationCourseSession.txt";
     do {
         gotoxy(35, 22);
         insertDate(DateStart);
@@ -427,9 +411,9 @@ void createRegistrationCourse() {
         }
         else break;
     } while (true);
-
+    hidePointer();
     fstream file;
-    file.open("file_save//RegistrationCourseSession.txt", ios::out);
+    file.open(filename, ios::out);
     file << 1 << endl;
     file << "Date start: " << DateStart << endl;
     file << "Date end:" << DateEnd << endl;
@@ -645,7 +629,7 @@ void addCourse() {
     file << course.ID_course << "," << course.name << "," << course.teacher << "," << course.Num_of_creadit << "," << course.Max_student << "," << course.DayOfWeek << "," << course.session[0] << "," << course.session[1] << endl;
     file.close();
 
-    file.open("file_save/SchoolYear/" + year + "/" + semester + "/Course/" + course.name+".csv", ios::out);
+    file.open("file_save/SchoolYear/" + year + "/" + semester + "/Course/" + course.ID_course+".csv", ios::out);
     file << "MSSV,TEN,LOP,GIOI TINH,DIEM GIUA KI,DIEM CUOI KI,DIEM KHAC,TONG KET" << endl;
     file.close();
     printtext("CREATE COURSE SUCCESSFUL !!!, PRESS ENTER TO BACK TO MENU.", 25, 27);
@@ -690,7 +674,7 @@ void getLineInfo(string filename, int line, string column[]) {
 ID[5]: 1
 Name[21]: 9
 Teachar[15]: 34
-Credits[3] 60
+Credits[3] 60   
 student[5] 76 
 Day[5] 88
 Session[5] 98 108
@@ -951,7 +935,6 @@ void deleteCourse(string filename, int currentLine) {
     file_af.close();
     remove(a);
     rename(b, a);
-
 }
 
 void editCourse() {
@@ -1133,6 +1116,7 @@ void editCourse() {
 void listCourse() {
     char ch;
     do {
+        hidePointer();
         system("cls");
         textBgColor(13, 15);
         printtext(" _     ___ ____ _____    ____ ___  _   _ ____  ____  _____", 30, 2);
@@ -1154,11 +1138,9 @@ void listCourse() {
         printtext("-[ENTER]: EDIT COURSE", 0, 1.5);
         printtext("-USE UP,DOWN,LEFT,RIGHT", 0, 2.5);
         printtext("KEY TO MOVE IN EDIT STATUS", 0, 3.5);
-
         string year, semester;
         determineYearSemesterNow(year, semester);
         drawRectangle(0, 10, 120, countLine("file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv")+2, 11);
-
         if (stoi(semester.substr(8, 1), 0, 10) == 0) {
             textBgColor(4, 15);
             printtext("YOU HAVEN'T CREATED SEMESTER YET, PRESS ENTER TO BACK TO MENU.", 30, 14);
@@ -1281,6 +1263,96 @@ void viewCourse() {
         y++;
     }
     file.close();
+    textBgColor(0, 15);
     ch = getch();
 }
 
+
+bool checkTimeEnd(string date,string month, string year) {
+    int Month = stoi(month, 0, 10);
+    int Year = stoi(year, 0, 10);
+    int Date = stoi(date, 0, 10);
+    time_t now = time(0);
+    tm* ltm = localtime(&now);
+    //Năm hiện tại nhỏ hơn
+    if (ltm->tm_year + 1900 < Year)
+        return true;
+    else{
+        //Năm hiện tại lớn hơn
+        if (ltm->tm_year + 1900 > Year)
+            return false;
+        //Năm hiện tại bằng
+        else {
+            //Tháng hiện tại nhỏ hơn
+            if (ltm->tm_mon + 1 < Month)
+                return true;
+            else{
+                //Tháng hiện tại lớn hơn
+                if (ltm->tm_mon + 1 > Month)
+                    return false;
+                //Tháng hiện tại bằng
+                else{
+                    if (ltm->tm_mday <= Date)
+                        return true;
+                    else
+                        return false;
+                }
+            }
+        }
+    }
+}
+
+bool checkTimeStart(string date, string month, string year) {
+    int Month = stoi(month, 0, 10);
+    int Year = stoi(year, 0, 10);
+    int Date = stoi(date, 0, 10);
+    time_t now = time(0);
+    tm* ltm = localtime(&now);
+    //Năm hiện tại lớn hơn
+    if (ltm->tm_year + 1900 > Year)
+        return true;
+    else {
+        //Năm hiện tại nhỏ hơn
+        if (ltm->tm_year + 1900 < Year)
+            return false;
+        //Năm hiện tại bằng
+        else {
+            //Tháng hiện tại lớn hơn
+            if (ltm->tm_mon + 1 > Month)
+                return true;
+            else {
+                //Tháng hiện tại nhỏ hơn
+                if (ltm->tm_mon + 1 < Month)
+                    return false;
+                //Tháng hiện tại bằng
+                else {
+                    if (ltm->tm_mday >= Date)
+                        return true;
+                    else
+                        return false;
+                }
+            }
+        }
+    }
+}
+
+bool checkCourseSession() {
+    string year, semester;
+    determineYearSemesterNow(year, semester);
+    fstream file;
+    file.open("file_save/SchoolYear/"+year+"/"+semester+"/RegistrationCourseSession.txt",ios::in);
+    string data;
+    getline(file, data);
+    if (stoi(data, 0, 10) == 0) return false;
+    else {
+        getline(file, data);
+        string dateStart = data.substr(13, 10);
+        getline(file, data);
+        string dateEnd = data.substr(10, 10);
+        if (checkTimeStart(dateStart.substr(0, 2), dateStart.substr(3, 2), dateStart.substr(6, 2)) == false) return false;
+        else {
+            if (checkTimeEnd(dateEnd.substr(0, 2), dateEnd.substr(3, 2), dateEnd.substr(6, 2)) == false) return false;
+            else return true;
+        }
+    }
+}

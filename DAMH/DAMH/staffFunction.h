@@ -35,10 +35,6 @@ void createRegistrationCourse();
 
 int checkDate(string Date);
 
-char* gettime();
-
-//void updateFileRegistration();
-
 void determineYearSemesterNow(string& Year, string& semester);
 
 void addCourse();
@@ -49,7 +45,7 @@ int countLine(string filename);
 
 void listCourse();
 
-//void getLineInfo(int line, string column[]);
+void getLineInfo(string filename, int line, string column[]);
 
 void updateFileCourse(int currentColumn,int currentLine, string column[]);
 
@@ -66,3 +62,9 @@ void insertString(string& data, int limit);
 void deleteCourse(string filename, int currentLine);
 
 void viewCourse();
+
+bool checkTimeEnd(string date, string month, string year);
+
+bool checkTimeStart(string date, string month, string year);
+
+bool checkCourseSession();
