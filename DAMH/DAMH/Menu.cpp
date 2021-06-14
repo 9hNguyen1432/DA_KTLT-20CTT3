@@ -4,6 +4,7 @@
 #include "read_data.h"
 #include "change_info.h"
 #include"staffFunction.h"
+
 void menuStaff(User &user)
 {	
 	showPointer();
@@ -25,15 +26,14 @@ void menuStaff(User &user)
 			<< "7. Add student to class\n"
 			<< "8. Create semester\n "
 			<< "9. Edit student's information\n"
-			<< "10. Edit student's marks"
-			<< "11. View list of course\n"
-			<< "12. Delete a course\n"
-			<< "13. Update course information\n"
-			<< "14. Export student list"
-			<< "15. View score board of a course\n"
-			<< "16. View score board of a class\n"
+			<< "10. Edit student's marks\n"
+			<< "11. View list of course,Delete a course \n"
+			<< "update course information\n"
+			<< "12. Export student list\n"
+			<< "13. View score board of a course\n"
+			<< "14. View score board of a class\n"
 			<< "0. Log out\n"
-			<< " ---------------------\n";
+			<< " -----------------------------\n";
 		std::cout << " your choice: ";
 		printtext("     ___                   ___", 40, 1);
 		printtext("    /  /\\     ___         /  /\\  ", 40, 2);
@@ -129,18 +129,13 @@ void menuStaff(User &user)
 			listCourse();
 			break;
 		case 12:
-			//xoa hoc phan
+			//xuat thong tin hoc sinh vao file
+			exportScoreboardInterface();
 			break;
 		case 13:
-			//update thong tin hoc phan
-			break;
-		case 14:
-			//xuat thong tin hoc sinh vao file
-			break;
-		case 15:
 			//view diem cua khoa hoc
 			break;
-		case 16:
+		case 14:
 			//view diem cua lop hoc
 		case 0:
 			isExit = true;

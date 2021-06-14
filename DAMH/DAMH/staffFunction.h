@@ -1,4 +1,5 @@
 #pragma once
+#pragma warning(disable : 4996)
 #include"Header.h"
 #include<iostream>
 #include<fstream>
@@ -9,8 +10,6 @@
 #include<conio.h> 
 #include <sys/stat.h>
 #include <ctime>
-#pragma warning(disable : 4996)
-
 using namespace std;
 
 void createFolder(string namefolder);
@@ -68,3 +67,7 @@ bool checkTimeEnd(string date, string month, string year);
 bool checkTimeStart(string date, string month, string year);
 
 bool checkCourseSession();
+
+void exportScoreboardInterface();
+
+void exportSB(string SchoolYear, string Semester, string CourseID);
