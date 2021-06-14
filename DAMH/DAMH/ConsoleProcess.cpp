@@ -90,7 +90,6 @@ void showPointer()
 void printtext(string str, int x, int y) {
 	gotoxy(x, y);
 	cout << str << endl;
-	void Output_info(User A);
 }
 void FixConsoleWindow() {
 	HWND consoleWindow = GetConsoleWindow();

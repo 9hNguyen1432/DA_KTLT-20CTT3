@@ -61,7 +61,7 @@ void Output_info(User A) {
 	system("pause");
 }
 
-void read_course(User& A, SchoolYear y)
+void read_course(User A, SchoolYear y)
 {
 	system("cls");
 	textBgColor(4, 10);
