@@ -71,3 +71,6 @@ bool checkCourseSession();
 void exportScoreboardInterface();
 
 void exportSB(string SchoolYear, string Semester, string CourseID);
+
+void listCourse();
+

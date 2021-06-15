@@ -4,12 +4,15 @@
 #include "read_data.h"
 #include "change_info.h"
 #include"staffFunction.h"
+#include "Course_function.h"
 
 void menuStaff(User &user)
 {	
 	showPointer();
 	bool isExit = false;
-	read_info(user);			
+	SchoolYear SY;
+	determineYearSemesterNow(SY.year, SY.semester.Name);
+	read_info(user, SY);			
 	int option;
 	do
 	{	
@@ -149,7 +152,10 @@ void menuStaff(User &user)
 void menuStudent(User &user)
 {
 	showPointer();
-	read_info(user);
+	SchoolYear SY;
+	determineYearSemesterNow(SY.year, SY.semester.Name);
+	read_info(user,SY);
+	get_course(user,SY);
 	bool isExit = false;
 	int option;
 	do
@@ -166,8 +172,9 @@ void menuStudent(User &user)
 		gotoxy(45, 15); std::cout << "7. Enroll courses\n";
 		gotoxy(45, 16); std::cout << "8. List of enrolled courses\n";
 		gotoxy(45, 17); std::cout << "9. Remove courses\n";
-		gotoxy(45, 18); std::cout << "0. Log out\n";
-		gotoxy(45, 19); std::cout << " ---------------------\n";
+		gotoxy(45, 18); std::cout << "9. View your list of course\n";
+		gotoxy(45, 19); std::cout << "0. Log out\n";
+		gotoxy(45, 20); std::cout << " ---------------------\n";
 		
 		gotoxy(45, 20); std::cout << " your choice: ";
 		printtext(" ______     ______   __  __     _____     ______     __   __     ______  ", 20, 1);
@@ -203,14 +210,19 @@ void menuStudent(User &user)
 			// lenh show bang diem
 			break;
 		case 7:
-			//lenh dang ki khoa hoc
+			enroll_course(user, SY,1);
+			system("pause");
 			break;
 		case 8:
-		
+			DisPlay_Course_Of_Student(SY, user);
 			break;
 		case 9:
 			//lenh xoa bot khoa hoc da dang ki
+			enroll_course(user, SY, -1);
+			system("pause");
 			break;
+		case 10:
+			//xem khoa hoc:
 		case 0:
 			isExit = true;
 			break;

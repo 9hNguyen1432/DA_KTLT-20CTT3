@@ -456,17 +456,15 @@ int countLine(string filename){
 }
 
 void determineYearSemesterNow(string& Year, string& semester) {
-    fstream file1, file2;
-    string data1, data2;
+    fstream file1;
+    string data1;
     file1.open("file_save/year-semester.csv",ios::in);  
-    file2.open("file_save/year-semester.csv",ios::in);
     getline(file1, data1);
     while (!file1.eof()) {
         getline(file1, data1);
-        getline(file2, data2);
     }
-    Year = data2.substr(0, 9);
-    semester = "Semester" + data2.substr(10, 1);
+    Year = data1.substr(0, 9);
+    semester = "Semester" + data1.substr(10, 1);
 }
 
 void addCourse() {
