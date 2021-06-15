@@ -1,12 +1,5 @@
 ID,COURSE NAME,TEACHER NAME,NUMBER OF CREDITS,MAX STUDENT,DAY,SESSION1,SESSION2
-ABC2,Nhap mon lap trinh 2,Le van chanh 2,3,100,WED,S2,S5
-ABC4,Nhap mon lap trinh 4,Le van chanh 4,3,100,FRI,S4,S7
-ABC5,Nhap mon lap trinh 5,Le van chanh 5,3,100,SAT,S5,S8
-ABC6,Nhap mon lap trinh 6,Le van chanh 6,3,100,SUN,S6,S9
-ABC7,Nhap mon lap trinh 7,Le van chanh 7,3,100,MON,S7,S10
-ABC8,Nhap mon lap trinh 8,Le van chanh 8,3,100,TUE,S8,S11
-ABC9,Nhap mon lap trinh 9,Le van chanh 9,3,100,WED,S9,S12
-ABC10,Nhap mon lap trinh 10,Le van chanh 10,3,100,THU,S10,S13
-ABC11,Nhap mon lap trinh 11,Le van chanh 11,3,100,FRI,S11,S14
-ABC12,Nhap mon lap trinh 12,Le van chanh 12,3,100,SAT,S12,S15
-ABC17,Nhap mon lap trinh 13,Le van chanh 13,3,100,SUN,S13,S16
+ABCD,Nhap mon lap trinh 4,Le van chanh 4,3,100,FRI,S4,S7
+AKAK,Nhap mon lap trinh 5,Le van chanh 5,3,100,SAT,S5,S8
+NMLT,Nhap mon lap trinh 6,Le van chanh 6,3,100,SUN,S6,S9
+TRR,Toan Roi Rac,Le van chanh 7,3,100,MON,S7,S10

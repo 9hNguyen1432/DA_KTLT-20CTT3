@@ -1,4 +1,5 @@
 #pragma once
+#pragma warning(disable : 4996)
 #include"Header.h"
 #include<iostream>
 #include<fstream>
@@ -9,8 +10,6 @@
 #include<conio.h> 
 #include <sys/stat.h>
 #include <ctime>
-#pragma warning(disable : 4996)
-
 using namespace std;
 
 void createFolder(string namefolder);
@@ -35,10 +34,6 @@ void createRegistrationCourse();
 
 int checkDate(string Date);
 
-char* gettime();
-
-//void updateFileRegistration();
-
 void determineYearSemesterNow(string& Year, string& semester);
 
 void addCourse();
@@ -49,7 +44,7 @@ int countLine(string filename);
 
 void listCourse();
 
-//void getLineInfo(int line, string column[]);
+void getLineInfo(string filename, int line, string column[]);
 
 void updateFileCourse(int currentColumn,int currentLine, string column[]);
 
@@ -67,4 +62,15 @@ void deleteCourse(string filename, int currentLine);
 
 void viewCourse();
 
+bool checkTimeEnd(string date, string month, string year);
+
+bool checkTimeStart(string date, string month, string year);
+
+bool checkCourseSession();
+
+void exportScoreboardInterface();
+
+void exportSB(string SchoolYear, string Semester, string CourseID);
+
 void listCourse();
+

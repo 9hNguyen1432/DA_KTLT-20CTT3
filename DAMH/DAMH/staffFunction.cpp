@@ -331,34 +331,16 @@ void addSemester() {
     file.open("file_save//SchoolYear//" + semester.schoolyear + "//Semester" + semester.Name + "//course_info.csv", ios::out);
     file << "ID,COURSE NAME,TEACHER NAME,NUMBER OF CREDITS,MAX STUDENT,DAY,SESSION1,SESSION2" << endl;
     file.close();
+    fstream fileCourse;
+    fileCourse.open("file_save//SchoolYear//" + semester.schoolyear + "//Semester" + semester.Name + "//RegistrationCourseSession.txt", ios::out);
+    fileCourse << 0 << endl;
+    fileCourse.close();
     hidePointer();
     textBgColor(10,11);
     printtext("CREATE SEMESTER SUCCESSFUL,PRESS ENTER BACK TO MENU !!!", 35, 19);
     ch = getch();
     textBgColor(0, 15);
 }
-
-char* gettime() {
-    time_t now = time(0);
-    char* dt = ctime(&now);
-    return dt;
-}
-//12-21
-/*
-void updateFileRegistration() {
-    fstream file,temp;
-    string data, month[12] = { "Jan", "Feb", "Mar", "Apr", "May","Jun", "Jul", "Aug", "Sep", "Oct", "Nov","Dec" };
-    file.open("file_save/RegistrationCourseSession.txt",ios::in);
-    getline(file, data);
-    if (stoi(data, 0, 10) == 1) {
-        getline(file, data);
-        string dt=gettime(),date;
-        if (data.substr(18, 4).compare(dt.substr(20, 4)) =  = 0) {
-
-        }
-    }
-}
-*/
 
 void createRegistrationCourse() {
     system("cls");
@@ -389,7 +371,9 @@ void createRegistrationCourse() {
     printtext("END DATE (DD/MM/YYYY):", 35, 24);
     drawRectangle(35, 22, 40, 1, 15);
     drawRectangle(35, 25, 40, 1, 15);
-
+    string year, semester;
+    determineYearSemesterNow(year, semester);
+    string filename = "file_save//SchoolYear//" + year + "//" + semester + "//RegistrationCourseSession.txt";
     do {
         gotoxy(35, 22);
         insertDate(DateStart);
@@ -427,9 +411,9 @@ void createRegistrationCourse() {
         }
         else break;
     } while (true);
-
+    hidePointer();
     fstream file;
-    file.open("file_save//RegistrationCourseSession.txt", ios::out);
+    file.open(filename, ios::out);
     file << 1 << endl;
     file << "Date start: " << DateStart << endl;
     file << "Date end:" << DateEnd << endl;
@@ -643,8 +627,8 @@ void addCourse() {
     file << course.ID_course << "," << course.name << "," << course.teacher << "," << course.Num_of_creadit << "," << course.Max_student << "," << course.DayOfWeek << "," << course.session[0] << "," << course.session[1] << endl;
     file.close();
 
-    file.open("file_save/SchoolYear/" + year + "/" + semester + "/Course/" + course.name+".csv", ios::out);
-    file << "MSSV,TEN,LOP,GIOI TINH,DIEM GIUA KI,DIEM CUOI KI,DIEM KHAC,TONG KET";
+    file.open("file_save/SchoolYear/" + year + "/" + semester + "/Course/" + course.ID_course+".csv", ios::out);
+    file << "ID STUDENT,NAME,BIRTHDAY,SEX,ID SOCIAL" << endl;
     file.close();
     printtext("CREATE COURSE SUCCESSFUL !!!, PRESS ENTER TO BACK TO MENU.", 25, 27);
     ch = getch();
@@ -688,7 +672,7 @@ void getLineInfo(string filename, int line, string column[]) {
 ID[5]: 1
 Name[21]: 9
 Teachar[15]: 34
-Credits[3] 60
+Credits[3] 60   
 student[5] 76 
 Day[5] 88
 Session[5] 98 108
@@ -949,7 +933,6 @@ void deleteCourse(string filename, int currentLine) {
     file_af.close();
     remove(a);
     rename(b, a);
-
 }
 
 void editCourse() {
@@ -1130,95 +1113,7 @@ void editCourse() {
 
 void listCourse() {
     char ch;
-    do {
-        system("cls");
-        textBgColor(13, 15);
-        printtext(" _     ___ ____ _____    ____ ___  _   _ ____  ____  _____", 30, 2);
-        printtext("| |   |_ _/ ___|_   _|  / ___/ _ \\| | | |  _ \\/ ___|| ____|", 30, 3);
-        printtext("| |    | |\\___ \\ | |   | |  | | | | | | | |_) \\___ \\|  _|", 30, 4);
-        printtext("| |___ | | ___) || |   | |__| |_| | |_| |  _ < ___) | |___", 30, 5);
-        printtext("|_____|___|____/ |_|    \\____\\___/ \\___/|_| \\_\\____/|_____|", 30, 6);
-        
-        drawRectangle(97, 0, 22, 5, 11);
-        textBgColor(4, 11);
-        printtext("-[e]: TRANFER TO", 97, 0);
-        printtext("EDIT STATUS ", 97, 1);
-        printtext("-[ESC]: BACK TO MENU", 97, 2);
-        printtext("OR RETURN", 97, 3);
-
-        drawRectangle(0, 0, 26, 5, 11);
-        textBgColor(4, 11);
-        printtext("-[x]: DELETE COURSE", 0, 0.5);
-        printtext("-[ENTER]: EDIT COURSE", 0, 1.5);
-        printtext("-USE UP,DOWN,LEFT,RIGHT", 0, 2.5);
-        printtext("KEY TO MOVE IN EDIT STATUS", 0, 3.5);
-
-        string year, semester;
-        determineYearSemesterNow(year, semester);
-        drawRectangle(0, 10, 120, countLine("file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv")+2, 11);
-
-        if (stoi(semester.substr(8, 1), 0, 10) == 0) {
-            textBgColor(4, 15);
-            printtext("YOU HAVEN'T CREATED SEMESTER YET, PRESS ENTER TO BACK TO MENU.", 30, 14);
-            ch = getch();
-            exit(1);
-        }
-
-        textBgColor(4, 11);
-        fstream file;
-        file.open("file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv", ios::in);
-        string data;
-        getline(file, data, ',');
-        printtext(data, 2, 11);
-        getline(file, data, ',');
-        printtext(data, 13, 11);
-        getline(file, data, ',');
-        printtext(data, 35, 11);
-        getline(file, data, ',');
-        printtext(data, 52, 11);
-        getline(file, data, ',');
-        printtext(data, 73, 11);
-        getline(file, data, ',');
-        printtext(data, 88, 11);
-        getline(file, data, ',');
-        printtext(data, 95, 11);
-        getline(file, data);
-        printtext(data, 105, 11);
-        textBgColor(0, 11);
-        int y = 12;
-        while (!file.eof()) {
-            getline(file, data, ',');
-            printtext(data, 1, y);
-            getline(file, data, ',');
-            printtext(data, 9, y);
-            getline(file, data, ',');
-            printtext(data, 34, y);
-            getline(file, data, ',');
-            printtext(data, 60, y);
-            getline(file, data, ',');
-            printtext(data, 76, y);
-            getline(file, data, ',');
-            printtext(data, 88, y);
-            getline(file, data, ',');
-            printtext(data, 98, y);
-            getline(file, data);
-            printtext(data, 108, y);
-            y++;
-        }
-        file.close();
-        ch = getch();
-        //drawRectangle(0, y, 200, 1, 15);
-        hidePointer();
-        //[e] chức năng edit
-        if (ch == 'e') {
-            editCourse();
-        }
-        textBgColor(0, 15);
-    }while (ch != 27);
-}
-
-void viewCourse() {
-    char ch;
+    hidePointer();
     system("cls");
     textBgColor(13, 15);
     printtext(" _     ___ ____ _____    ____ ___  _   _ ____  ____  _____", 30, 2);
@@ -1227,9 +1122,22 @@ void viewCourse() {
     printtext("| |___ | | ___) || |   | |__| |_| | |_| |  _ < ___) | |___", 30, 5);
     printtext("|_____|___|____/ |_|    \\____\\___/ \\___/|_| \\_\\____/|_____|", 30, 6);
         
+    drawRectangle(97, 0, 22, 5, 11);
+    textBgColor(4, 11);
+    printtext("-[e]: TRANFER TO", 97, 0);
+    printtext("EDIT STATUS ", 97, 1);
+    printtext("-[ESC]: BACK TO MENU", 97, 2);
+    printtext("OR RETURN", 97, 3);
+
+    drawRectangle(0, 0, 26, 5, 11);
+    textBgColor(4, 11);
+    printtext("-[x]: DELETE COURSE", 0, 0.5);
+    printtext("-[ENTER]: EDIT COURSE", 0, 1.5);
+    printtext("-USE UP,DOWN,LEFT,RIGHT", 0, 2.5);
+    printtext("KEY TO MOVE IN EDIT STATUS", 0, 3.5);
     string year, semester;
     determineYearSemesterNow(year, semester);
-    drawRectangle(0, 10, 120, countLine("file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv") + 2, 11);
+    drawRectangle(0, 10, 120, countLine("file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv")+2, 11);
     if (stoi(semester.substr(8, 1), 0, 10) == 0) {
         textBgColor(4, 15);
         printtext("YOU HAVEN'T CREATED SEMESTER YET, PRESS ENTER TO BACK TO MENU.", 30, 14);
@@ -1279,6 +1187,352 @@ void viewCourse() {
         y++;
     }
     file.close();
+    
+    //drawRectangle(0, y, 200, 1, 15);
+    hidePointer();
+    //[e] chức năng edit
+    while (true){
+        ch = getch();
+        if (ch == 'e') {
+            editCourse();
+        }
+        if (ch == 27) {
+            break;
+        }
+    }
     textBgColor(0, 15);
 }
+
+void viewCourse() {
+    char ch;
+    system("cls");
+    textBgColor(13, 15);
+    printtext(" _     ___ ____ _____    ____ ___  _   _ ____  ____  _____", 30, 2);
+    printtext("| |   |_ _/ ___|_   _|  / ___/ _ \\| | | |  _ \\/ ___|| ____|", 30, 3);
+    printtext("| |    | |\\___ \\ | |   | |  | | | | | | | |_) \\___ \\|  _|", 30, 4);
+    printtext("| |___ | | ___) || |   | |__| |_| | |_| |  _ < ___) | |___", 30, 5);
+    printtext("|_____|___|____/ |_|    \\____\\___/ \\___/|_| \\_\\____/|_____|", 30, 6);
+    string year, semester;
+    determineYearSemesterNow(year, semester);
+    drawRectangle(0, 10, 120, countLine("file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv") + 2, 11);
+    if (stoi(semester.substr(8, 1), 0, 10) == 0) {
+        textBgColor(4, 15);
+        printtext("YOU HAVEN'T CREATED SEMESTER YET, PRESS ENTER TO BACK TO MENU.", 30, 14);
+        ch = getch();
+        exit(1);
+    }
+    textBgColor(4, 11);
+    fstream file;
+    file.open("file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv", ios::in);
+    string data;
+    getline(file, data, ',');
+    printtext(data, 2, 11);
+    getline(file, data, ',');
+    printtext(data, 13, 11);
+    getline(file, data, ',');
+    printtext(data, 35, 11);
+    getline(file, data, ',');
+    printtext(data, 52, 11);
+    getline(file, data, ',');
+    printtext(data, 73, 11);
+    getline(file, data, ',');
+    printtext(data, 88, 11);
+    getline(file, data, ',');
+    printtext(data, 95, 11);
+    getline(file, data);
+    printtext(data, 105, 11);
+    textBgColor(0, 11);
+    int y = 12;
+    while (!file.eof()) {
+        getline(file, data, ',');
+        printtext(data, 1, y);
+        getline(file, data, ',');
+        printtext(data, 9, y);
+        getline(file, data, ',');
+        printtext(data, 34, y);
+        getline(file, data, ',');
+        printtext(data, 60, y);
+        getline(file, data, ',');
+        printtext(data, 76, y);
+        getline(file, data, ',');
+        printtext(data, 88, y);
+        getline(file, data, ',');
+        printtext(data, 98, y);
+        getline(file, data);
+        printtext(data, 108, y);
+        y++;
+    }
+    file.close();
+    textBgColor(0, 15);
+    ch = getch();
+}
+
+bool checkTimeEnd(string date,string month, string year) {
+    int Month = stoi(month, 0, 10);
+    int Year = stoi(year, 0, 10);
+    int Date = stoi(date, 0, 10);
+    time_t now = time(0);
+    tm* ltm = localtime(&now);
+    //Năm hiện tại nhỏ hơn
+    if (ltm->tm_year + 1900 < Year)
+        return true;
+    else{
+        //Năm hiện tại lớn hơn
+        if (ltm->tm_year + 1900 > Year)
+            return false;
+        //Năm hiện tại bằng
+        else {
+            //Tháng hiện tại nhỏ hơn
+            if (ltm->tm_mon + 1 < Month)
+                return true;
+            else{
+                //Tháng hiện tại lớn hơn
+                if (ltm->tm_mon + 1 > Month)
+                    return false;
+                //Tháng hiện tại bằng
+                else{
+                    if (ltm->tm_mday <= Date)
+                        return true;
+                    else
+                        return false;
+                }
+            }
+        }
+    }
+}
+
+bool checkTimeStart(string date, string month, string year) {
+    int Month = stoi(month, 0, 10);
+    int Year = stoi(year, 0, 10);
+    int Date = stoi(date, 0, 10);
+    time_t now = time(0);
+    tm* ltm = localtime(&now);
+    //Năm hiện tại lớn hơn
+    if (ltm->tm_year + 1900 > Year)
+        return true;
+    else {
+        //Năm hiện tại nhỏ hơn
+        if (ltm->tm_year + 1900 < Year)
+            return false;
+        //Năm hiện tại bằng
+        else {
+            //Tháng hiện tại lớn hơn
+            if (ltm->tm_mon + 1 > Month)
+                return true;
+            else {
+                //Tháng hiện tại nhỏ hơn
+                if (ltm->tm_mon + 1 < Month)
+                    return false;
+                //Tháng hiện tại bằng
+                else {
+                    if (ltm->tm_mday >= Date)
+                        return true;
+                    else
+                        return false;
+                }
+            }
+        }
+    }
+}
+
+bool checkCourseSession() {
+    string year, semester;
+    determineYearSemesterNow(year, semester);
+    fstream file;
+    file.open("file_save/SchoolYear/"+year+"/"+semester+"/RegistrationCourseSession.txt",ios::in);
+    string data;
+    getline(file, data);
+    if (stoi(data, 0, 10) == 0) return false;
+    else {
+        getline(file, data);
+        string dateStart = data.substr(13, 10);
+        getline(file, data);
+        string dateEnd = data.substr(10, 10);
+        if (checkTimeStart(dateStart.substr(0, 2), dateStart.substr(3, 2), dateStart.substr(6, 2)) == false) return false;
+        else {
+            if (checkTimeEnd(dateEnd.substr(0, 2), dateEnd.substr(3, 2), dateEnd.substr(6, 2)) == false) return false;
+            else return true;
+        }
+    }
+}
+
+
+
+void exportScoreboardInterface() {
+    char ch;
+    system("cls");
+    textBgColor(13, 15);
+    printtext(" _______  ______   ___  ____ _____ ", 30, 1);
+    printtext("| ____\\ \\/ /  _ \\ / _ \\|  _ \\_   _|", 30, 2);
+    printtext("|  _|  \\  /| |_) | | | | |_) || |", 30, 3);
+    printtext("| |___ /  \\|  __/| |_| |  _ < | |", 30, 4);
+    printtext("|_____/_/\\_\\_|    \\___/|_| \\_\\|_|", 30, 5);
+    printtext(" ____   ____ ___  ____  _____ ____   ___    _    ____  ____ ", 30, 7);
+    printtext("/ ___| / ___/ _ \\|  _ \\| ____| __ ) / _ \\  / \\  |  _ \\|  _ \\ ", 30, 8);
+    printtext("\\___ \\| |  | | | | |_) |  _| |  _ \\| | | |/ _ \\ | |_) | | | |", 30, 9);
+    printtext(" ___) | |__| |_| |  _ <| |___| |_) | |_| / ___ \\|  _ <| |_| |", 30, 11);
+    printtext("|____/ \\____\\___/|_| \\_\\_____|____/ \\___/_/   \\_\\_| \\_\\____/", 30, 10);
+
+    string year, semester;
+    determineYearSemesterNow(year, semester);
+    drawRectangle(0, 11, 120, countLine("file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv") + 2, 11);
+
+    textBgColor(4, 11);
+    fstream file;
+    file.open("file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv", ios::in);
+    string data;
+    getline(file, data, ',');
+    printtext(data, 2, 11);
+    getline(file, data, ',');
+    printtext(data, 13, 11);
+    getline(file, data, ',');
+    printtext(data, 35, 11);
+    getline(file, data, ',');
+    printtext(data, 52, 11);
+    getline(file, data, ',');
+    printtext(data, 73, 11);
+    getline(file, data, ',');
+    printtext(data, 88, 11);
+    getline(file, data, ',');
+    printtext(data, 95, 11);
+    getline(file, data);
+    printtext(data, 105, 11);
+    textBgColor(0, 11);
+    int y = 12;
+    while (!file.eof()) {
+        getline(file, data, ',');
+        printtext(data, 1, y);
+        getline(file, data, ',');
+        printtext(data, 9, y);
+        getline(file, data, ',');
+        printtext(data, 34, y);
+        getline(file, data, ',');
+        printtext(data, 60, y);
+        getline(file, data, ',');
+        printtext(data, 76, y);
+        getline(file, data, ',');
+        printtext(data, 88, y);
+        getline(file, data, ',');
+        printtext(data, 98, y);
+        getline(file, data);
+        printtext(data, 108, y);
+        y++;
+    }
+    file.close();
+    textBgColor(0, 15);
+    int line = countLine("file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv") - 1;
+    int currentLine = 1;
+    y = 11;
+    string column[8];
+    getLineInfo("file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv", currentLine + 1, column);
+    drawRectangle(1, y + currentLine, 115, 1, 14);
+    textBgColor(0, 14);
+    printtext(column[0], 1, y + currentLine);
+    printtext(column[1], 9, y + currentLine);
+    printtext(column[2], 34, y + currentLine);
+    printtext(column[3], 60, y + currentLine);
+    printtext(column[4], 76, y + currentLine);
+    printtext(column[5], 88, y + currentLine);
+    printtext(column[6], 98, y + currentLine);
+    printtext(column[7], 108, y + currentLine);
+
+    while(true){
+        hidePointer();
+        ch = getch();
+        //[ESC]
+        if (ch == 27) {
+            break;
+        }
+        //Control Up down 
+        if (ch == 72 && currentLine > 1) //up
+        {
+            getLineInfo("file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv", currentLine + 1, column);
+            drawRectangle(1, y + currentLine, 115, 1, 11);
+            textBgColor(0, 11);
+            printtext(column[0], 1, y + currentLine);
+            printtext(column[1], 9, y + currentLine);
+            printtext(column[2], 34, y + currentLine);
+            printtext(column[3], 60, y + currentLine);
+            printtext(column[4], 76, y + currentLine);
+            printtext(column[5], 88, y + currentLine);
+            printtext(column[6], 98, y + currentLine);
+            printtext(column[7], 108, y + currentLine);
+
+            currentLine--;
+            getLineInfo("file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv", currentLine + 1, column);
+            drawRectangle(1, y + currentLine, 115, 1, 14);
+            textBgColor(0, 14);
+            printtext(column[0], 1, y + currentLine);
+            printtext(column[1], 9, y + currentLine);
+            printtext(column[2], 34, y + currentLine);
+            printtext(column[3], 60, y + currentLine);
+            printtext(column[4], 76, y + currentLine);
+            printtext(column[5], 88, y + currentLine);
+            printtext(column[6], 98, y + currentLine);
+            printtext(column[7], 108, y + currentLine);
+        }
+        if (ch == 80 && currentLine < line) //down
+        {
+            getLineInfo("file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv", currentLine + 1, column);
+            drawRectangle(1, y + currentLine, 115, 1, 11);
+            textBgColor(0, 11);
+            printtext(column[0], 1, y + currentLine);
+            printtext(column[1], 9, y + currentLine);
+            printtext(column[2], 34, y + currentLine);
+            printtext(column[3], 60, y + currentLine);
+            printtext(column[4], 76, y + currentLine);
+            printtext(column[5], 88, y + currentLine);
+            printtext(column[6], 98, y + currentLine);
+            printtext(column[7], 108, y + currentLine);
+
+            currentLine++;
+            getLineInfo("file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv", currentLine + 1, column);
+            drawRectangle(1, y + currentLine, 115, 1, 14);
+            textBgColor(0, 14);
+            printtext(column[0], 1, y + currentLine);
+            printtext(column[1], 9, y + currentLine);
+            printtext(column[2], 34, y + currentLine);
+            printtext(column[3], 60, y + currentLine);
+            printtext(column[4], 76, y + currentLine);
+            printtext(column[5], 88, y + currentLine);
+            printtext(column[6], 98, y + currentLine);
+            printtext(column[7], 108, y + currentLine);
+        }
+        if (ch == 13) {
+            exportSB(year,semester,column[0]);
+            drawRectangle(40, 15, 25, 5, 4);
+            textBgColor(15, 4);
+            printtext("EXPORT SUCCESSFULLY !!!", 41, 17);
+            ch = getch();
+            textBgColor(0,15);
+            exportScoreboardInterface();
+        }
+    } 
+    textBgColor(0, 15);
+}
+
+void exportSB(string SchoolYear, string Semester, string CourseID) {
+    fstream fileScore, fileList;
+    fileScore.open("Score/Export/" + SchoolYear + "_" + Semester + "_" + CourseID + ".csv", ios::app);
+    fileScore << "NO,STUDENT ID,NAME,TOTAL MARK,FINAL MARK,MIDTERM MARK,OTHER MARK" << endl;
+    fileList.open("file_save/SchoolYear/" + SchoolYear + "/" + Semester + "/Course/" + CourseID + ".csv", ios::in);
+    string data;
+    getline(fileList, data);
+    int i = 1;
+    while (!fileList.eof()) {
+        fileScore << i;
+        getline(fileList, data, ',');
+        fileScore << "," << data;
+        getline(fileList, data, ',');
+        fileScore << "," << data << endl;
+        getline(fileList, data);
+        i++;
+    }
+}
+/*
+void importScoreBoard(string filename) {
+    fstream file;
+    file.open();
+}
+*/
 
