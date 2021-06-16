@@ -10,6 +10,7 @@
 #include<conio.h> 
 #include <sys/stat.h>
 #include <ctime>
+
 using namespace std;
 
 void createFolder(string namefolder);
@@ -42,13 +43,13 @@ void insertNum(int& n);
 
 int countLine(string filename);
 
-void listCourse();
+void listCourse(string year, string semester);
 
 void getLineInfo(string filename, int line, string column[]);
 
-void updateFileCourse(int currentColumn,int currentLine, string column[]);
+void updateFileCourse(int currentColumn,int currentLine, string column[],string year,string semester);
 
-void editInforCourse(int y, int currentLine, string column[]);
+void editInforCourse(int y, int currentLine, string column[], string year, string semester);
 
 void insertSession(string& data, int limit);
 
@@ -58,7 +59,9 @@ void insertNum2(string& data, int limit);
 
 void insertString(string& data, int limit);
 
-void deleteCourse(string filename, int currentLine);
+void editCourse(string year, string semester);
+
+void deleteCourse(string filename, int currentLine,string year,string semester);
 
 void viewCourse();
 
@@ -66,11 +69,13 @@ bool checkTimeEnd(string date, string month, string year);
 
 bool checkTimeStart(string date, string month, string year);
 
-bool checkCourseSession();
+int checkCourseSession();
 
-void exportScoreboardInterface();
+void exportScoreboardInterface(string year,string semester);
 
 void exportSB(string SchoolYear, string Semester, string CourseID);
 
-void listCourse();
+void importScoreBoard(string year, string semester, string courseID);
+
+void importScoreBoardUI();
 
