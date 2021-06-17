@@ -18,7 +18,6 @@ void menuStaff(User &user)
 	do
 	{	
 		showPointer();
-
 		system("cls");
 		std::cout << "==============================\n";
 		printtext(" 1. Profile info\n", 1, 8);
@@ -34,8 +33,9 @@ void menuStaff(User &user)
 			<< "11. View list of course,Delete a course \n"
 			<< "update course information\n"
 			<< "12. Export student list\n"
-			<< "13. View score board of a course\n"
-			<< "14. View score board of a class\n"
+			<< "13. Import student list\n"
+			<< "14. View score board of a course\n"
+			<< "15. View score board of a class\n"
 			<< "0. Log out\n"
 			<< " -----------------------------\n";
 		std::cout << " your choice: ";
@@ -83,8 +83,7 @@ void menuStaff(User &user)
 		printtext("      |__|::/    \\  \\:\\/:/  ", 75, 20);
 		printtext("      /__/:/      \\  \\::/  ", 75, 21);
 		printtext("      \\__\\/        \\__\\/  ", 75, 22);
-			
-			
+		
 		std::cin >> option;
 		switch (option)
 		{
@@ -135,16 +134,21 @@ void menuStaff(User &user)
 		case 11:
 			//view danh sachs hoc phan
 			cin.ignore();
-			listCourse();
+			listCourse(SY.year, SY.semester.Name);
 			break;
 		case 12:
-			//xuat thong tin hoc sinh vao file
-			exportScoreboardInterface();
+			//xuat diem hoc sinh vao file
+			exportScoreboardInterface(SY.year,SY.semester.Name);
 			break;
 		case 13:
-			//view diem cua khoa hoc
+			//xuat diem hoc sinh vao file
+			cin.ignore();
+			importScoreBoardUI();
 			break;
 		case 14:
+			//view diem cua khoa hoc
+			break;
+		case 15:
 			//view diem cua lop hoc
 		case 0:
 			isExit = true;
@@ -215,10 +219,23 @@ void menuStudent(User &user)
 		case 6: 
 			// lenh show bang diem
 			break;
-		case 7:
-			enroll_course(user, SY,1);
-			system("pause");
+		case 7:{
+			int check = checkCourseSession();
+			if (check==1){
+				enroll_course(user, SY,1);
+				system("pause");
+			}
+			else {
+				drawRectangle(40, 15, 25, 5, 4);
+				textBgColor(15, 4);
+				if (check == 0) printtext("NOT OPEN REGISTER COURSE YET", 41, 17);
+				else if (check == -1) printtext("IT'S NOT THE TIME TO START YET", 41, 17);
+				else printtext("It was late to register the course", 41, 17);
+				Sleep(1000);
+				menuStudent(user);
+			}
 			break;
+		}
 		case 8:
 			DisPlay_Course_Of_Student(SY, user);
 			break;
