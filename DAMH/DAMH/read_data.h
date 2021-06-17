@@ -8,7 +8,11 @@ void Output_info(User A);
 void read_course(User A,SchoolYear y);
 void read1CourseInfor(Course& A, ifstream& f);
 void init_List_Mark(MarkNode*& head);
-void add_Tail_List_Mark(MarkNode*& head, string A);
+void add_Tail_List_Mark(MarkNode*& head, string ID,string Name);
 void get_course(User& A, SchoolYear s_y);
 void delete_Mark_node(MarkNode*& head, string ID);
+void get_1_score(MarkNode*& A, string ID, ifstream& f);
+void get_score(User& A, SchoolYear s_y, int& i);
+void view_1_line(Mark M, int x, int y);
+void view_all_score_of_1_student(User A, SchoolYear Y);
 #endif

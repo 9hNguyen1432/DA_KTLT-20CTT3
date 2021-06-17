@@ -218,6 +218,7 @@ void menuStudent(User &user)
 			break;
 		case 6: 
 			// lenh show bang diem
+			view_all_score_of_1_student(user, SY);
 			break;
 		case 7:{
 			int check = checkCourseSession();

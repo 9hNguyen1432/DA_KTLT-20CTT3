@@ -198,7 +198,7 @@ void get_course(User& A, SchoolYear s_y) {
 					}
 					add_Tail_List_Mark(A.info.phead, IDtemp, temp);
 					IDtemp = "";
-
+					fi.close();
 				}
 				else if (temp1[i] != ',') {
 					IDtemp += temp1[i];
@@ -226,7 +226,7 @@ void get_1_score(MarkNode* &A, string ID, ifstream& f) {
 	while (!f.eof()) {
 		getline(f,temp,',');// doc stt
 		getline(f, temp, ',');//doc mssv
-		if (strcmpi(temp.c_str(), ID.c_str()) == 0) {
+		if (_strcmpi(temp.c_str(), ID.c_str()) == 0) {
 			getline(f, temp, ',');//doc ten
 			getline(f, temp, ',');//doc lop
 			getline(f, temp, ',');
@@ -247,8 +247,8 @@ void get_1_score(MarkNode* &A, string ID, ifstream& f) {
 void get_score(User& A, SchoolYear s_y, int &i) {
 	ifstream f;
 	string semester_path = "file_save/SchoolYear/" + s_y.year + '/' + s_y.semester.Name + '/';
-	string course_path = semester_path + "Course/Score";
-	int i = 0;
+	string course_path = semester_path + "Course/score/";
+	i = 0;
 	MarkNode* temp = A.info.phead;
 	while (temp != NULL) {
 		string fileName = course_path + temp->data.ID + csv_tail;
@@ -267,13 +267,35 @@ void get_score(User& A, SchoolYear s_y, int &i) {
 		temp = temp->pNext;
 	}
 }
+void view_1_line(Mark M,int x,int y) {
+	printtext(M.ID, x, y);
+	printtext(M.Name, x+12 , y);//12 ki tu cho id
+	printtext(to_string(M.Midterm_Mark), x + 42, y);//30 ki tu cho ten
+	printtext(to_string(M.Final_Mark), x + 56, y);//14 ki tu cho 1 diem
+	printtext(to_string(M.Other_Mark), x + 70, y);//14 ki tu cho 1 diem
+	printtext(to_string(M.Total_Mark), x + 84, y);//14 ki tu cho 1 diem
+}
 void view_all_score_of_1_student(User A, SchoolYear Y) {
+	system("cls");
 	int n;
 	get_score(A, Y, n);
+	int x = 15;
+	int y = 14;
+	drawRectangle(0, 13, 120, n+3, 11);
+	textBgColor(0, 11);
+	printtext("ID", x, y);
+	printtext("Name of Course", x + 12, y);//12 ki tu cho id
+	printtext("Midterm Mark", x + 42, y);//30 ki tu cho ten
+	printtext("Final Mark", x + 56, y);//14 ki tu cho 1 diem
+	printtext("Other Mark", x + 70, y);//14 ki tu cho 1 diem
+	printtext("Total Mark", x + 84, y);//14 ki tu cho 1 diem
+	y++;
 	Mark* M = new Mark[n];
 	MarkNode* temp = A.info.phead;
 	for (int i = 0; i < n; i++) {
 		M[i] = temp->data;
+		view_1_line(M[i], x, y + i);
 		temp = temp->pNext;
 	}
+	system("pause");
 }
