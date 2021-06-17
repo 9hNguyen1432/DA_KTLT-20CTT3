@@ -5,6 +5,7 @@
 #include "change_info.h"
 #include"staffFunction.h"
 #include "Course_function.h"
+#include "ListClass.h"
 
 void menuStaff(User &user)
 {	
@@ -101,8 +102,13 @@ void menuStaff(User &user)
 			addSchoolYear();
 			break;
 		case 4:
-			// lenh them lop hoc
-			break;
+			system("cls");
+			/*int k = 0;
+			do
+			{
+				k = RunMenuViewListClass(SelectCommand(MenuViewListClass()));
+			} while (k != 3);*/
+			RunMenuViewListClass(SelectCommand(MenuViewListClass()));
 		case 5:
 			// lenh them khoa hoc
 			cin.ignore();

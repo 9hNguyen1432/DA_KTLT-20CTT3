@@ -4,7 +4,6 @@
 #include"ListClass.h"
 int main() {
 	FixConsoleWindow();
-	ListClass();
 	User user;
 	repeatLogin(user);
 }
