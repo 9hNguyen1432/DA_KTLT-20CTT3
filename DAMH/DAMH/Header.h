@@ -31,12 +31,16 @@ using namespace std;
 		15 bright white
 */
 // struct điểm 1 môn của 1 sinh viên
-struct MarkNode {
+struct Mark {
 	string ID;// linh hoạt trong điểm của sinh viên thì là id môn học, còn trong môn học thì là id sinh viên
+	string Name;
 	float Total_Mark;
 	float Final_Mark;
 	float Midterm_Mark;
 	float Other_Mark;
+};
+struct MarkNode {
+	Mark data;
 	MarkNode* pNext;
 };
 //struct thông tin học sinh hoặc giáo viên, nếu là giáo viên thì 1 số thông tin bỏ trống

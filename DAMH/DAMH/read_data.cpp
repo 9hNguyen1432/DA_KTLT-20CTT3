@@ -100,7 +100,7 @@ void read_course(User A, SchoolYear y)
 		while (!fi.eof())
 		{
 			read1CourseInfor(co, fi);
-			if (_strcmpi(co.ID_course.c_str(),tempo->ID.c_str()) == 0)
+			if (_strcmpi(co.ID_course.c_str(),tempo->data.ID.c_str()) == 0)
 			{
 				gotoxy(1, 15 + i); std::cout << i;
 				gotoxy(8, 15 + i); std::cout << co.ID_course;
@@ -136,10 +136,15 @@ void read1CourseInfor(Course& A, ifstream& f)
 void init_List_Mark(MarkNode*& head) {
 	head = NULL;
 }
-void add_Tail_List_Mark(MarkNode*& head, string A) {
+void add_Tail_List_Mark(MarkNode*& head, string ID , string name) {
 	//khởi tạo 1 node
 	MarkNode* n1 = new MarkNode;
-	n1->ID = A;
+	n1->data.ID = ID;
+	n1->data.Name = name;
+	n1->data.Midterm_Mark = 0;
+	n1->data.Final_Mark = 0;
+	n1->data.Other_Mark = 0;
+	n1->data.Total_Mark = 0;
 	n1->pNext = NULL;
 	MarkNode* temp = head;
 	if (head == NULL) {
@@ -177,8 +182,23 @@ void get_course(User& A, SchoolYear s_y) {
 					if (i == temp1.length() - 1) {
 						IDtemp += temp1[i];
 					}
-					add_Tail_List_Mark(A.info.phead, IDtemp);
+					ifstream fi;
+					string fileName = "file_save/SchoolYear/" + s_y.year + "/" + s_y.semester.Name + "/course_info.csv";
+					fi.open(fileName, ios::in);
+					string temp;
+					while (!fi.eof()) {
+						getline(fi, temp, ',');
+						if (_strcmpi(temp.c_str(), IDtemp.c_str()) == 0) {
+							getline(fi, temp, ',');
+							break;
+						}
+						else {
+							getline(fi, temp);
+						}
+					}
+					add_Tail_List_Mark(A.info.phead, IDtemp, temp);
 					IDtemp = "";
+
 				}
 				else if (temp1[i] != ',') {
 					IDtemp += temp1[i];
@@ -192,11 +212,68 @@ void delete_Mark_node(MarkNode*& head, string ID) {
 	MarkNode** Dp = &head;
 	while (*Dp != NULL) {
 		MarkNode* temp = *Dp;
-		if (_strcmpi(temp->ID.c_str(), ID.c_str()) == 0) {
+		if (_strcmpi(temp->data.ID.c_str(), ID.c_str()) == 0) {
 			*Dp = temp->pNext;
 			delete (temp);
 		}
 		else
 			Dp = &(temp->pNext);
+	}
+}
+void get_1_score(MarkNode* &A, string ID, ifstream& f) {
+	string temp;
+	getline(f, temp);
+	while (!f.eof()) {
+		getline(f,temp,',');// doc stt
+		getline(f, temp, ',');//doc mssv
+		if (strcmpi(temp.c_str(), ID.c_str()) == 0) {
+			getline(f, temp, ',');//doc ten
+			getline(f, temp, ',');//doc lop
+			getline(f, temp, ',');
+			A->data.Midterm_Mark = atof(temp.c_str());
+			getline(f, temp, ',');
+			A->data.Final_Mark = atof(temp.c_str());
+			getline(f, temp, ',');
+			A->data.Other_Mark = atof(temp.c_str());
+			getline(f, temp);
+			A->data.Total_Mark = atof(temp.c_str());
+			return;
+		}
+		else {
+			getline(f, temp);
+		}
+	}
+}
+void get_score(User& A, SchoolYear s_y, int &i) {
+	ifstream f;
+	string semester_path = "file_save/SchoolYear/" + s_y.year + '/' + s_y.semester.Name + '/';
+	string course_path = semester_path + "Course/Score";
+	int i = 0;
+	MarkNode* temp = A.info.phead;
+	while (temp != NULL) {
+		string fileName = course_path + temp->data.ID + csv_tail;
+		f.open(fileName, ios::in);
+		if (f.good()) {
+			get_1_score(temp, A.ID, f);
+		}
+		else {
+			temp->data.Final_Mark = 0;
+			temp->data.Midterm_Mark = 0;
+			temp->data.Other_Mark = 0;
+			temp->data.Total_Mark = 0;
+		}
+		f.close();
+		i++;
+		temp = temp->pNext;
+	}
+}
+void view_all_score_of_1_student(User A, SchoolYear Y) {
+	int n;
+	get_score(A, Y, n);
+	Mark* M = new Mark[n];
+	MarkNode* temp = A.info.phead;
+	for (int i = 0; i < n; i++) {
+		M[i] = temp->data;
+		temp = temp->pNext;
 	}
 }
