@@ -214,11 +214,13 @@ void enroll_course(User& A, SchoolYear s_y, int command_flag) {
 		getline(file_course_info, temp, ',');//đọc mã môn học
 		//nếu so sánh được mã môn nhập vào có trong danh sách lớp học, cho phép ghi danh:
 		if (_strcmpi(temp.c_str(), ID_course_input.c_str()) == 0) {
+			string Name;
+			getline(file_course_info, Name, ',');
 			MarkNode* Mtemp = A.info.phead;
 			//kiểm tra xem trong danh sách môn học của sinh viên đã có môn này hay chưa
 			realine_flag = true;
 			while (Mtemp != NULL) {
-				if (_strcmpi(temp.c_str(), Mtemp->ID.c_str()) == 0) {
+				if (_strcmpi(temp.c_str(), Mtemp->data.ID.c_str()) == 0) {
 					//nếu có thì return.
 					if (command_flag >=0) {
 						cout << "\nFailed!! The course has been registered before.";
@@ -233,7 +235,7 @@ void enroll_course(User& A, SchoolYear s_y, int command_flag) {
 			}
 			if (command_flag>=0){
 				//chưa có thì thêm vào danh sách.
-				add_Tail_List_Mark(A.info.phead, temp);
+				add_Tail_List_Mark(A.info.phead, temp,Name);
 				//ghi them vao file;
 				string file_cousre_of_class = class_path + A.info.Class;
 				rewrite_course_of_student_file(A, file_cousre_of_class, temp, 1);
