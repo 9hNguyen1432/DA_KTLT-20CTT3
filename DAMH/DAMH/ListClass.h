@@ -7,7 +7,7 @@
 #include <fstream>
 
 using namespace std;
-//
+
 struct Date {
 	int Date;
 	int Month;
@@ -19,10 +19,15 @@ struct Database {
 	Date Birth;// ngày sinh
 	string sex;
 };
+string CreateNewClass();
+void UpdateInforToNewClass();
+void ViewListClasses();
+int RunMenuCreate(int Lenh);
+int RunMenuView(int Lenh);
+int MenuViewListClass();
+int MenuCreate();
+int MenuView();
+int SelectCommand(int Lenh);
+int RunMenuViewListClass(int Lenh);
 
-
-void openFileToInput(const char* filename, fstream& fs);
-void openFileToOutput(const char* filename, fstream& fs);
-void ReturnClass(fstream& f, Data& info, fstream& ofs);
-void ListClass();
 

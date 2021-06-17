@@ -150,7 +150,6 @@ int CheckLogin(User& user) {
 
 void repeatLogin(User &user){
     textColor(0);
-    ListClass();
     do
 	{   
         system("cls");
