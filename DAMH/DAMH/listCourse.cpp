@@ -6,7 +6,7 @@ void viewCourse(SchoolYear y)
 	ifstream f1;
 	string link, temp;
 	//need year & semester to make a proper link
-	link = "file_save/SchoolYear/"+"/TotalCourse.csv";//a temp link
+	link = "file_save/SchoolYear/"+y.year+"/"+y.semester->Name+"/TotalCourse.csv";//a temp link
 	f1.open(link, ios::in);
 	int i = 1;
 	if (f1.is_open() == false)
@@ -41,5 +41,35 @@ void viewCourse(SchoolYear y)
 		getline(f1, temp, ',');
 		printtext(temp, 90, 9 + i);
 		i++;
+	}
+}
+void viewStudentInCourse(SchoolYear y)
+{
+	string* courseN = NULL;
+	int courseToken = -1;
+	ifstream f1;
+	string link, temp;
+	//need year & semester to make a proper link
+	link = "file_save/SchoolYear/" + y.year + "/" + y.semester->Name + "/TotalCourse.csv";//a temp link
+	f1.open(link, ios::in);
+	if (f1.is_open())
+	{
+		while (getline(f1, temp))
+		{
+			//read until eof
+			courseToken++;
+		}
+		f1.close();
+	}
+	else
+	{
+		cout << "File is unable to be opened";
+	}
+	courseN = new string[courseToken];
+	f1.open(link, ios::in);
+	getline(f1, temp);
+	while (!f1.eof())
+	{
+
 	}
 }
