@@ -218,7 +218,8 @@ void menuStudent(User &user)
 			break;
 		case 6: 
 			// lenh show bang diem
-			view_all_score_of_1_student(user, SY);
+
+			edit_score(user, SY,4, view_all_score_of_1_student(user, SY));
 			break;
 		case 7:{
 			int check = checkCourseSession();
@@ -247,11 +248,12 @@ void menuStudent(User &user)
 			break;
 		case 10:
 			//xem khoa hoc:
+			break;
 		case 0:
 			isExit = true;
 			break;
 		default: std::cout << "option is invalid!!!\n";
-
+			break;
 		}
 	} while (!isExit);
 	std::cin.ignore();

@@ -14,5 +14,7 @@ void delete_Mark_node(MarkNode*& head, string ID);
 void get_1_score(MarkNode*& A, string ID, ifstream& f);
 void get_score(User& A, SchoolYear s_y, int& i);
 void view_1_line(Mark M, int x, int y);
-void view_all_score_of_1_student(User A, SchoolYear Y);
+Mark* view_all_score_of_1_student(User A, SchoolYear Y);
+void insertMark(string& data, int limit, int& flag);
+void edit_score(User& A, SchoolYear SY, int line, Mark* M);
 #endif
