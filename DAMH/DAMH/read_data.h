@@ -16,5 +16,6 @@ void get_score(User& A, SchoolYear s_y, int& i);
 void view_1_line(Mark M, int x, int y);
 Mark* view_all_score_of_1_student(User A, SchoolYear Y);
 void insertMark(string& data, int limit, int& flag);
-void edit_score(User& A, SchoolYear SY, int line, Mark* M);
+void save_Mark(User& A, Mark* B, int i, SchoolYear SY);
+
 #endif

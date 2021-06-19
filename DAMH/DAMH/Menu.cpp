@@ -218,8 +218,8 @@ void menuStudent(User &user)
 			break;
 		case 6: 
 			// lenh show bang diem
-
-			edit_score(user, SY,4, view_all_score_of_1_student(user, SY));
+			DisPlay_Mark_Of_Student( SY, user);
+			/*edit_score(user, SY,4, view_all_score_of_1_student(user, SY));*/
 			break;
 		case 7:{
 			int check = checkCourseSession();

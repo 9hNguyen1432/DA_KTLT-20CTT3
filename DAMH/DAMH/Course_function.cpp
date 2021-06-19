@@ -394,7 +394,7 @@ void DisPlay_Course_Of_Student(SchoolYear Y, User A) {
 	do {
 		hidePointer();
 		read_course(A, Y);
-		drawRectangle(27, 29, 60, 1, 11);
+		drawRectangle(27, 29, 60, 1, 10);
 		textColor(496);
 		string text = Y.semester.Name + "; Year: " + Y.year + ".   Press[C] to change!";
 		printtext(text, 32, 29);
@@ -410,6 +410,195 @@ void DisPlay_Course_Of_Student(SchoolYear Y, User A) {
 				change_Year_Semester(Y);
 				get_course(A, Y);
 				read_course(A, Y);
+			}
+		}
+	} while (true);
+}
+void edit_score(User& A, SchoolYear SY, int line, Mark* M) {
+	char ch;
+	int line_now = 1;
+	int x = 15, y = 14;
+	drawRectangle(1, y + line_now, 115, 1, 14);
+	textBgColor(0, 14);
+	view_1_line(M[line_now - 1], x, y + line_now);
+	do {
+		hidePointer();
+		ch = _getch();
+		//[ESC]
+		if (ch == 27) {
+			drawRectangle(1, y + line_now, 115, 1, 11);
+			textBgColor(0, 11);
+			view_1_line(M[line_now - 1], x, y + line_now);
+			break;
+		}
+		else {
+			//Control Up down 
+			if (ch == 72 && line_now > 1) //up
+			{
+				drawRectangle(1, y + line_now, 115, 1, 11);
+				textBgColor(0, 11);
+				view_1_line(M[line_now - 1], x, y + line_now);
+
+				line_now--;
+				drawRectangle(1, y + line_now, 115, 1, 14);
+				textBgColor(0, 14);
+				view_1_line(M[line_now - 1], x, y + line_now);
+			}
+			if (ch == 80 && line_now < line) //down
+			{
+				drawRectangle(1, y + line_now, 115, 1, 11);
+				textBgColor(0, 11);
+				view_1_line(M[line_now - 1], x, y + line_now);
+
+				line_now++;
+				drawRectangle(1, y + line_now, 115, 1, 14);
+				textBgColor(0, 14);
+				view_1_line(M[line_now - 1], x, y + line_now);
+			}
+			if (ch == 13) {
+				string fCheck = "file_save/SchoolYear/" + SY.year + '/' + SY.semester.Name + "/Course/score/" + M[line_now - 1].ID + csv_tail;
+				fstream fcheck;
+				fcheck.open(fCheck, ios::in);
+				if (!fcheck.good())
+				{
+					gotoxy(x + 42, y + line_now);
+					cout << "Fail!! This subject has not been graded by the teacher yet.";
+					Sleep(900);
+					drawRectangle(1, y + line_now, 115, 1, 14);
+					textBgColor(0, 14);
+					view_1_line(M[line_now - 1], x, y + line_now);
+					fcheck.close();
+					continue;
+				}
+				else {
+					fcheck.close();
+					int y_now = y + line_now;
+					int x_now = x + 42, x_max = x + 70, x_min = x + 42;
+					string S[] = { to_string(M[line_now - 1].Midterm_Mark),to_string(M[line_now - 1].Final_Mark),to_string(M[line_now - 1].Other_Mark) };
+					drawRectangle(x + 42, y_now, 14, 1, 15);
+					textBgColor(0, 15);
+					printtext(to_string(M[line_now - 1].Midterm_Mark), x + 42, y_now);
+					char CH;
+					do
+					{
+						CH = _getch();
+						//ESC
+						if (CH == 27) {
+							drawRectangle(x_now, y_now, 14, 1, 14);
+							textBgColor(0, 14);
+							printtext(S[(x_now - x_min) / 14], x_now, y_now);
+							break;
+						}
+						else {
+							//Left 
+							if (CH == 75 && x_now > x_min) {
+								drawRectangle(x_now, y_now, 14, 1, 14);
+								textBgColor(0, 14);
+								printtext(S[(x_now - x_min) / 14], x_now, y_now);
+
+								x_now = x_now - 14;
+								drawRectangle(x_now, y_now, 14, 1, 15);
+								textBgColor(0, 15);
+								printtext(S[(x_now - x_min) / 14], x_now, y_now);
+							}
+							//Right
+							if (CH == 77 && x_now < x_max) {
+								drawRectangle(x_now, y_now, 14, 1, 14);
+								textBgColor(0, 14);
+								printtext(S[(x_now - x_min) / 14], x_now, y_now);
+
+								x_now = x_now + 14;
+								drawRectangle(x_now, y_now, 14, 1, 15);
+								textBgColor(0, 15);
+								printtext(S[(x_now - x_min) / 14], x_now, y_now);
+							}
+
+							//[ENTER]
+							if (CH == 13) {
+								drawRectangle(x_now, y_now, 14, 1, 15);
+								textBgColor(0, 15);
+								float i;
+								string mark;
+								int flag = 0;
+								do {
+									mark = "";
+									gotoxy(x_now, y_now);
+									insertMark(mark, 5, flag);
+									if (flag == -1) {
+										drawRectangle(x_now, y_now, 14, 1, 15);
+										textBgColor(0, 15);
+										printtext(S[(x_now - x_min) / 14], x_now, y_now);
+										break;
+									}
+									else {
+										i = atof(mark.c_str());
+										if (i > 10) {
+											gotoxy(x_now, y_now);
+											cout << "Erroll!!";
+											Sleep(900);
+											drawRectangle(x_now, y_now, 14, 1, 15);
+										}
+									}
+								} while (i > 10);
+								if (flag == 0) {
+									int a = (x_now - x_min) / 14;
+									switch (a)
+									{
+									case 0:
+										M[line_now - 1].Midterm_Mark = i;
+										S[(x_now - x_min) / 14] = to_string(M[line_now - 1].Midterm_Mark);
+										break;
+									case 1:
+										M[line_now - 1].Final_Mark = i;
+										S[(x_now - x_min) / 14] = to_string(M[line_now - 1].Final_Mark);
+										break;
+									case 2:
+										M[line_now - 1].Other_Mark = i;
+										S[(x_now - x_min) / 14] = to_string(M[line_now - 1].Other_Mark);
+										break;
+									default:
+										break;
+									}
+									M[line_now - 1].Total_Mark = 0.3 * M[line_now - 1].Midterm_Mark + 0.6 * M[line_now - 1].Final_Mark + 0.1 * M[line_now - 1].Other_Mark;
+									drawRectangle(1, y + line_now, 115, 1, 14);
+									textBgColor(0, 14);
+									view_1_line(M[line_now - 1], x, y + line_now);
+									drawRectangle(x_now, y_now, 14, 1, 15);
+									textBgColor(0, 15);
+									printtext(S[(x_now - x_min) / 14], x_now, y_now);
+									save_Mark(A, M, line_now - 1, SY);
+								}
+							}
+
+						}
+					} while (true);
+				}
+
+			}
+		}
+	} while (true);
+}
+void DisPlay_Mark_Of_Student(SchoolYear Y, User A) {
+	char ch;
+	do {
+		hidePointer();
+		view_all_score_of_1_student(A, Y);
+		drawRectangle(27, 29, 60, 1, 6);
+		textColor(499);
+		string text = Y.semester.Name + "; Year: " + Y.year + ".   Press[C] to change!";
+		printtext(text, 32, 29);
+		ch = getch();
+		//[ESC]
+		if (ch == 27) {
+			return;
+		}
+		else {
+			//Control Up down 
+			if (ch == 'c' || ch == 'C') //up
+			{
+				change_Year_Semester(Y);
+				get_course(A, Y);
+				view_all_score_of_1_student(A, Y);
 			}
 		}
 	} while (true);
