@@ -9,16 +9,13 @@ using namespace std;
 
 const string csv_tail = ".csv";
 
-struct Date {
-	int Date;
-	int Month;
-	int Year;
-};
 struct Database {
-	int ID;
+	string No;
+	string ID;
 	string name;
-	Date Birth;// ngày sinh
+	string Birth;// ngày sinh
 	string sex;
+	string IDsocial;
 };
 
 
@@ -46,25 +43,18 @@ void UpdateInforToNewClass()
 	int count = 0;
 	while (!ifs.eof() && (count != 45))
 	{
-		string ID;
-		getline(ifs, ID, ',');
-		info.ID = atoi(ID.c_str());
-		if (info.ID == 0) break;
+		getline(ifs, info.No, ',');
+		fs << info.No << ',';
+		getline(ifs, info.ID, ',');
 		fs << info.ID << ',';
 		getline(ifs, info.name, ',');
 		fs << info.name << ',';
-		string date, month, year;
-		getline(ifs, date, ',');
-		info.Birth.Date = atoi(date.c_str());
-		fs << info.Birth.Date << ',';
-		getline(ifs, month, ',');
-		info.Birth.Month = atoi(month.c_str());
-		fs << info.Birth.Month << ',';
-		getline(ifs, year, ',');
-		info.Birth.Year = atoi(year.c_str());
-		fs << info.Birth.Year << ',';
-		ifs >> info.sex;
-		fs << info.sex << endl;
+		getline(ifs, info.Birth, ',');
+		fs << info.Birth << ",";
+		getline(ifs, info.sex, ',');
+		fs << info.sex << ',';
+		ifs >> info.IDsocial;
+		fs << info.IDsocial;
 		count += 1;
 	}
 	ifs.close();
@@ -86,7 +76,6 @@ void ViewListClasses()
 	f.close();
 
 }
-
 int RunMenuCreate(int Lenh);
 
 int RunMenuView(int Lenh);
@@ -271,3 +260,5 @@ int RunMenuView(int Lenh)
 		}
 	}
 }
+
+
