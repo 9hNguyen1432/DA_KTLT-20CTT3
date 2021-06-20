@@ -453,6 +453,7 @@ int countLine(string filename){
     int count = 0;
     while (getline(file, line,'\n'))
         count++;
+    file.close();
     return count;
 }
 

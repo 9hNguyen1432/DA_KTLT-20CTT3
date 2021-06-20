@@ -1,5 +1,6 @@
 ﻿#include "Header.h"
 #include "read_data.h"
+#include"staffFunction.h"
 #include"ConsoleProcess.h"
 
 void read_1_info(User& A, ifstream &f) {
@@ -374,3 +375,103 @@ void insertMark(string& data, int limit, int &flag) {
 	} while (ch != 13);
 }
 //
+Mark* read_file_score_of_course(SchoolYear SY, string IDcourse, int &n) {
+	string fileName = "file_save/SchoolYear/" + SY.year + '/' + SY.semester.Name + "/Course/score/" + IDcourse + csv_tail;
+	ifstream f;
+	f.open(fileName, ios::in);
+	if (!f.good()) {
+		return NULL;
+	}
+	n = countLine(fileName);
+	Mark* M=new Mark[n];
+	string temp;
+	getline(f, temp);
+	for (int i = 0; i < n; i++) {
+		getline(f, temp, ',');
+		getline(f, M[i].ID, ',');
+		getline(f, M[i].Name, ',');
+		getline(f, M[i].C, ',');
+		getline(f, temp, ',');
+		M[i].Midterm_Mark = atof(temp.c_str());
+		getline(f, temp, ',');
+		M[i].Final_Mark = atof(temp.c_str());
+		getline(f, temp, ',');
+		M[i].Other_Mark = atof(temp.c_str());
+		getline(f, temp);
+		M[i].Total_Mark = atof(temp.c_str());
+	}
+	f.close();
+	return M;
+}
+void view_1_score_of_course(Mark M, int x, int y) {
+	printtext(M.ID, x, y);
+	printtext(M.Name, x + 12, y);//12 ki tu cho id
+	printtext(M.C, x + 42, y);
+	printtext(to_string(M.Midterm_Mark), x + 52, y);//30 ki tu cho ten
+	printtext(to_string(M.Final_Mark), x + 66, y);//14 ki tu cho 1 diem
+	printtext(to_string(M.Other_Mark), x + 80, y);//14 ki tu cho 1 diem
+	printtext(to_string(M.Total_Mark), x + 94, y);//14 ki tu cho 1 diem
+}
+void view_10_score_of_course(Mark*M,int i,int n, int x, int y) {
+	if (n - i >= 10) {
+		for (int j = 0; j < 10; j++) {
+			view_1_score_of_course(M[i + j], x, y+j);
+		}
+	}
+	else {
+		for (int j = 0; j < n%10-1; j++) {
+			view_1_score_of_course(M[i + j], x, y+j);
+		}
+	}
+	
+}
+int view_score_of_course_in_year(Mark* M, int n) {
+	system("cls");
+	int x = 10;
+	int y = 14;
+	textBgColor(4, 6);
+	printtext("    __     _            __           _____                            ", 25, 3);
+	printtext("   / /    (_)   _____  / /_         / ___/  _____  ____    _____  ___ ", 25, 4);
+	printtext("  / /    / /   / ___/ / __/         \\__ \\  / ___/ / __ \\  / ___/ / _ \\", 25, 5);
+	printtext(" / /___ / /   (__  ) / /_          ___/ / / /__  / /_/ / / /    /  __/", 25, 6);
+	printtext("/_____//_/   /____/  \\__/         /____/  \\___/  \\____/ /_/     \\___/ ", 25, 7);
+	printtext("                                                                      ", 25, 8);
+	drawRectangle(0, y-2, 120, 13, 11);
+	textBgColor(0, 11);
+	printtext("ID", x, y-1);
+	printtext("Name", x + 12, y-1);//12 ki tu cho id
+	printtext("Class", x + 42, y-1);
+	printtext("Midterm Mark", x + 52, y-1);//30 ki tu cho ten
+	printtext("Final Mark", x + 66, y-1);//14 ki tu cho 1 diem
+	printtext("Other Mark", x + 80, y-1);//14 ki tu cho 1 diem
+	printtext("Total Mark", x + 94, y-1);//14 ki tu cho 1 diem
+	char ch;
+	int tab_now = 0;
+	view_10_score_of_course(M, tab_now*10, n, x, y);
+	do {
+		hidePointer();
+		ch = _getch();
+		//[ESC]
+		if (ch == 27) {
+			return-1;
+		}
+		else {
+			//Control Up down 
+			if (ch == 72 && tab_now > 0) //up
+			{
+				tab_now--;
+				drawRectangle(0, y , 120, 11, 11);
+				view_10_score_of_course(M, tab_now*10, n, x, y);
+			}
+			if (ch == 80 && tab_now < n/10) //down
+			{
+				tab_now++;
+				drawRectangle(0, y, 120, 11, 11);
+				view_10_score_of_course(M, tab_now*10, n, x, y);
+			}
+			if (ch == 13) {
+				return tab_now;
+			}
+		}
+	} while (true);
+}

@@ -17,5 +17,8 @@ void view_1_line(Mark M, int x, int y);
 Mark* view_all_score_of_1_student(User A, SchoolYear Y);
 void insertMark(string& data, int limit, int& flag);
 void save_Mark(User& A, Mark* B, int i, SchoolYear SY);
-
+Mark* read_file_score_of_course(SchoolYear SY, string IDcourse, int& n);
+void view_1_score_of_course(Mark M, int x, int y);
+void view_10_score_of_course(Mark* M, int i, int n, int x, int y);
+int view_score_of_course_in_year(Mark*M, int n);
 #endif
