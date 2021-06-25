@@ -1,5 +1,9 @@
 #ifndef readdata_h
 #define readdata_h
+#include <string>
+#include"staffFunction.h"
+#include"ConsoleProcess.h"
+#include "Header.h"
 const string csv_tail = ".csv";
 const string txt_tail = ".txt";
 void read_1_info(User& A, ifstream &f);
@@ -21,4 +25,5 @@ Mark* read_file_score_of_course(SchoolYear SY, string IDcourse, int& n);
 void view_1_score_of_course(Mark M, int x, int y);
 void view_10_score_of_course(Mark* M, int i, int n, int x, int y);
 int view_score_of_course_in_year(Mark*M, int n);
+void save_Mark_With_List_Cousre(string IDcourse, Mark B, SchoolYear SY);
 #endif

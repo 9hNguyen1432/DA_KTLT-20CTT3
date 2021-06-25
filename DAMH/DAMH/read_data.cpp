@@ -1,7 +1,6 @@
-﻿#include "Header.h"
+﻿
 #include "read_data.h"
-#include"staffFunction.h"
-#include"ConsoleProcess.h"
+
 
 void read_1_info(User& A, ifstream &f) {
 	string NO_temp;
@@ -426,6 +425,7 @@ void view_10_score_of_course(Mark*M,int i,int n, int x, int y) {
 	
 }
 int view_score_of_course_in_year(Mark* M, int n) {
+	textBgColor(0, 15);
 	system("cls");
 	int x = 10;
 	int y = 14;
@@ -474,4 +474,42 @@ int view_score_of_course_in_year(Mark* M, int n) {
 			}
 		}
 	} while (true);
+}
+void save_Mark_With_List_Cousre(string IDcourse, Mark B, SchoolYear SY) {
+	string Str = ',' + B.ID + ',' + B.Name + ',' + B.C + ',' + to_string(B.Midterm_Mark) + ',' + to_string(B.Final_Mark) + ',' + to_string(B.Other_Mark) + ',' + to_string(B.Total_Mark);
+	fstream file_prv, file_aft;
+	string fileName = "file_save/SchoolYear/" + SY.year + '/' + SY.semester.Name + "/Course/score/" + IDcourse;
+	bool flag_first_line = true;
+	string oldName = fileName + csv_tail;
+	string newName = fileName + "new" + csv_tail;
+	file_prv.open(oldName, ios::in);
+	file_aft.open(newName, ios::out);
+	string temp_str;
+	while (file_prv.eof() == false) {
+		getline(file_prv, temp_str, ',');
+		if (flag_first_line == true) {
+			flag_first_line = false;
+			file_aft << temp_str;
+		}
+		else {
+			file_aft << endl << temp_str;
+		}
+		getline(file_prv, temp_str, ',');
+		if (_strcmpi(temp_str.c_str(), B.ID.c_str()) == 0) {
+			getline(file_prv, temp_str);
+			file_aft << Str;
+		}
+		else {
+			file_aft << ',' << temp_str;
+			getline(file_prv, temp_str);
+			file_aft << ',' << temp_str;
+		}
+	}
+
+	file_prv.close();
+	file_aft.close();
+	// removing the existing file
+	remove(oldName.c_str());
+	// renaming the updated file with the existing file name
+	rename(newName.c_str(), oldName.c_str());
 }
