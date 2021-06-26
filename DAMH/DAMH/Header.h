@@ -9,6 +9,8 @@
 #include <iostream>
 #include <iomanip>
 #include <cmath>
+#include<stdio.h> 
+#include<conio.h> 
 using namespace std;
 
 /*
@@ -34,6 +36,7 @@ using namespace std;
 struct Mark {
 	string ID;// linh hoạt trong điểm của sinh viên thì là id môn học, còn trong môn học thì là id sinh viên
 	string Name;
+	string C;
 	float Total_Mark;
 	float Final_Mark;
 	float Midterm_Mark;

@@ -147,8 +147,11 @@ void menuStaff(User &user)
 			importScoreBoardUI();
 			break;
 		case 14:
-			//view diem cua khoa hoc
+		{
+			int n = 0;
+			view_score_of_course_in_year(read_file_score_of_course(SY, "ABC4", n), n);
 			break;
+		}
 		case 15:
 			//view diem cua lop hoc
 		case 0:
@@ -219,8 +222,9 @@ void menuStudent(User &user)
 			break;
 		case 6: 
 			// lenh show bang diem
-			DisPlay_Mark_Of_Student( SY, user);
+			/*DisPlay_Mark_Of_Student( SY, user);*/
 			/*edit_score(user, SY,4, view_all_score_of_1_student(user, SY));*/
+			edit_score_in_list_course(user, SY);
 			break;
 		case 7:{
 			int check = checkCourseSession();
