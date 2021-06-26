@@ -130,6 +130,7 @@ void menuStaff(User &user)
 			break;
 		case 10:
 			//edit diem sinh vien
+			listClass(SY);
 			break;
 		case 11:
 			//view danh sachs hoc phan
@@ -138,7 +139,7 @@ void menuStaff(User &user)
 			break;
 		case 12:
 			//xuat diem hoc sinh vao file
-			exportScoreboardInterface(SY.year,SY.semester.Name);
+			exportScoreboardInterface(SY.year,SY.semester.Name,2,2,1);
 			break;
 		case 13:
 			//xuat diem hoc sinh vao file

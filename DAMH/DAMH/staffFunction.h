@@ -43,9 +43,15 @@ void insertNum(int& n);
 
 int countLine(string filename);
 
+void moveUp(string filename, int &currentLine, int columnNum, int indexB[], int y,string column[],int lineInConsole,int width,int x);
+
+void moveDown(string filename, int &currentLine, int columnNum, int indexB[], int y, string column[],int lineInConsole,int width,int x);
+
+void drawList(int columnNum, string filename, int y, int indexA[], int indexB[], int line,int flagLine);
+
 void listCourse(string year, string semester);
 
-void getLineInfo(string filename, int line, string column[]);
+void getLineInfo(string filename, int line, string column[],int columnNum);
 
 void updateFileCourse(int currentColumn,int currentLine, string column[],string year,string semester);
 
@@ -71,11 +77,17 @@ bool checkTimeStart(string date, string month, string year);
 
 int checkCourseSession();
 
-void exportScoreboardInterface(string year,string semester);
+void exportScoreboardInterface(string year,string semester,int flagLine, int currentLine, int lineInConsole);
 
 void exportSB(string SchoolYear, string Semester, string CourseID);
 
 void importScoreBoard(string year, string semester, string courseID);
 
 void importScoreBoardUI();
+
+void listClass(SchoolYear Y);
+
+void getLineInfoCourse(string filename, int line, string column[]);
+
+void showStudentInclass(SchoolYear Y, string classname);
 

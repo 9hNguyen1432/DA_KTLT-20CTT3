@@ -1,5 +1,37 @@
 ID,COURSE NAME,TEACHER NAME,NUMBER OF CREDITS,MAX STUDENT,DAY,SESSION1,SESSION2
-ABCD1,Nhap mon lap trinh 4,Le van chanh 4,3,100,FRI,S4,S7
-AKAK,Nhap mon lap trinh 5,Le van chanh 5,3,100,SAT,S5,S8
-NMLT,Nhap mon lap trinh 6,Le van chanh 6,3,100,SUN,S6,S9
-TRR,Toan Roi Rac,Le van chanh 7,3,100,MON,S7,S10
+MTH007,toan roi rac,aaaaaaaaaaaaaaa,4,50,TUS,S1,S3
+HP1000,hoc phan moi,nguyen van a,463,20,MON,S2,S4
+HP3,hoc phan 3, Nguyen Thi D,2,40,WED,S1,S4
+ABC2,Nhap mon lap trinh 2,Le van chanh 2,3,100,WED,S2,S5
+ABC3,Nhap mon lap trinh 2,Le van chanh 2,3,100,WED,S2,S5
+ABC5,Nhap mon lap trinh 5,Le van chanh 5,5,100,SAT,S5,S8
+ABC6,Nhap mon lap trinh 6,Le van chanh 6,6,100,SUN,S6,S9
+ABC7,Nhap mon lap trinh 7,Le van chanh 7,7,100,MON,S7,S10
+ABC8,Nhap mon lap trinh 8,Le van chanh 8,8,100,TUE,S8,S11
+ABC9,Nhap mon lap trinh 9,Le van chanh 9,9,100,WED,S9,S12
+ABC10,Nhap mon lap trinh 10,Le van chanh 10,10,100,THU,S10,S13
+ABC11,Nhap mon lap trinh 11,Le van chanh 11,11,100,FRI,S11,S14
+ABC12,Nhap mon lap trinh 12,Le van chanh 12,12,100,SAT,S12,S15
+ABC13,Nhap mon lap trinh 13,Le van chanh 13,13,100,SUN,S13,S16
+ABC14,Nhap mon lap trinh 14,Le van chanh 14,14,100,MON,S14,S17
+ABC15,Nhap mon lap trinh 15,Le van chanh 15,15,100,TUE,S15,S18
+ABC16,Nhap mon lap trinh 16,Le van chanh 16,16,100,WED,S16,S19
+ABC17,Nhap mon lap trinh 17,Le van chanh 17,17,100,THU,S17,S20
+ABC18,Nhap mon lap trinh 18,Le van chanh 18,18,100,FRI,S18,S21
+ABC19,Nhap mon lap trinh 19,Le van chanh 19,18,100,SAT,S19,S22
+ABC20,Nhap mon lap trinh 20,Le van chanh 20,18,100,SUN,S20,S23
+ABC21,Nhap mon lap trinh 21,Le van chanh 21,18,100,MON,S21,S24
+ABC22,Nhap mon lap trinh 22,Le van chanh 22,18,100,TUE,S22,S25
+ABC23,Nhap mon lap trinh 23,Le van chanh 23,18,100,WED,S23,S26
+ABC24,Nhap mon lap trinh 24,Le van chanh 24,18,100,THU,S24,S27
+ABC25,Nhap mon lap trinh 25,Le van chanh 25,18,100,FRI,S25,S28
+ABC26,Nhap mon lap trinh 26,Le van chanh 26,18,100,SAT,S26,S29
+ABC27,Nhap mon lap trinh 27,Le van chanh 27,19,100,SUN,S27,S30
+ABC28,Nhap mon lap trinh 28,Le van chanh 28,20,100,MON,S28,S31
+ABC29,Nhap mon lap trinh 29,Le van chanh 29,21,100,TUE,S29,S32
+ABC30,Nhap mon lap trinh 30,Le van chanh 30,22,100,WED,S30,S33
+ABC31,Nhap mon lap trinh 31,Le van chanh 31,23,100,THU,S31,S34
+ABC32,Nhap mon lap trinh 32,Le van chanh 32,24,100,FRI,S32,S35
+ABC33,Nhap mon lap trinh 33,Le van chanh 33,25,100,SAT,S33,S36
+ABC34,Nhap mon lap trinh 34,Le van chanh 34,26,100,SUN,S34,S37
+ABC35,Nhap mon lap trinh 35,Le van chanh 35,27,100,MON,S35,S38
