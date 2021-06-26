@@ -44,6 +44,7 @@ struct Mark {
 };
 struct MarkNode {
 	Mark data;
+	string ID;
 	MarkNode* pNext;
 };
 //struct thông tin học sinh hoặc giáo viên, nếu là giáo viên thì 1 số thông tin bỏ trống

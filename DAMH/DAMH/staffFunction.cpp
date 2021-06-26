@@ -2,6 +2,7 @@
 #include"Header.h"
 #include"ConsoleProcess.h"
 #include"Course_function.h"
+#include"read_data.h"
 
 void createFolder(string namefolder) {
     const char* NameFolder = namefolder.c_str();
@@ -336,6 +337,9 @@ void addSemester() {
     fileCourse.open("file_save//SchoolYear//" + semester.schoolyear + "//Semester" + semester.Name + "//RegistrationCourseSession.txt", ios::out);
     fileCourse << 0 << endl;
     fileCourse.close();
+    fstream fileClass;
+    fileClass.open("file_save//SchoolYear//" + semester.schoolyear + "//Semester" + semester.Name + "//class_info.csv", ios::out);
+    fileClass << "STT,CLASS NAME,MAJOR,NUMBER OF STUDENT,YEAR";
     hidePointer();
     textBgColor(10,11);
     printtext("CREATE SEMESTER SUCCESSFUL,PRESS ENTER BACK TO MENU !!!", 35, 19);
@@ -636,7 +640,34 @@ void addCourse() {
     ch = getch();
 }
 
-void getLineInfo(string filename, int line, string column[]) {
+void getLineInfo(string filename, int line, string column[],int columnNum) {
+    if (line > countLine(filename)) cout << "Not exist line";
+    int numLine = countLine(filename);
+    fstream file;
+    string data;
+    file.open(filename, ios::in);
+    for (int i=1;i<=numLine;i++) {
+        if (i == line) {
+            for (int j = 0; j < columnNum; j++) {
+                if (j != columnNum - 1) {
+                    getline(file, data, ',');
+                    column[j] = data;
+                }
+                else {
+                    getline(file, data);
+                    column[j] = data;
+                }
+            }
+            break;
+        }
+        else {
+            getline(file, data);
+        }
+    }
+}
+
+
+void getLineInfoCourse(string filename, int line, string column[]) {
     if (line > countLine(filename)) cout << "Not exist line";
     fstream file;
     string data;
@@ -644,7 +675,7 @@ void getLineInfo(string filename, int line, string column[]) {
     int i = 1;
     getline(file, data);
     while (i != line) {
-        if (i == line - 1) {
+        if (i == line-1 ) {
             getline(file, data, ',');
             column[0] = data;
             getline(file, data, ',');
@@ -653,14 +684,8 @@ void getLineInfo(string filename, int line, string column[]) {
             column[2] = data;
             getline(file, data, ',');
             column[3] = data;
-            getline(file, data, ',');
-            column[4] = data;
-            getline(file, data, ',');
-            column[5] = data;
-            getline(file, data, ',');
-            column[6] = data;
             getline(file, data);
-            column[7] = data;
+            column[4] = data;
             break;
         }
         else {
@@ -778,7 +803,6 @@ void updateFileCourse(int currentColumn,int currentLine,string column[],string y
     fstream file_be,file_af;
     string newdata,line;
     string filename = "file_save//SchoolYear//" + year + "//" + semester + "//course_info.csv";
-    //int numLine = countLine(filename)-1;
     for (int i = 0; i < 8; i++) {
         if (i != 7) {
             newdata = newdata +column[i] + ",";
@@ -789,7 +813,7 @@ void updateFileCourse(int currentColumn,int currentLine,string column[],string y
     file_af.open("file_save//SchoolYear//" + year + "//" + semester  + "//course_info_new.csv", ios::app);
     getline(file_be, line);
     file_af << line;
-    int i = 1;
+    int i = 2;
     while (!file_be.eof()) {
         if (i == currentLine) {
             file_af <<endl<< newdata ;
@@ -801,6 +825,7 @@ void updateFileCourse(int currentColumn,int currentLine,string column[],string y
         }
         i++;
     }
+
     char* a = new char[filename.size() + 1];
     strcpy(a, filename.c_str());
     a[filename.size()] = '\0';
@@ -905,7 +930,7 @@ void deleteCourse(string filename, int currentLine,string year,string semester) 
     file_af.open("file_save//SchoolYear//" + year + "//" + semester + "//course_info_new.csv", ios::app);
     getline(file_be, line);
     file_af << line;
-    int i = 1;
+    int i = 2;
     while (!file_be.eof()) {
         if (i == currentLine) {
             getline(file_be, line);
@@ -929,178 +954,160 @@ void deleteCourse(string filename, int currentLine,string year,string semester) 
     rename(b, a);
 }
 
+void moveUp(string filename,int &currentLine,int columnNum,int indexB[],int y, string column[],int lineInConsole,int width,int x){
+    getLineInfo(filename, currentLine + 1, column, columnNum);
+    drawRectangle(x, y + lineInConsole + 1, width, 1, 11);
+    textBgColor(0, 11);
+    for (int i = 0; i < columnNum; i++) {
+        printtext(column[i], indexB[i], y + lineInConsole + 1);
+    }
+
+    getLineInfo(filename, currentLine , column, columnNum);
+    drawRectangle(x, y + lineInConsole, width, 1, 14);
+    textBgColor(0, 14);
+    for (int i = 0; i < columnNum; i++) {
+        printtext(column[i], indexB[i], y + lineInConsole);
+    }    
+    
+    
+}
+
+void moveDown(string filename, int &currentLine, int columnNum, int indexB[],int y,string column[],int lineInConsole,int width,int x) {
+    
+    getLineInfo(filename, currentLine -1  , column, columnNum);
+    drawRectangle(x, y - 1 + lineInConsole, width, 1, 11);
+    textBgColor(0, 11);
+    for (int i = 0; i < columnNum; i++) {
+        printtext(column[i], indexB[i], y + lineInConsole - 1);
+    }
+    getLineInfo(filename, currentLine , column, columnNum);
+    drawRectangle(x, y + lineInConsole, width, 1, 14);
+    textBgColor(0, 14);
+    for (int i = 0; i < columnNum; i++) {
+        printtext(column[i], indexB[i], y + lineInConsole);
+    }
+    
+}
+
+
 void editCourse(string year,string semester) {
     char ch;
-    int line = countLine("file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv")-1 ;
-    int currentLine = 1;
+    int line = countLine("file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv") ;
+    int currentLine = 2;
     int y = 11;
     string column[8];
-    getLineInfo("file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv", currentLine + 1, column);
-    drawRectangle(1, y + currentLine, 115, 1, 14);
+    int lineInConsole = 1;
+    int a[8] = { 2,13,35,52,73,88,95,105 };
+    int b[8] = { 1,9,34,60,76,88,98,108 };
+    getLineInfo("file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv",currentLine, column,8);
+    drawRectangle(1, y + lineInConsole, 110, 1, 14);
     textBgColor(0, 14);
-    printtext(column[0], 1, y + currentLine);
-    printtext(column[1], 9, y + currentLine);
-    printtext(column[2], 34, y + currentLine);
-    printtext(column[3], 60, y + currentLine);
-    printtext(column[4], 76, y + currentLine);
-    printtext(column[5], 88, y + currentLine);
-    printtext(column[6], 98, y + currentLine);
-    printtext(column[7], 108, y + currentLine);
-
+    for (int i = 0; i < 8; i++) 
+        printtext(column[i], b[i], y + lineInConsole);
     do {
         hidePointer();
         ch = getch();
         //[ESC]
         if (ch == 27) {
-            drawRectangle(1, y + currentLine, 115, 1, 11);
+            drawRectangle(1, y + lineInConsole, 110, 1, 11);
             textBgColor(0, 11);
-            printtext(column[0], 1, y + currentLine);
-            printtext(column[1], 9, y + currentLine);
-            printtext(column[2], 34, y + currentLine);
-            printtext(column[3], 60, y + currentLine);
-            printtext(column[4], 76, y + currentLine);
-            printtext(column[5], 88, y + currentLine);
-            printtext(column[6], 98, y + currentLine);
-            printtext(column[7], 108, y + currentLine);
+            for (int i = 0; i < 8; i++)
+                printtext(column[i], b[i], y + lineInConsole);
             break;
         }
         else {
-            //Control Up down 
-            if (ch == 72 && currentLine > 1) //up
-            {
-                getLineInfo("file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv", currentLine + 1, column);
-                drawRectangle(1, y + currentLine, 115, 1, 11);
-                textBgColor(0, 11);
-                printtext(column[0], 1, y + currentLine);
-                printtext(column[1], 9, y + currentLine);
-                printtext(column[2], 34, y + currentLine);
-                printtext(column[3], 60, y + currentLine);
-                printtext(column[4], 76, y + currentLine);
-                printtext(column[5], 88, y + currentLine);
-                printtext(column[6], 98, y + currentLine);
-                printtext(column[7], 108, y + currentLine);
-
+            if (ch == 72 && currentLine > 2 ) //up
+            {   
                 currentLine--;
-                getLineInfo("file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv", currentLine + 1, column);
-                drawRectangle(1, y + currentLine, 115, 1, 14);
-                textBgColor(0, 14);
-                printtext(column[0], 1, y + currentLine);
-                printtext(column[1], 9, y + currentLine);
-                printtext(column[2], 34, y + currentLine);
-                printtext(column[3], 60, y + currentLine);
-                printtext(column[4], 76, y + currentLine);
-                printtext(column[5], 88, y + currentLine);
-                printtext(column[6], 98, y + currentLine);
-                printtext(column[7], 108, y + currentLine);
+                lineInConsole--;
+                if (lineInConsole + y <= 11) {
+                    lineInConsole = 12;
+                    drawRectangle(1, 10, 120, 15, 15);
+                    drawRectangle(1, 10, 120, 15, 11);
+                    drawList(8, "file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv", y, a, b, line, currentLine-11);
+                    getLineInfo("file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv", currentLine, column, 8);
+                    drawRectangle(1, y + lineInConsole, 110, 1, 14);
+                    textBgColor(0, 14);
+                    for (int i = 0; i < 8; i++) {
+                        printtext(column[i], b[i], y + lineInConsole);
+                    }
+                }
+                else 
+                    moveUp("file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv", currentLine, 8, b, y, column,lineInConsole,110,1);
+                
             }
             if (ch == 80 && currentLine < line) //down
-            {
-                getLineInfo("file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv", currentLine + 1, column);
-                drawRectangle(1, y + currentLine, 115, 1, 11);
-                textBgColor(0, 11);
-                printtext(column[0], 1, y + currentLine);
-                printtext(column[1], 9, y + currentLine);
-                printtext(column[2], 34, y + currentLine);
-                printtext(column[3], 60, y + currentLine);
-                printtext(column[4], 76, y + currentLine);
-                printtext(column[5], 88, y + currentLine);
-                printtext(column[6], 98, y + currentLine);
-                printtext(column[7], 108, y + currentLine);
-
+            {   
                 currentLine++;
-                getLineInfo("file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv", currentLine + 1, column);
-                drawRectangle(1, y + currentLine, 115, 1, 14);
-                textBgColor(0, 14);
-                printtext(column[0], 1, y + currentLine);
-                printtext(column[1], 9, y + currentLine);
-                printtext(column[2], 34, y + currentLine);
-                printtext(column[3], 60, y + currentLine);
-                printtext(column[4], 76, y + currentLine);
-                printtext(column[5], 88, y + currentLine);
-                printtext(column[6], 98, y + currentLine);
-                printtext(column[7], 108, y + currentLine);
+                lineInConsole++;
+                if (lineInConsole + y > 23) {
+                    lineInConsole=1;
+                    drawRectangle(1, 10, 120, 15, 15);
+                    drawRectangle(1, 10, 120, 15, 11);
+                    drawList(8, "file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv", y, a, b, line, currentLine);
+                    getLineInfo("file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv", currentLine, column, 8);
+                    drawRectangle(1, y + lineInConsole, 110, 1, 14);
+                    textBgColor(0, 14);
+                    for (int i = 0; i < 8; i++) {
+                        printtext(column[i], b[i], y + lineInConsole);
+                    }
+                }
+                else
+                    moveDown("file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv", currentLine, 8, b, y, column, lineInConsole,110,1);
             }
             if (ch == 13) {
-                //printtext();
-                editInforCourse(y + currentLine, currentLine, column,year,semester);
-
-                drawRectangle(1, y + currentLine, 115, 1, 14);
-                textBgColor(0, 14);
-                printtext(column[0], 1, y + currentLine);
-                printtext(column[1], 9, y + currentLine);
-                printtext(column[2], 34, y + currentLine);
-                printtext(column[3], 60, y + currentLine);
-                printtext(column[4], 76, y + currentLine);
-                printtext(column[5], 88, y + currentLine);
-                printtext(column[6], 98, y + currentLine);
-                printtext(column[7], 108, y + currentLine);
+            //printtext();
+            editInforCourse(y + lineInConsole, currentLine, column,year,semester);
+            drawRectangle(1, y + lineInConsole, 110, 1, 14);
+            textBgColor(0, 14);
+            for (int i = 0; i < 8; i++)
+                printtext(column[i], b[i], y + lineInConsole);
             }
 
             if (ch == 'x') {
                 deleteCourse("file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv", currentLine, year, semester);
-
-                drawRectangle(0, 10, 120, countLine("file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv") + 2, 11);
-
-                textBgColor(4, 11);
-                fstream file;
-                file.open("file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv", ios::in);
-                string data;
-                getline(file, data, ',');
-                printtext(data, 2, 11);
-                getline(file, data, ',');
-                printtext(data, 13, 11);
-                getline(file, data, ',');
-                printtext(data, 35, 11);
-                getline(file, data, ',');
-                printtext(data, 52, 11);
-                getline(file, data, ',');
-                printtext(data, 73, 11);
-                getline(file, data, ',');
-                printtext(data, 88, 11);
-                getline(file, data, ',');
-                printtext(data, 95, 11);
-                getline(file, data);
-                printtext(data, 105, 11);
-                textBgColor(0, 11);
-                int k = 12;
-                while (!file.eof()) {
-                    getline(file, data, ',');
-                    printtext(data, 1, k);
-                    getline(file, data, ',');
-                    printtext(data, 9, k);
-                    getline(file, data, ',');
-                    printtext(data, 34, k);
-                    getline(file, data, ',');
-                    printtext(data, 60, k);
-                    getline(file, data, ',');
-                    printtext(data, 76, k);
-                    getline(file, data, ',');
-                    printtext(data, 88, k);
-                    getline(file, data, ',');
-                    printtext(data, 98, k);
-                    getline(file, data);
-                    printtext(data, 108, k);
-                    k++;
-                }
-                file.close();
+                string filename = "file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv";
+                drawList(8, filename , y, a, b, line,currentLine-lineInConsole+1);
                 if (currentLine == line) {
                     currentLine = line - 1;
+                    lineInConsole--;
                 }
                 line--;
-                drawRectangle(1, y + currentLine, 115, 1, 14);
+                drawRectangle(1, y + lineInConsole, 110, 1, 14);
                 textBgColor(0, 14);
-                getLineInfo("file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv", currentLine + 1, column);
-                printtext(column[0], 1, y + currentLine);
-                printtext(column[1], 9, y + currentLine);
-                printtext(column[2], 34, y + currentLine);
-                printtext(column[3], 60, y + currentLine);
-                printtext(column[4], 76, y + currentLine);
-                printtext(column[5], 88, y + currentLine);
-                printtext(column[6], 98, y + currentLine);
-                printtext(column[7], 108, y + currentLine);
+                getLineInfo(filename, currentLine , column,8);
+                for (int i = 0; i < 8; i++)
+                    printtext(column[i], b[i], y + lineInConsole);
             }
         }
     } while (true);
+}
+
+void drawList(int columnNum, string filename, int y, int indexA[], int indexB[], int line,int flagLine) {
+    if (line == 0 || columnNum == 0) return;
+    string *datanew = new string[line];
+    string *column = new string[columnNum];
+    textBgColor(4, 11);
+  
+    fstream file;
+    file.open(filename , ios::in);
+    getLineInfo(filename, 1, column,columnNum);
+    for (int i = 0; i < columnNum; i++) {
+        printtext(column[i], indexA[i], y);
+    }
+    file.close();
+    textBgColor(0, 11);
+    y ++;
+    int j = flagLine, h = 1;
+    while (j<=line && h<=12) {
+        getLineInfo(filename,j, column, columnNum);
+        for (int i = 0; i < columnNum; i++) {
+            printtext(column[i], indexB[i], y);
+        }
+        y++; j++;
+        h++;
+    }
+    file.close();
 }
 
 void listCourse(string year, string semester) {
@@ -1116,8 +1123,6 @@ void listCourse(string year, string semester) {
         
     drawRectangle(97, 0, 22, 5, 11);
     textBgColor(4, 11);
-    printtext("-[e]: TRANFER TO", 97, 0);
-    printtext("EDIT STATUS ", 97, 1);
     printtext("-[ESC]: BACK TO MENU", 97, 2);
     printtext("OR RETURN", 97, 3);
 
@@ -1129,64 +1134,25 @@ void listCourse(string year, string semester) {
     printtext("KEY TO MOVE IN EDIT STATUS", 0, 3.5);
     printtext("-[c]: CHANGE TIME", 0, 4.5);
 
-    drawRectangle(0, 10, 120, countLine("file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv")+2, 11);
     if (stoi(semester.substr(8, 1), 0, 10) == 0) {
         textBgColor(4, 15);
         printtext("YOU HAVEN'T CREATED SEMESTER YET, PRESS ENTER TO BACK TO MENU.", 30, 14);
         ch = getch();
         exit(1);
     }
-
-    textBgColor(4, 11);
-    fstream file;
-    file.open("file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv", ios::in);
-    string data;
-    getline(file, data, ',');
-    printtext(data, 2, 11);
-    getline(file, data, ',');
-    printtext(data, 13, 11);
-    getline(file, data, ',');
-    printtext(data, 35, 11);
-    getline(file, data, ',');
-    printtext(data, 52, 11);
-    getline(file, data, ',');
-    printtext(data, 73, 11);
-    getline(file, data, ',');
-    printtext(data, 88, 11);
-    getline(file, data, ',');
-    printtext(data, 95, 11);
-    getline(file, data);
-    printtext(data, 105, 11);
-    textBgColor(0, 11);
-    int y = 12;
-    while (!file.eof()) {
-        getline(file, data, ',');
-        printtext(data, 1, y);
-        getline(file, data, ',');
-        printtext(data, 9, y);
-        getline(file, data, ',');
-        printtext(data, 34, y);
-        getline(file, data, ',');
-        printtext(data, 60, y);
-        getline(file, data, ',');
-        printtext(data, 76, y);
-        getline(file, data, ',');
-        printtext(data, 88, y);
-        getline(file, data, ',');
-        printtext(data, 98, y);
-        getline(file, data);
-        printtext(data, 108, y);
-        y++;
-    }
-    file.close();
-    
-    //drawRectangle(0, y, 200, 1, 15);
+   
+    string filename = "file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv";
+    int lineNum = countLine(filename);
+    drawRectangle(1, 10, 120, 15, 11);
+    int a[8] = { 2,13,35,52,73,88,95,105 };
+    int b[8] = { 1,9,34,60,76,88,98,108 };
+    drawList(8, filename, 11, a, b,lineNum,2);
     hidePointer();
-    //[e] chức năng edit
-    while (true){
+    do
+    {
         ch = getch();
         if (ch == 'e') {
-            editCourse(year,semester);
+            editCourse(year, semester);
         }
         if (ch == 'c') {
             SchoolYear s;
@@ -1196,7 +1162,7 @@ void listCourse(string year, string semester) {
         if (ch == 27) {
             break;
         }
-    }
+    } while (true);
     textBgColor(0, 15);
 }
 
@@ -1353,9 +1319,7 @@ int checkCourseSession() {
     }
 }
 
-
-
-void exportScoreboardInterface(string year,string semester) {
+void exportScoreboardInterface(string year, string semester,int flagLine,int currentLine,int lineInConsole) {
     char ch;
     system("cls");
     textBgColor(13, 15);
@@ -1376,144 +1340,92 @@ void exportScoreboardInterface(string year,string semester) {
     printtext(" YEAR", 97, 1);
     printtext("-[ESC]: BACK TO MENU", 97, 3);
 
-    drawRectangle(0, 11, 120, countLine("file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv") + 2, 11);
-    textBgColor(4, 11);
-    fstream file;
-    file.open("file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv", ios::in);
-    string data;
-    getline(file, data, ',');
-    printtext(data, 2, 11);
-    getline(file, data, ',');
-    printtext(data, 13, 11);
-    getline(file, data, ',');
-    printtext(data, 35, 11);
-    getline(file, data, ',');
-    printtext(data, 52, 11);
-    getline(file, data, ',');
-    printtext(data, 73, 11);
-    getline(file, data, ',');
-    printtext(data, 88, 11);
-    getline(file, data, ',');
-    printtext(data, 95, 11);
-    getline(file, data);
-    printtext(data, 105, 11);
-    textBgColor(0, 11);
-    int y = 12;
-    while (!file.eof()) {
-        getline(file, data, ',');
-        printtext(data, 1, y);
-        getline(file, data, ',');
-        printtext(data, 9, y);
-        getline(file, data, ',');
-        printtext(data, 34, y);
-        getline(file, data, ',');
-        printtext(data, 60, y);
-        getline(file, data, ',');
-        printtext(data, 76, y);
-        getline(file, data, ',');
-        printtext(data, 88, y);
-        getline(file, data, ',');
-        printtext(data, 98, y);
-        getline(file, data);
-        printtext(data, 108, y);
-        y++;
-    }
-    file.close();
-    textBgColor(0, 15);
-    int line = countLine("file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv") - 1;
-    int currentLine = 1;
-    y = 11;
-    string column[8];
-    getLineInfo("file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv", currentLine + 1, column);
-    drawRectangle(1, y + currentLine, 115, 1, 14);
-    textBgColor(0, 14);
-    printtext(column[0], 1, y + currentLine);
-    printtext(column[1], 9, y + currentLine);
-    printtext(column[2], 34, y + currentLine);
-    printtext(column[3], 60, y + currentLine);
-    printtext(column[4], 76, y + currentLine);
-    printtext(column[5], 88, y + currentLine);
-    printtext(column[6], 98, y + currentLine);
-    printtext(column[7], 108, y + currentLine);
+    string filename = "file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv";
+    int lineNum = countLine(filename);
+    drawRectangle(1, 10, 120, 15, 11);
+    int a[8] = { 2,13,35,52,73,88,95,105 };
+    int b[8] = { 1,9,34,60,76,88,98,108 };
+    drawList(8, filename, 11, a, b, lineNum, flagLine);
+    hidePointer();
 
-    while(true){
+    //int currentLine = 2;
+    int y = 11;
+    string column[8];
+    //int lineInConsole = 1;
+    getLineInfo("file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv", currentLine, column, 8);
+    drawRectangle(1, y + lineInConsole, 110, 1, 14);
+    textBgColor(0, 14);
+    for (int i = 0; i < 8; i++)
+        printtext(column[i], b[i], y + lineInConsole);
+    
+    do {
         hidePointer();
         ch = getch();
         //[ESC]
         if (ch == 27) {
+            drawRectangle(1, y + lineInConsole, 110, 1, 11);
+            textBgColor(0, 11);
+            for (int i = 0; i < 8; i++)
+                printtext(column[i], b[i], y + lineInConsole);
             break;
         }
-        //Control Up down 
-        if (ch == 72 && currentLine > 1) //up
+        if (ch == 72 && currentLine > 2) //up
         {
-            getLineInfo("file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv", currentLine + 1, column);
-            drawRectangle(1, y + currentLine, 115, 1, 11);
-            textBgColor(0, 11);
-            printtext(column[0], 1, y + currentLine);
-            printtext(column[1], 9, y + currentLine);
-            printtext(column[2], 34, y + currentLine);
-            printtext(column[3], 60, y + currentLine);
-            printtext(column[4], 76, y + currentLine);
-            printtext(column[5], 88, y + currentLine);
-            printtext(column[6], 98, y + currentLine);
-            printtext(column[7], 108, y + currentLine);
-
             currentLine--;
-            getLineInfo("file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv", currentLine + 1, column);
-            drawRectangle(1, y + currentLine, 115, 1, 14);
-            textBgColor(0, 14);
-            printtext(column[0], 1, y + currentLine);
-            printtext(column[1], 9, y + currentLine);
-            printtext(column[2], 34, y + currentLine);
-            printtext(column[3], 60, y + currentLine);
-            printtext(column[4], 76, y + currentLine);
-            printtext(column[5], 88, y + currentLine);
-            printtext(column[6], 98, y + currentLine);
-            printtext(column[7], 108, y + currentLine);
-        }
-        if (ch == 80 && currentLine < line) //down
-        {
-            getLineInfo("file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv", currentLine + 1, column);
-            drawRectangle(1, y + currentLine, 115, 1, 11);
-            textBgColor(0, 11);
-            printtext(column[0], 1, y + currentLine);
-            printtext(column[1], 9, y + currentLine);
-            printtext(column[2], 34, y + currentLine);
-            printtext(column[3], 60, y + currentLine);
-            printtext(column[4], 76, y + currentLine);
-            printtext(column[5], 88, y + currentLine);
-            printtext(column[6], 98, y + currentLine);
-            printtext(column[7], 108, y + currentLine);
+            lineInConsole--;
+            if (lineInConsole + y <= 11) {
+                lineInConsole = 12;
+                drawRectangle(1, 10, 120, 15, 15);
+                drawRectangle(1, 10, 120, 15, 11);
+                drawList(8, "file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv", y, a, b, lineNum, currentLine - 11);
+                getLineInfo("file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv", currentLine, column, 8);
+                drawRectangle(1, y + lineInConsole, 110, 1, 14);
+                textBgColor(0, 14);
+                for (int i = 0; i < 8; i++) {
+                    printtext(column[i], b[i], y + lineInConsole);
+                }
+            }
+            else
+                moveUp("file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv", currentLine, 8, b, y, column, lineInConsole,110,1);
 
-            currentLine++;
-            getLineInfo("file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv", currentLine + 1, column);
-            drawRectangle(1, y + currentLine, 115, 1, 14);
-            textBgColor(0, 14);
-            printtext(column[0], 1, y + currentLine);
-            printtext(column[1], 9, y + currentLine);
-            printtext(column[2], 34, y + currentLine);
-            printtext(column[3], 60, y + currentLine);
-            printtext(column[4], 76, y + currentLine);
-            printtext(column[5], 88, y + currentLine);
-            printtext(column[6], 98, y + currentLine);
-            printtext(column[7], 108, y + currentLine);
         }
+        if (ch == 80 && currentLine < lineNum) //down
+        {
+            currentLine++;
+            lineInConsole++;
+            if (lineInConsole + y > 23) {
+                lineInConsole = 1;
+                drawRectangle(1, 10, 120, 15, 15);
+                drawRectangle(1, 10, 120, 15, 11);
+                drawList(8, "file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv", y, a, b, lineNum, currentLine);
+                getLineInfo("file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv", currentLine, column, 8);
+                drawRectangle(1, y + lineInConsole, 110, 1, 14);
+                textBgColor(0, 14);
+                for (int i = 0; i < 8; i++) {
+                    printtext(column[i], b[i], y + lineInConsole);
+                }
+            }
+            else
+                moveDown("file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv", currentLine, 8, b, y, column, lineInConsole,110,1);
+        }
+
         if (ch == 13) {
-            exportSB(year,semester,column[0]);
+            exportSB(year, semester, column[0]);
             drawRectangle(40, 15, 25, 5, 4);
             textBgColor(15, 4);
             printtext("EXPORT SUCCESSFULLY !!!", 41, 17);
             ch = getch();
-            textBgColor(0,15);
-            exportScoreboardInterface(year,semester);
+            textBgColor(0, 15);
+            exportScoreboardInterface(year, semester,flagLine,currentLine,lineInConsole);
         }
+        
         if (ch == 'c') {
             SchoolYear s;
             change_Year_Semester(s);
-            exportScoreboardInterface(s.year, s.semester.Name);
+            exportScoreboardInterface(s.year, s.semester.Name, flagLine, currentLine, lineInConsole);
         }
-    } 
-    textBgColor(0, 15);
+        textBgColor(0, 15);
+    } while (true);
 }
 
 void exportSB(string SchoolYear, string Semester, string CourseID) {
@@ -1534,7 +1446,6 @@ void exportSB(string SchoolYear, string Semester, string CourseID) {
         i++;
     }
 }
-
 
 void importScoreBoard(string year, string semester, string courseID) {
     fstream file, fileScore;
@@ -1574,6 +1485,7 @@ void importScoreBoardUI() {
     getline(cin, filename);
     fstream file;
     file.open(filename+".csv");
+    
     if (file) {
         drawRectangle(40, 15, 25, 5, 4);
         textBgColor(15, 4);
@@ -1590,4 +1502,230 @@ void importScoreBoardUI() {
     ch = getch();
     textBgColor(0, 15);
 }
+
+void listClass(SchoolYear Y) {
+    string year = Y.year, semester = Y.semester.Name;
+    char ch;
+    hidePointer();
+    system("cls");
+    textBgColor(13, 15);
+    printtext(" _     ___ ____ _____    ____ _        _    ____ ____ ", 30, 2);
+    printtext("| |   |_ _/ ___|_   _|  / ___| |      / \\  / ___/ ___|", 30, 3);
+    printtext("| |    | |\\___ \\ | |   | |   | |     / _ \\ \\___ \\___ \\ ", 30, 4);
+    printtext("| |___ | | ___) || |   | |___| |___ / ___ \\ ___) |__) |", 30, 5);
+    printtext("|_____|___|____/ |_|    \\____|_____/_/   \\_\\____/____/ ", 30, 6);
+
+    drawRectangle(97, 0, 22, 6, 11);
+    textBgColor(4, 11);
+    printtext("-[c]: CHANGE SCHOOL YEAR", 97, 0);
+    printtext(" YEAR", 97, 1);
+    printtext("-[ESC]: BACK TO MENU", 97, 3);
+    printtext("-[ENTER]: CHOSE", 97, 5);
+
+    string filename = "file_save/SchoolYear/" + year + "/" + semester + "/class_info.csv";
+    int lineNum = countLine(filename);
+    int y = 11;
+    drawRectangle(8, 10, 95, 15, 11);
+    int a[5] = { 11,17,43,65,90};
+    int b[5] = { 11.5,18.5,33,72,90};
+    drawList(5, filename, y, a, b, lineNum, 2);
+    hidePointer();
+
+    int currentLine = 2, lineInConsole = 1;
+    string column[5];
+    getLineInfo(filename, currentLine, column, 5);
+    drawRectangle(8, y + lineInConsole, 95, 1, 14);
+    textBgColor(0, 14);
+    for (int i = 0; i < 5; i++)
+        printtext(column[i], b[i], y + lineInConsole);
+
+    do {
+        hidePointer();
+        ch = getch();
+        //[ESC]
+        if (ch == 27) {
+            break;
+        }
+        if (ch == 72 && currentLine > 2) //up
+        {
+            currentLine--;
+            lineInConsole--;
+            if (lineInConsole + y <= 11) {
+                lineInConsole = 12;
+                drawRectangle(8, 10, 95, 15, 15);
+                drawRectangle(8, 10, 95, 15, 11);
+                drawList(5, filename, y, a, b, lineNum, currentLine - 11);
+                getLineInfo(filename, currentLine, column, 5);
+                drawRectangle(8, y + lineInConsole, 95, 1, 14);
+                textBgColor(0, 14);
+                for (int i = 0; i < 5; i++) {
+                    printtext(column[i], b[i], y + lineInConsole);
+                }
+            }
+            else
+                moveUp(filename, currentLine, 5, b, y, column, lineInConsole,95,8);
+        }
+        if (ch == 80 && currentLine < lineNum) //down
+        {
+            currentLine++;
+            lineInConsole++;
+            if (lineInConsole + y > 23) {
+                lineInConsole = 1;
+                drawRectangle(8, 10, 95, 15, 15);
+                drawRectangle(8, 10, 95, 15, 11);
+                drawList(5, filename, y, a, b, lineNum, currentLine);
+                getLineInfo(filename, currentLine, column, 5);
+                drawRectangle(8, y + lineInConsole, 95, 1, 14);
+                textBgColor(0, 14);
+                for (int i = 0; i < 5; i++) {
+                    printtext(column[i], b[i], y + lineInConsole);
+                }
+            }
+            else
+                moveDown(filename, currentLine, 5, b, y, column, lineInConsole,95,8);
+        }
+        if (ch == 13) {
+            textBgColor(0, 15);
+            showStudentInclass(Y,column[1]);
+            listClass(Y);
+        }
+        if (ch == 'c') {
+            textBgColor(0, 15);
+            change_Year_Semester(Y);
+            listClass(Y);
+        }
+    } while (true);
+    textBgColor(0, 15);
+}
+
+void getlineStudent(string filename,int line,string column[]) {
+    if (line > countLine(filename)) cout << "Not exist line";
+    fstream file;
+    string data;
+    file.open(filename, ios::in);
+    int i = 1;
+    getline(file, data);
+    while (i != line) {
+        if (i == line - 1) {
+            getline(file, data, ',');
+            column[0] = data;
+            getline(file, data, ',');
+            column[1] = data;
+            getline(file, data, ',');
+            column[2] = data;
+            getline(file, data, ',');
+            column[3] = data;
+            getline(file, data, ',');
+            column[4] = data;
+            getline(file, data);
+            column[5] = data;
+            break;
+        }
+        else {
+            getline(file, data);
+            i++;
+        }
+    }
+}
+
+
+void showStudentInclass(SchoolYear Y,string classname) {
+    string year = Y.year, semester = Y.semester.Name;
+    char ch;
+    hidePointer();
+    system("cls");
+    textBgColor(13, 15);
+    printtext(" _     ___ ____ _____   ____ _____ _   _ ____  _____ _   _ _____ ", 30, 2);
+    printtext("| |   |_ _/ ___|_   _| / ___|_   _| | | |  _ \\| ____| \\ | |_   _|", 30, 3);
+    printtext("| |    | |\\___ \\ | |   \\___ \\ | | | | | | | | |  _| |  \\| | | | ", 30, 4);
+    printtext("| |___ | | ___) || |    ___) || | | |_| | |_| | |___| |\\  | | | ", 30, 5);
+    printtext("|_____|___|____/ |_|   |____/ |_|  \\___/|____/|_____|_| \\_| |_| ", 30, 6);
+
+    drawRectangle(97, 0, 22, 6, 11);
+    textBgColor(4, 11);
+    printtext("-[c]: CHANGE SCHOOL YEAR", 97, 0);
+    printtext(" YEAR", 97, 1);
+    printtext("-[ESC]: BACK TO MENU", 97, 3);
+    printtext("-[ENTER]: CHOSE", 97, 5);
+
+    string filename = "file_save/SchoolYear/" + year + "/" + classname + ".csv";
+    int lineNum = countLine(filename);
+    int y = 11;
+    drawRectangle(8, 10, 100, 15, 11);
+    int a[6] = { 8,17,44,63,85,95 };
+    int b[6] = { 8,18,36,64,85,95 };
+    drawList(6, filename, y, a, b, lineNum, 2);
+    hidePointer();
+
+    int currentLine = 2, lineInConsole = 1;
+    string column[6];
+    getLineInfo(filename, currentLine, column, 6);
+    drawRectangle(8, y + lineInConsole, 100, 1, 14);
+    textBgColor(0, 14);
+    for (int i = 0; i < 6; i++)
+        printtext(column[i], b[i], y + lineInConsole);
+
+    do {
+        hidePointer();
+        ch = getch();
+        //[ESC]
+        if (ch == 27) {
+            break;
+        }
+        if (ch == 72 && currentLine > 2) //up
+        {
+            currentLine--;
+            lineInConsole--;
+            if (lineInConsole + y <= 11) {
+                lineInConsole = 12;
+                drawRectangle(8, 10, 100, 15, 15);
+                drawRectangle(8, 10, 100, 15, 11);
+                drawList(6, filename, y, a, b, lineNum, currentLine - 11);
+                getLineInfo(filename, currentLine, column, 6);
+                drawRectangle(8, y + lineInConsole, 100, 1, 14);
+                textBgColor(0, 14);
+                for (int i = 0; i < 6; i++) {
+                    printtext(column[i], b[i], y + lineInConsole);
+                }
+            }
+            else
+                moveUp(filename, currentLine, 6, b, y, column, lineInConsole, 100, 8);
+        }
+        if (ch == 80 && currentLine < lineNum) //down
+        {
+            currentLine++;
+            lineInConsole++;
+            if (lineInConsole + y > 23) {
+                lineInConsole = 1;
+                drawRectangle(8, 10, 100, 15, 15);
+                drawRectangle(8, 10, 100, 15, 11);
+                drawList(6, filename, y, a, b, lineNum, currentLine);
+                getLineInfo(filename, currentLine, column, 6);
+                drawRectangle(8, y + lineInConsole, 105, 1, 14);
+                textBgColor(0, 14);
+                for (int i = 0; i < 6; i++) {
+                    printtext(column[i], b[i], y + lineInConsole);
+                }
+            }
+            else
+                moveDown(filename, currentLine, 6, b, y, column, lineInConsole, 100, 8);
+        }
+        if (ch == 13) {
+            User A;
+            A.ID = column[1];
+            A.info.Class = classname;
+            A.info.IDsocial = column[5];
+            A.info.Bir = column[3];
+            A.info.name = column[2];
+            A.info.sex = column[4];
+            get_course(A, Y);
+            textBgColor(0, 15);
+            DisPlay_Mark_Of_Student(Y, A);
+            showStudentInclass(Y, classname);
+        }
+    } while (true);
+    textBgColor(0, 15);
+}
+
+
 
