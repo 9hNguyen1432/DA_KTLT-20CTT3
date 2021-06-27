@@ -414,10 +414,16 @@ void DisPlay_Course_Of_Student(SchoolYear Y, User A) {
 		}
 	} while (true);
 }
-void edit_score(User& A, SchoolYear SY, int line, Mark* M) {
+void edit_score(User& A, SchoolYear SY, Mark* M) {
 	char ch;
 	int line_now = 1;
 	int x = 15, y = 14;
+	int line = 0;
+	MarkNode* temp = A.info.phead;
+	while (temp != NULL) {
+		line++;
+		temp = temp->pNext;
+	}
 	drawRectangle(1, y + line_now, 115, 1, 14);
 	textBgColor(0, 14);
 	view_1_line(M[line_now - 1], x, y + line_now);

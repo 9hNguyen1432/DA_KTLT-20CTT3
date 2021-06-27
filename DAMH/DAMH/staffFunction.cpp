@@ -1720,7 +1720,7 @@ void showStudentInclass(SchoolYear Y,string classname) {
             A.info.sex = column[4];
             get_course(A, Y);
             textBgColor(0, 15);
-            DisPlay_Mark_Of_Student(Y, A);
+            edit_score(A, Y, view_all_score_of_1_student(A, Y));
             showStudentInclass(Y, classname);
         }
     } while (true);
