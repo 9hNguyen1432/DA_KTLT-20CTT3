@@ -28,14 +28,13 @@ void menuStaff(User &user)
 			<< "6. Create course registration session\n"
 			<< "7. Add student to class\n"
 			<< "8. Create semester\n "
-			<< "9. Edit student's information\n"
-			<< "10. Edit student's marks\n"
-			<< "11. View list of course,Delete a course \n"
+			<< "9. Edit student's marks\n"
+			<< "10. View list of course,Delete a course \n"
 			<< "update course information\n"
-			<< "12. Export student list\n"
-			<< "13. Import student list\n"
-			<< "14. View score board of a course\n"
-			<< "15. View score board of a class\n"
+			<< "11. Export student list\n"
+			<< "12. Import student list\n"
+			<< "13. View score board of a course\n"
+			<< "14. View score board of a class\n"
 			<< "0. Log out\n"
 			<< " -----------------------------\n";
 		std::cout << " your choice: ";
@@ -126,34 +125,33 @@ void menuStaff(User &user)
 			addSemester();
 			break;
 		case 9:
-			//lenh dieu chinh thong tin sinh vien
-			break;
-		case 10:
 			//edit diem sinh vien
 			listClass(SY);
 			break;
-		case 11:
+		case 10:
 			//view danh sachs hoc phan
 			cin.ignore();
 			listCourse(SY.year, SY.semester.Name);
 			break;
-		case 12:
+		case 11:
 			//xuat diem hoc sinh vao file
-			exportScoreboardInterface(SY.year,SY.semester.Name,2,2,1);
+			exportScoreboardInterface(SY.year, SY.semester.Name, 2, 2, 1);
 			break;
-		case 13:
+		case 12:
 			//xuat diem hoc sinh vao file
 			cin.ignore();
 			importScoreBoardUI();
 			break;
-		case 14:
+		case 13:
 		{
 			int n = 0;
 			view_score_of_course_in_year(read_file_score_of_course(SY, "ABC4", n), n);
 			break;
 		}
-		case 15:
+
+		case 14:
 			//view diem cua lop hoc
+			break;
 		case 0:
 			isExit = true;
 			break;
@@ -179,14 +177,12 @@ void menuStudent(User &user)
 		std::cout << "==================MENU============\n";
 		gotoxy(45, 9); std::cout << "1. Profile info\n";
 		gotoxy(45, 10); std::cout << "2. Change password\n";
-		gotoxy(45, 11); std::cout << "3. List of classes\n";
-		gotoxy(45, 12); std::cout << "4. List of student in class\n";
-		gotoxy(45, 13); std::cout << "5. List of student in a course\n";
-		gotoxy(45, 14); std::cout << "6. Score board\n";
-		gotoxy(45, 15); std::cout << "7. Enroll courses\n";
-		gotoxy(45, 16); std::cout << "8. List of enrolled courses\n";
-		gotoxy(45, 17); std::cout << "9. Remove courses\n";
-		gotoxy(45, 18); std::cout << "9. View your list of course\n";
+		gotoxy(45, 12); std::cout << "3. List of student in class\n";
+		gotoxy(45, 14); std::cout << "4. Score board\n";
+		gotoxy(45, 15); std::cout << "5. Enroll courses\n";
+		gotoxy(45, 16); std::cout << "6. List of enrolled courses\n";
+		gotoxy(45, 17); std::cout << "7. Remove courses\n";
+		gotoxy(45, 18); std::cout << "8. View your list of course\n";
 		gotoxy(45, 19); std::cout << "0. Log out\n";
 		gotoxy(45, 20); std::cout << " ---------------------\n";
 		
@@ -212,24 +208,17 @@ void menuStudent(User &user)
 			change_password(user);
 			break;
 		case 3:
-			// lenh show danh sach cac lop
+
 			break;
 		case 4:
-			//lenh show danh sach hoc sinh trong 1 lop
+			// lenh show bang diem
+			DisPlay_Mark_Of_Student( SY, user);
 			break;
 		case 5:
-			//lenh show danh sach hoc sinh trong 1 khoa hoc
-			break;
-		case 6: 
-			// lenh show bang diem
-			/*DisPlay_Mark_Of_Student( SY, user);*/
-			edit_score(user, SY, view_all_score_of_1_student(user, SY));
-			/*edit_score_in_list_course(user, SY);*/
-			break;
-		case 7:{
+		{
 			int check = checkCourseSession();
-			if (check==1){
-				enroll_course(user, SY,1);
+			if (check == 1) {
+				enroll_course(user, SY, 1);
 				system("pause");
 			}
 			else {
@@ -243,16 +232,20 @@ void menuStudent(User &user)
 			}
 			break;
 		}
-		case 8:
+		case 6: 
 			DisPlay_Course_Of_Student(SY, user);
+			//edit_score(user, SY, view_all_score_of_1_student(user, SY));
+			/*edit_score_in_list_course(user, SY);*/
 			break;
-		case 9:
+		case 7:
+		{
 			//lenh xoa bot khoa hoc da dang ki
 			enroll_course(user, SY, -1);
 			system("pause");
 			break;
-		case 10:
-			//xem khoa hoc:
+		}
+		case 8:
+			DisPlay_Course_Of_Student(SY, user);
 			break;
 		case 0:
 			isExit = true;

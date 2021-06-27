@@ -646,6 +646,8 @@ void edit_score_in_list_course(User& A, SchoolYear SY) {
 				textBgColor(0, 15);
 				return;
 			}
+			line_now = 0;
+			count = tab_now * 10;
 			drawRectangle(1, y + line_now, 115, 1, 14);
 			textBgColor(0, 14);
 			view_1_score_of_course(M[tab_now * 10], x, y);
@@ -672,7 +674,7 @@ void edit_score_in_list_course(User& A, SchoolYear SY) {
 				textBgColor(0, 14);
 				view_1_score_of_course(M[count], x, y + line_now);
 			}
-			else if (ch == 80 && line_now < 9) //down
+			else if (ch == 80 && line_now < 9 && count < n-1) //down
 			{
 				drawRectangle(1, y + line_now, 115, 1, 11);
 				textBgColor(0, 11);
