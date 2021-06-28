@@ -72,10 +72,14 @@ void addSchoolYear() {
     createFolder(nameFolder);
 
     fstream file;
+    fstream file1;
     string data;
     file.open("file_save//year-semester.csv", ios::app);
+    file1.open("file_save//year.csv", ios::app);
     file << schoolyear.year << ",0"<<endl;
+    file1 << schoolyear.year << endl;
     file.close();
+    file1.close();
 
     hidePointer();
     textBgColor(10, 11);
