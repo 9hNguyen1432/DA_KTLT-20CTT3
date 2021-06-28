@@ -106,7 +106,7 @@ void menuStaff(User &user)
 			{
 				k = RunMenuViewListClass(SelectCommand(MenuViewListClass()));
 			} while (k != 3);*/
-			RunMenuViewListClass(SelectCommand(MenuViewListClass()));
+			RunMenuViewListClass();
 		case 5:
 			// lenh them khoa hoc
 			cin.ignore();
@@ -118,6 +118,8 @@ void menuStaff(User &user)
 			break;
 		case 7:
 			//them sinh vien vao lop
+			system("cls");
+			AddStudentToClass();
 			break;
 		case 8: 
 			//lenh them hoc ki
