@@ -19,15 +19,10 @@ struct Database {
 	Date Birth;// ngày sinh
 	string sex;
 };
-string CreateNewClass();
-void UpdateInforToNewClass();
+void AddStudentToClass();
+void CreateNewClass();
 void ViewListClasses();
-int RunMenuCreate(int Lenh);
-int RunMenuView(int Lenh);
 int MenuViewListClass();
-int MenuCreate();
-int MenuView();
-int SelectCommand(int Lenh);
-int RunMenuViewListClass(int Lenh);
+int RunMenuViewListClass();
 
 
