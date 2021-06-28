@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include <string>
 #include <fstream>
+#include"ConsoleProcess.h"
+#include "Course_function.h"
 
 using namespace std;
 
@@ -13,252 +15,229 @@ struct Database {
 	string No;
 	string ID;
 	string name;
-	string Birth;// ngày sinh
+	string Birth;
 	string sex;
 	string IDsocial;
 };
 
+Database Imput()
+{
+	Database data;
+	cin.ignore();
+	cout << "Imput MSSV:";
+	getline(cin, data.ID);
+	cout << "Imput Name:";
+	getline(cin, data.name);
+	cout << "Imput Birth:";
+	getline(cin, data.Birth);
+	cout << "Imput Sex:";
+	getline(cin, data.sex);
+	cout << "Imput IDsocial:";
+	getline(cin, data.IDsocial);
+	return data;
+}
 
-string CreateNewClass()
+void CreateNewClass()
 {
-	fstream fs, fs1;
 	string name;
-	cout << "MENU CREATE NEW CLASS" << endl;
-	cout << "Please you create name of new class:";
-	cin >> name;
-	cout << "File has been created !!!";
-	string FileName = name + csv_tail;
-	fs.open(FileName, ios::out);
-	fs1.open("ListClass.csv", ios::out);
-	fs1 << FileName << endl;
-	fs1.close();
-	return FileName;
-}
-void UpdateInforToNewClass()
-{
-	fstream ifs, fs;
-	ifs.open("infor_student.csv", ios::in);
-	fs.open(CreateNewClass(), ios::out);
-	Database info;
-	int count = 0;
-	while (!ifs.eof() && (count != 45))
+	system("cls");
+	gotoxy(40, 10);
+	cout << "Enter Name Of Class(Ex:20CTT1,..): ";
+	gotoxy(40, 11);
+	cin.ignore();
+	getline(cin, name);
+	fstream file1;
+	bool check = true;
+	file1.open("file_save//SchoolYear//2020-2021//ListClassOfYear.csv", ios::in);
+	string NameClass;
+	while (!file1.eof())
 	{
-		getline(ifs, info.No, ',');
-		fs << info.No << ',';
-		getline(ifs, info.ID, ',');
-		fs << info.ID << ',';
-		getline(ifs, info.name, ',');
-		fs << info.name << ',';
-		getline(ifs, info.Birth, ',');
-		fs << info.Birth << ",";
-		getline(ifs, info.sex, ',');
-		fs << info.sex << ',';
-		ifs >> info.IDsocial;
-		fs << info.IDsocial;
-		count += 1;
+		getline(file1, NameClass);
+		if (name == NameClass)
+		{
+			check = false;
+		}
 	}
-	ifs.close();
-	fs.close();
+	if (check == false)
+	{
+		gotoxy(40, 15);
+		cout << "CLASS EXIT! PLEASE TRY AGAIN" << endl;
+	}
+	if (check == true)
+	{
+		gotoxy(40, 15);
+		string FileName = "file_save//SchoolYear//2020-2021//" + name + csv_tail;
+		fstream f1;
+		f1.open(FileName, ios::out);
+		f1 << "No" << "," << "ID" << "," << "Name" << "," << "Birth" << "," << "Sex" << "," << "IDSocial" << endl;
+		f1.close();
+		fstream file;
+		file.open("file_save//SchoolYear//2020-2021//ListClassOfYear.csv", ios::app);
+		file << name << endl;
+		file.close();
+		cout << "CREATE CLASS SUCCESSFUL,PRESS ENTER TO BACK TO MENU !!!" << endl;
+	}
+
 }
+
+void AddStudentToClass()
+{
+	Database data;
+	data = Imput();
+	string YearCourse;
+	string Class;
+	gotoxy(40, 15);
+	cout << "\nImput YearCourse:";
+	getline(cin, YearCourse);
+	cout << YearCourse << endl;
+	fstream file;
+	file.open("file_save//year.csv", ios::in);
+	string Year;
+	bool check = false;
+	while (!file.eof())
+	{
+		getline(file, Year);
+		if (YearCourse == Year)
+		{
+			check = true;
+		}
+	}
+	if (check == false)
+	{
+		gotoxy(40, 17);
+		cout << "Don't Find Year Semester" << endl;
+		system("pause");
+	}
+	if (check == true)
+	{
+		gotoxy(40, 18);
+		cout << "\nImput Class:";
+		getline(cin, Class);
+		string yearSem = "file_save//SchoolYear//" + YearCourse + "//ListClassOfYear.csv";
+		fstream file1;
+		string Cla;
+		bool check1 = false;
+		file1.open(yearSem, ios::in);
+		while (!file1.eof())
+		{
+			getline(file1, Cla);
+			if (Class == Cla)
+			{
+				check1 = true;
+			}
+		}
+		if (check1 = false)
+		{ 
+			gotoxy(40, 20);
+			cout << "Don't Find Class" << endl;
+			system("pause");
+		}
+		else
+		{
+			string ClassSem = "file_save//SchoolYear//" + YearCourse + "//" + Class + csv_tail;
+			fstream file2;
+			file2.open(ClassSem, ios::app);
+			file2 << "0" << "," << data.ID << "," << data.name << "," << data.Birth << "," << data.sex << "," << data.IDsocial << endl;
+			file2.close();
+		}
+	}
+}
+	
+
 
 void ViewListClasses()
 {
 	fstream f;
-	cout << "LIST CLASSES" << endl;
-	f.open("ListClass.csv", ios::in);
-	while (!f.eof())
+	string selection;
+	gotoxy(20, 6);
+	cin.ignore();
+	cout << "Please Imput Your Selection (Year Semester): ";
+	getline(cin, selection);
+	fstream file;
+	string year;
+	bool check = false;
+	file.open("file_save//year.csv", ios::in);
+	while (!file.eof())
 	{
-		string NameClass;
-		f >> NameClass;
-		cout << NameClass << endl;
+		getline(file, year);
+		if (selection == year)
+		{
+			check = true;
+		}
 	}
-	cout << endl;
-	f.close();
-
+	if (check == false)
+	{
+		gotoxy(25, 15);
+		cout << "Your Selection Is Fail" << endl;
+	}
+	else
+	{
+		gotoxy(25, 15);
+		cout << "===== LIST CLASSES IN " << selection << " =======" << endl;
+		f.open("file_save//SchoolYear//" + selection + "//ListClassOfYear.csv", ios::in);
+		int i = 16;
+		while (!f.eof())
+		{
+			string NameClass;
+			f >> NameClass;
+			gotoxy(25, i);
+			cout << NameClass << endl;
+			i++;
+		}
+		cout << endl;
+		f.close();
+	}
 }
-int RunMenuCreate(int Lenh);
-
-int RunMenuView(int Lenh);
-
 
 int MenuViewListClass()
 {
-
+	gotoxy(20, 10);
 	cout << "======CLASSES======" << endl;
+	gotoxy(20, 11);
 	cout << "1. Create New Class" << endl;
-	cout << "2. View List Classes" << endl;
+	gotoxy(20, 12);
+	cout << "2. View List Classes In Year Semester" << endl;
+	gotoxy(20, 13);
 	cout << "3. Exit Menu" << endl;
+	gotoxy(20, 14);
 	cout << "===========================" << endl;
 	return 3;
 }
 
-int MenuCreate()
-{
-	system("cls");
-	cout << "======CREATE NEW CLASSES======" << endl;
-	cout << "0. Return Menu" << endl;
-	cout << "1. Create New Classes" << endl;
-	cout << "2. Exit Menu" << endl;
-	return 2;
-}
 
-int MenuView()
-{
-	system("cls");
-	cout << "======VIEW LIST CLASSES======" << endl;
-	cout << "0. Return Menu" << endl;
-	cout << "1. View List Classes" << endl;
-	cout << "2. Exit Menu" << endl;
-	return 2;
-}
 
-int SelectCommand(int Lenh)
+int RunMenuViewListClass()
 {
-	bool check;
-	int  n;
-	do
+	while (true)
 	{
+
+		int command;
+		MenuViewListClass();
+		gotoxy(20, 15);
 		cout << "Please Input Your Command: ";
-		cin >> n;
-		check = cin.fail();
-		if (check == true)
+		cin >> command;
+		switch (command)
 		{
-			cin.clear();
-			cin.ignore();
-
-		}
-	} while (check == true || n > Lenh || n < 0);
-	return n;
-}
-
-int RunMenuViewListClass(int Lenh)
-{
-	switch (Lenh)
-	{
-	case 1:
-	{
-		system("cls");
-		int lenh;
-		int check = 0;
-		do
-		{
-			lenh = SelectCommand(MenuCreate());
-			check = RunMenuCreate(lenh);
-		} while (check != 2);
-	};
-	case 2:
-	{
-		system("cls");
-		int lenh;
-		int check = 0;
-		do
-		{
-			lenh = SelectCommand(MenuView());
-			check = RunMenuView(lenh);
-		} while (check != 2);
-	};
-	case 3:
-	{
-		bool check = true;
-		char c;
-		do {
-			cout << "Press Y to exit: ";
-			cin >> c;
-			check = cin.fail();
-			if (check)
+			case 1:
 			{
-				cin.ignore();
-				cin.clear();
+				system("cls");
+				CreateNewClass();
+				system("pause");
+				system("cls");
+				break;
 			}
-
-		} while (check == true);
-		if (c == 'y')
-		{
-			return 3;
-		}
-		else
-		{
-			return 0;
-		}
-	};
-	}
-}
-
-int RunMenuCreate(int Lenh)
-{
-	if (Lenh == 0)
-	{
-		return 2;
-
-	}
-	else if (Lenh == 1)
-	{
-		system("cls");
-		UpdateInforToNewClass();
-		system("pause");
-	}
-	else if (Lenh == 2)
-	{
-		bool check = true;
-		char c;
-		do {
-			cout << "Press Y to exit: ";
-			cin >> c;
-			check = cin.fail();
-			if (check)
+			case 2:
 			{
-				cin.ignore();
-				cin.clear();
+				system("cls");
+				ViewListClasses();
+				system("pause");
+				system("cls");
+				break;
 			}
-
-		} while (check == true);
-		if (c == 'y')
-		{
-			return 2;
-		}
-		else
-		{
-			return -1;
+			case 3: return 0; break;
 		}
 	}
 }
 
-int RunMenuView(int Lenh)
-{
-	if (Lenh == 0)
-	{
-		return 2;
-	}
-	else if (Lenh == 1)
-	{
-		system("cls");
-		ViewListClasses();
-		system("pause");
-	}
-	else if (Lenh == 2)
-	{
-		bool check = true;
-		char c;
-		do {
-			cout << "Press Y to exit: ";
-			cin >> c;
-			check = cin.fail();
-			if (check)
-			{
-				cin.ignore();
-				cin.clear();
-			}
-
-		} while (check == true);
-		if (c == 'y')
-		{
-			return 2;
-		}
-		else
-		{
-			return -1;
-		}
-	}
-}
 
 
