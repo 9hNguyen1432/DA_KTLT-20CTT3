@@ -23,16 +23,23 @@ struct Database {
 Database Imput()
 {
 	Database data;
+	gotoxy(53, 14);
+	cout << "IMPUT INFORMATION STUDENT" << endl;
 	cin.ignore();
-	cout << "Imput MSSV:";
+	gotoxy(58, 15);
+	cout << "Mssv:";
 	getline(cin, data.ID);
-	cout << "Imput Name:";
+	gotoxy(58, 16);
+	cout << "Name:";
 	getline(cin, data.name);
-	cout << "Imput Birth:";
+	gotoxy(58, 17);
+	cout << "Birth:";
 	getline(cin, data.Birth);
-	cout << "Imput Sex:";
+	gotoxy(58, 18);
+	cout << "Sex:";
 	getline(cin, data.sex);
-	cout << "Imput IDsocial:";
+	gotoxy(58, 19);
+	cout << "IDsocial:";
 	getline(cin, data.IDsocial);
 	return data;
 }
@@ -41,117 +48,94 @@ void CreateNewClass()
 {
 	string name;
 	system("cls");
-	gotoxy(40, 10);
-	cout << "Enter Name Of Class(Ex:20CTT1,..): ";
-	gotoxy(40, 11);
-	cin.ignore();
-	getline(cin, name);
-	fstream file1;
-	bool check = true;
-	file1.open("file_save//SchoolYear//2020-2021//ListClassOfYear.csv", ios::in);
-	string NameClass;
-	while (!file1.eof())
-	{
-		getline(file1, NameClass);
-		if (name == NameClass)
-		{
-			check = false;
-		}
-	}
-	if (check == false)
-	{
-		gotoxy(40, 15);
-		cout << "CLASS EXIT! PLEASE TRY AGAIN" << endl;
-	}
-	if (check == true)
-	{
-		gotoxy(40, 15);
-		string FileName = "file_save//SchoolYear//2020-2021//" + name + csv_tail;
-		fstream f1;
-		f1.open(FileName, ios::out);
-		f1 << "No" << "," << "ID" << "," << "Name" << "," << "Birth" << "," << "Sex" << "," << "IDSocial" << endl;
-		f1.close();
-		fstream file;
-		file.open("file_save//SchoolYear//2020-2021//ListClassOfYear.csv", ios::app);
-		file << name << endl;
-		file.close();
-		cout << "CREATE CLASS SUCCESSFUL,PRESS ENTER TO BACK TO MENU !!!" << endl;
-	}
-
-}
-
-void AddStudentToClass()
-{
-	Database data;
-	data = Imput();
-	string YearCourse;
-	string Class;
-	gotoxy(40, 15);
-	cout << "\nImput YearCourse:";
-	getline(cin, YearCourse);
-	cout << YearCourse << endl;
-	fstream file;
-	file.open("file_save//year.csv", ios::in);
+	textBgColor(1, 10);
+	printtext("   ______    __       ____         _____   _____ ", 40, 4);
+	printtext("  / ____/   / /      / /\\ \\      / ____/  / ___/ ", 40, 5);
+	printtext(" / /       / /      / /__\\ \\     \\ \\      \\ \\    ", 40, 6);
+	printtext("/ /___    / /____  / /____\\ \\   __\\ \\    __\\ \\   ", 40, 7);
+	printtext("\\____/   /______/ /_/      \\_\\ /____/   /____/   ", 40, 8);
+	printtext("                                                 ", 40, 9);
 	string Year;
-	bool check = false;
-	while (!file.eof())
+	gotoxy(34, 12);
+	textBgColor(5, 15);
+	cin.ignore();
+	cout << "Enter School Year That You Want To Create New Class:";
+	getline(cin, Year);
+	fstream fs;
+	fs.open("file_save//year.csv", ios::in);
+	bool checkYear = false;
+	string tempYear;
+	while (!fs.eof())
 	{
-		getline(file, Year);
-		if (YearCourse == Year)
+		getline(fs, tempYear);
+		if (Year == tempYear)
 		{
-			check = true;
+			checkYear = true;
 		}
 	}
-	if (check == false)
+	if (checkYear == false)
 	{
-		gotoxy(40, 17);
-		cout << "Don't Find Year Semester" << endl;
-		system("pause");
+		gotoxy(40, 14);
+		cout << "SCHOOL YEAR DON'T EXIT!! PLEASE TRY AGAIN" << endl;
 	}
-	if (check == true)
-	{
-		gotoxy(40, 18);
-		cout << "\nImput Class:";
-		getline(cin, Class);
-		string yearSem = "file_save//SchoolYear//" + YearCourse + "//ListClassOfYear.csv";
+	if (checkYear == true)
+	{ 
+		gotoxy(43, 14);
+		cout << "Enter Name Of Class(Ex:20CTT1,..): ";
+		getline(cin, name);
 		fstream file1;
-		string Cla;
-		bool check1 = false;
-		file1.open(yearSem, ios::in);
+		bool check = true;
+		file1.open("file_save//SchoolYear//" + Year + "//ListClassOfYear.csv", ios::in);
+		string NameClass;
 		while (!file1.eof())
 		{
-			getline(file1, Cla);
-			if (Class == Cla)
+			getline(file1, NameClass);
+			if (name == NameClass)
 			{
-				check1 = true;
+				check = false;
 			}
 		}
-		if (check1 = false)
-		{ 
-			gotoxy(40, 20);
-			cout << "Don't Find Class" << endl;
-			system("pause");
-		}
-		else
+		if (check == false)
 		{
-			string ClassSem = "file_save//SchoolYear//" + YearCourse + "//" + Class + csv_tail;
-			fstream file2;
-			file2.open(ClassSem, ios::app);
-			file2 << "0" << "," << data.ID << "," << data.name << "," << data.Birth << "," << data.sex << "," << data.IDsocial << endl;
-			file2.close();
+			gotoxy(40, 16);
+			cout << "CLASS EXIT! PLEASE TRY AGAIN" << endl;
+		}
+		if (check == true)
+		{
+			string FileName = "file_save//SchoolYear//" + Year + "//" + name + csv_tail;
+			fstream f1;
+			f1.open(FileName, ios::out);
+			f1 << "No" << "," << "ID" << "," << "Name" << "," << "Birth" << "," << "Sex" << "," << "IDSocial" << endl;
+			f1.close();
+			fstream file;
+			file.open("file_save//SchoolYear//" + Year + "//ListClassOfYear.csv", ios::app);
+			file << name << endl;
+			file.close();
+			gotoxy(38, 16);
+			cout << "CREATE CLASS SUCCESSFUL,PRESS ENTER TO BACK TO MENU !!!" << endl;
 		}
 	}
-}
 	
+}
 
 
 void ViewListClasses()
 {
+	textBgColor(1, 10);
+	printtext("   ______    __       ____         _____   _____ ", 40, 4);
+	printtext("  / ____/   / /      / /\\ \\      / ____/  / ___/ ", 40, 5);
+	printtext(" / /       / /      / /__\\ \\     \\ \\      \\ \\    ", 40, 6);
+	printtext("/ /___    / /____  / /____\\ \\   __\\ \\    __\\ \\   ", 40, 7);
+	printtext("\\____/   /______/ /_/      \\_\\ /____/   /____/   ", 40, 8);
+	printtext("                                                 ", 40, 9);
+	textBgColor(5, 15);
 	fstream f;
 	string selection;
-	gotoxy(20, 6);
+	gotoxy(50, 10);
+	cout << "VIEW LIST CLASS IN SCHOOL YEAR";
+	gotoxy(45, 12);
 	cin.ignore();
-	cout << "Please Imput Your Selection (Year Semester): ";
+	cout << "Please Select School Year: ";
 	getline(cin, selection);
 	fstream file;
 	string year;
@@ -167,20 +151,21 @@ void ViewListClasses()
 	}
 	if (check == false)
 	{
-		gotoxy(25, 15);
+		textBgColor(10, 11);
+		gotoxy(45, 14);
 		cout << "Your Selection Is Fail" << endl;
 	}
 	else
 	{
-		gotoxy(25, 15);
+		gotoxy(44, 14);
 		cout << "===== LIST CLASSES IN " << selection << " =======" << endl;
 		f.open("file_save//SchoolYear//" + selection + "//ListClassOfYear.csv", ios::in);
-		int i = 16;
+		int i = 15;
 		while (!f.eof())
 		{
 			string NameClass;
 			f >> NameClass;
-			gotoxy(25, i);
+			gotoxy(61, i);
 			cout << NameClass << endl;
 			i++;
 		}
@@ -189,32 +174,36 @@ void ViewListClasses()
 	}
 }
 
-int MenuViewListClass()
+void MenuViewListClass()
 {
-	gotoxy(20, 10);
-	cout << "======CLASSES======" << endl;
-	gotoxy(20, 11);
-	cout << "1. Create New Class" << endl;
-	gotoxy(20, 12);
+	textBgColor(1, 10);
+	printtext("   ______    __       ____         _____   _____ ", 40, 4);
+	printtext("  / ____/   / /      / /\\ \\      / ____/  / ___/ ", 40, 5);
+	printtext(" / /       / /      / /__\\ \\     \\ \\      \\ \\    ", 40, 6);
+	printtext("/ /___    / /____  / /____\\ \\   __\\ \\    __\\ \\   ", 40, 7);
+	printtext("\\____/   /______/ /_/      \\_\\ /____/   /____/   ", 40, 8);
+	printtext("                                                 ", 40, 9);
+	textBgColor(5, 15);
+	gotoxy(40, 12);
+	cout << "1. Create New Class In Year Semester" << endl;
+	gotoxy(40, 14);
 	cout << "2. View List Classes In Year Semester" << endl;
-	gotoxy(20, 13);
-	cout << "3. Exit Menu" << endl;
-	gotoxy(20, 14);
-	cout << "===========================" << endl;
-	return 3;
+	gotoxy(40, 16);
+	cout << "3. Exit" << endl;
 }
 
 
 
 int RunMenuViewListClass()
 {
+	char ch;
 	while (true)
 	{
 
 		int command;
 		MenuViewListClass();
-		gotoxy(20, 15);
-		cout << "Please Input Your Command: ";
+		gotoxy(40, 18);
+		cout << "Please Select Your Command: ";
 		cin >> command;
 		switch (command)
 		{
@@ -234,7 +223,14 @@ int RunMenuViewListClass()
 				system("cls");
 				break;
 			}
-			case 3: return 0; break;
+			case 3:
+			{
+				textBgColor(10, 11);
+				printtext("YOU WANT TO EXIT, PRESS ENTER TO BACK TO MENU !!!", 40, 20);
+				ch = _getch();
+				textBgColor(0, 15);
+				return 0;
+			}
 		}
 	}
 }
