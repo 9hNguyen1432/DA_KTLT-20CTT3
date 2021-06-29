@@ -20,6 +20,7 @@ bool IsPathExist(const std::string& s)
     return (stat(s.c_str(), &buffer) == 0);
 }
 
+
 void addSchoolYear() {
     SchoolYear schoolyear;
     char ch;
@@ -76,11 +77,14 @@ void addSchoolYear() {
     string data;
     file.open("file_save//year-semester.csv", ios::app);
     file1.open("file_save//year.csv", ios::app);
-    file << schoolyear.year << ",0"<<endl;
+    file << endl << schoolyear.year << ",0"<< endl;
     file1 << schoolyear.year << endl;
     file.close();
     file1.close();
-
+    fstream fs;
+    string CreateList = "file_save//SchoolYear//" + schoolyear.year + "//ListClassOfYear.csv";
+    fs.open(CreateList, ios::out);
+    fs.close();
     hidePointer();
     textBgColor(10, 11);
     printtext("CREATE SCHOOL YEAR SUCCESSFUL,PRESS ENTER TO BACK TO MENU !!!", 40, 14);
