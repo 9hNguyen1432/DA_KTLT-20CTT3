@@ -163,7 +163,7 @@ void get_course(User& A, SchoolYear s_y) {
 	string semester_path = "file_save/SchoolYear/" + s_y.year + '/' + s_y.semester.Name + '/';
 	string class_path = semester_path + "Class/";
 	string course_path = semester_path + "Course/";
-	string fileName = class_path + A.info.Class + csv_tail;// chỉ là thử nghiệm, sau khi có hàm đọc học kì sẽ thay đổi.
+	string fileName = class_path + A.info.Class + csv_tail;
 	f.open(fileName, ios::in);
 	init_List_Mark(A.info.phead);
 	while (f.eof() == false) {
