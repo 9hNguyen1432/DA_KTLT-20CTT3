@@ -8,26 +8,19 @@
 
 using namespace std;
 
-struct Date {
-	int Date;
-	int Month;
-	int Year;
-};
 struct Database {
-	int ID;
+	string No;
+	string ID;
 	string name;
-	Date Birth;// ngày sinh
+	string Birth;
 	string sex;
+	string IDsocial;
 };
-string CreateNewClass();
-void UpdateInforToNewClass();
+Database Imput();
+void AddStudentToClass();
+void CreateNewClass();
 void ViewListClasses();
-int RunMenuCreate(int Lenh);
-int RunMenuView(int Lenh);
-int MenuViewListClass();
-int MenuCreate();
-int MenuView();
-int SelectCommand(int Lenh);
-int RunMenuViewListClass(int Lenh);
-
+void MenuViewListClass();
+int RunMenuViewListClass();
+void AddRandomInfoStudentToClass();
 
