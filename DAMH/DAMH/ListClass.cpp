@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include <string>
 #include <fstream>
+#include"ConsoleProcess.h"
+#include "Course_function.h"
 
 using namespace std;
 
@@ -13,252 +15,225 @@ struct Database {
 	string No;
 	string ID;
 	string name;
-	string Birth;// ngày sinh
+	string Birth;
 	string sex;
 	string IDsocial;
 };
 
+Database Imput()
+{
+	Database data;
+	gotoxy(53, 14);
+	cout << "IMPUT INFORMATION STUDENT" << endl;
+	cin.ignore();
+	gotoxy(58, 15);
+	cout << "Mssv:";
+	getline(cin, data.ID);
+	gotoxy(58, 16);
+	cout << "Name:";
+	getline(cin, data.name);
+	gotoxy(58, 17);
+	cout << "Birth:";
+	getline(cin, data.Birth);
+	gotoxy(58, 18);
+	cout << "Sex:";
+	getline(cin, data.sex);
+	gotoxy(58, 19);
+	cout << "IDsocial:";
+	getline(cin, data.IDsocial);
+	return data;
+}
 
-string CreateNewClass()
+void CreateNewClass()
 {
-	fstream fs, fs1;
 	string name;
-	cout << "MENU CREATE NEW CLASS" << endl;
-	cout << "Please you create name of new class:";
-	cin >> name;
-	cout << "File has been created !!!";
-	string FileName = name + csv_tail;
-	fs.open(FileName, ios::out);
-	fs1.open("ListClass.csv", ios::out);
-	fs1 << FileName << endl;
-	fs1.close();
-	return FileName;
-}
-void UpdateInforToNewClass()
-{
-	fstream ifs, fs;
-	ifs.open("infor_student.csv", ios::in);
-	fs.open(CreateNewClass(), ios::out);
-	Database info;
-	int count = 0;
-	while (!ifs.eof() && (count != 45))
+	system("cls");
+	textBgColor(1, 10);
+	printtext("   ______    __       ____         _____   _____ ", 40, 4);
+	printtext("  / ____/   / /      / /\\ \\      / ____/  / ___/ ", 40, 5);
+	printtext(" / /       / /      / /__\\ \\     \\ \\      \\ \\    ", 40, 6);
+	printtext("/ /___    / /____  / /____\\ \\   __\\ \\    __\\ \\   ", 40, 7);
+	printtext("\\____/   /______/ /_/      \\_\\ /____/   /____/   ", 40, 8);
+	printtext("                                                 ", 40, 9);
+	string Year;
+	gotoxy(34, 12);
+	textBgColor(5, 15);
+	cin.ignore();
+	cout << "Enter School Year That You Want To Create New Class:";
+	getline(cin, Year);
+	fstream fs;
+	fs.open("file_save//year.csv", ios::in);
+	bool checkYear = false;
+	string tempYear;
+	while (!fs.eof())
 	{
-		getline(ifs, info.No, ',');
-		fs << info.No << ',';
-		getline(ifs, info.ID, ',');
-		fs << info.ID << ',';
-		getline(ifs, info.name, ',');
-		fs << info.name << ',';
-		getline(ifs, info.Birth, ',');
-		fs << info.Birth << ",";
-		getline(ifs, info.sex, ',');
-		fs << info.sex << ',';
-		ifs >> info.IDsocial;
-		fs << info.IDsocial;
-		count += 1;
+		getline(fs, tempYear);
+		if (Year == tempYear)
+		{
+			checkYear = true;
+		}
 	}
-	ifs.close();
-	fs.close();
+	if (checkYear == false)
+	{
+		gotoxy(40, 14);
+		cout << "SCHOOL YEAR DON'T EXIT!! PLEASE TRY AGAIN" << endl;
+	}
+	if (checkYear == true)
+	{ 
+		gotoxy(43, 14);
+		cout << "Enter Name Of Class(Ex:20CTT1,..): ";
+		getline(cin, name);
+		fstream file1;
+		bool check = true;
+		file1.open("file_save//SchoolYear//" + Year + "//ListClassOfYear.csv", ios::in);
+		string NameClass;
+		while (!file1.eof())
+		{
+			getline(file1, NameClass);
+			if (name == NameClass)
+			{
+				check = false;
+			}
+		}
+		if (check == false)
+		{
+			gotoxy(40, 16);
+			cout << "CLASS EXIT! PLEASE TRY AGAIN" << endl;
+		}
+		if (check == true)
+		{
+			string FileName = "file_save//SchoolYear//" + Year + "//" + name + csv_tail;
+			fstream f1;
+			f1.open(FileName, ios::out);
+			f1 << "No" << "," << "ID" << "," << "Name" << "," << "Birth" << "," << "Sex" << "," << "IDSocial" << endl;
+			f1.close();
+			fstream file;
+			file.open("file_save//SchoolYear//" + Year + "//ListClassOfYear.csv", ios::app);
+			file << name << endl;
+			file.close();
+			gotoxy(38, 16);
+			cout << "CREATE CLASS SUCCESSFUL,PRESS ENTER TO BACK TO MENU !!!" << endl;
+		}
+	}
+	
 }
+
 
 void ViewListClasses()
 {
+	textBgColor(1, 10);
+	printtext("   ______    __       ____         _____   _____ ", 40, 4);
+	printtext("  / ____/   / /      / /\\ \\      / ____/  / ___/ ", 40, 5);
+	printtext(" / /       / /      / /__\\ \\     \\ \\      \\ \\    ", 40, 6);
+	printtext("/ /___    / /____  / /____\\ \\   __\\ \\    __\\ \\   ", 40, 7);
+	printtext("\\____/   /______/ /_/      \\_\\ /____/   /____/   ", 40, 8);
+	printtext("                                                 ", 40, 9);
+	textBgColor(5, 15);
 	fstream f;
-	cout << "LIST CLASSES" << endl;
-	f.open("ListClass.csv", ios::in);
-	while (!f.eof())
+	string selection;
+	gotoxy(50, 10);
+	cout << "VIEW LIST CLASS IN SCHOOL YEAR";
+	gotoxy(45, 12);
+	cin.ignore();
+	cout << "Please Select School Year: ";
+	getline(cin, selection);
+	fstream file;
+	string year;
+	bool check = false;
+	file.open("file_save//year.csv", ios::in);
+	while (!file.eof())
 	{
-		string NameClass;
-		f >> NameClass;
-		cout << NameClass << endl;
-	}
-	cout << endl;
-	f.close();
-
-}
-int RunMenuCreate(int Lenh);
-
-int RunMenuView(int Lenh);
-
-
-int MenuViewListClass()
-{
-
-	cout << "======CLASSES======" << endl;
-	cout << "1. Create New Class" << endl;
-	cout << "2. View List Classes" << endl;
-	cout << "3. Exit Menu" << endl;
-	cout << "===========================" << endl;
-	return 3;
-}
-
-int MenuCreate()
-{
-	system("cls");
-	cout << "======CREATE NEW CLASSES======" << endl;
-	cout << "0. Return Menu" << endl;
-	cout << "1. Create New Classes" << endl;
-	cout << "2. Exit Menu" << endl;
-	return 2;
-}
-
-int MenuView()
-{
-	system("cls");
-	cout << "======VIEW LIST CLASSES======" << endl;
-	cout << "0. Return Menu" << endl;
-	cout << "1. View List Classes" << endl;
-	cout << "2. Exit Menu" << endl;
-	return 2;
-}
-
-int SelectCommand(int Lenh)
-{
-	bool check;
-	int  n;
-	do
-	{
-		cout << "Please Input Your Command: ";
-		cin >> n;
-		check = cin.fail();
-		if (check == true)
+		getline(file, year);
+		if (selection == year)
 		{
-			cin.clear();
-			cin.ignore();
-
+			check = true;
 		}
-	} while (check == true || n > Lenh || n < 0);
-	return n;
+	}
+	if (check == false)
+	{
+		textBgColor(10, 11);
+		gotoxy(45, 14);
+		cout << "Your Selection Is Fail" << endl;
+	}
+	else
+	{
+		gotoxy(44, 14);
+		cout << "===== LIST CLASSES IN " << selection << " =======" << endl;
+		f.open("file_save//SchoolYear//" + selection + "//ListClassOfYear.csv", ios::in);
+		int i = 15;
+		while (!f.eof())
+		{
+			string NameClass;
+			f >> NameClass;
+			gotoxy(61, i);
+			cout << NameClass << endl;
+			i++;
+		}
+		cout << endl;
+		f.close();
+	}
 }
 
-int RunMenuViewListClass(int Lenh)
+void MenuViewListClass()
 {
-	switch (Lenh)
+	textBgColor(1, 10);
+	printtext("   ______    __       ____         _____   _____ ", 40, 4);
+	printtext("  / ____/   / /      / /\\ \\      / ____/  / ___/ ", 40, 5);
+	printtext(" / /       / /      / /__\\ \\     \\ \\      \\ \\    ", 40, 6);
+	printtext("/ /___    / /____  / /____\\ \\   __\\ \\    __\\ \\   ", 40, 7);
+	printtext("\\____/   /______/ /_/      \\_\\ /____/   /____/   ", 40, 8);
+	printtext("                                                 ", 40, 9);
+	textBgColor(5, 15);
+	gotoxy(40, 12);
+	cout << "1. Create New Class In Year Semester" << endl;
+	gotoxy(40, 14);
+	cout << "2. View List Classes In Year Semester" << endl;
+	gotoxy(40, 16);
+	cout << "3. Exit" << endl;
+}
+
+
+
+int RunMenuViewListClass()
+{
+	char ch;
+	while (true)
 	{
-	case 1:
-	{
-		system("cls");
-		int lenh;
-		int check = 0;
-		do
+
+		int command;
+		MenuViewListClass();
+		gotoxy(40, 18);
+		cout << "Please Select Your Command: ";
+		cin >> command;
+		switch (command)
 		{
-			lenh = SelectCommand(MenuCreate());
-			check = RunMenuCreate(lenh);
-		} while (check != 2);
-	};
-	case 2:
-	{
-		system("cls");
-		int lenh;
-		int check = 0;
-		do
-		{
-			lenh = SelectCommand(MenuView());
-			check = RunMenuView(lenh);
-		} while (check != 2);
-	};
-	case 3:
-	{
-		bool check = true;
-		char c;
-		do {
-			cout << "Press Y to exit: ";
-			cin >> c;
-			check = cin.fail();
-			if (check)
+			case 1:
 			{
-				cin.ignore();
-				cin.clear();
+				system("cls");
+				CreateNewClass();
+				system("pause");
+				system("cls");
+				break;
 			}
-
-		} while (check == true);
-		if (c == 'y')
-		{
-			return 3;
-		}
-		else
-		{
-			return 0;
-		}
-	};
-	}
-}
-
-int RunMenuCreate(int Lenh)
-{
-	if (Lenh == 0)
-	{
-		return 2;
-
-	}
-	else if (Lenh == 1)
-	{
-		system("cls");
-		UpdateInforToNewClass();
-		system("pause");
-	}
-	else if (Lenh == 2)
-	{
-		bool check = true;
-		char c;
-		do {
-			cout << "Press Y to exit: ";
-			cin >> c;
-			check = cin.fail();
-			if (check)
+			case 2:
 			{
-				cin.ignore();
-				cin.clear();
+				system("cls");
+				ViewListClasses();
+				system("pause");
+				system("cls");
+				break;
 			}
-
-		} while (check == true);
-		if (c == 'y')
-		{
-			return 2;
-		}
-		else
-		{
-			return -1;
-		}
-	}
-}
-
-int RunMenuView(int Lenh)
-{
-	if (Lenh == 0)
-	{
-		return 2;
-	}
-	else if (Lenh == 1)
-	{
-		system("cls");
-		ViewListClasses();
-		system("pause");
-	}
-	else if (Lenh == 2)
-	{
-		bool check = true;
-		char c;
-		do {
-			cout << "Press Y to exit: ";
-			cin >> c;
-			check = cin.fail();
-			if (check)
+			case 3:
 			{
-				cin.ignore();
-				cin.clear();
+				textBgColor(10, 11);
+				printtext("YOU WANT TO EXIT, PRESS ENTER TO BACK TO MENU !!!", 40, 20);
+				ch = _getch();
+				textBgColor(0, 15);
+				return 0;
 			}
-
-		} while (check == true);
-		if (c == 'y')
-		{
-			return 2;
-		}
-		else
-		{
-			return -1;
 		}
 	}
 }
+
 
 

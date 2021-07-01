@@ -6,7 +6,7 @@
 #include"staffFunction.h"
 #include "Course_function.h"
 #include "ListClass.h"
-
+#include "AddStudent.h"
 void menuStaff(User &user)
 {	
 	showPointer();
@@ -20,14 +20,15 @@ void menuStaff(User &user)
 		showPointer();
 		system("cls");
 		std::cout << "==============================\n";
-		printtext(" 1. Profile info\n", 1, 8);
-		std::cout << "2. Change password\n"
+		gotoxy(0, 7);
+		std::cout<<"1. Profile info\n"
+			<< "2. Change password\n"
 			<< "3. Create school-year\n"
 			<< "4. Create class\n"
 			<< "5. Create course\n"
 			<< "6. Create course registration session\n"
 			<< "7. Add student to class\n"
-			<< "8. Create semester\n "
+			<< "8. Create semester\n"
 			<< "9. Edit student's marks\n"
 			<< "10. View list of course,Delete a course \n"
 			<< "update course information\n"
@@ -37,7 +38,7 @@ void menuStaff(User &user)
 			<< "14. View score board of a class\n"
 			<< "0. Log out\n"
 			<< " -----------------------------\n";
-		std::cout << " your choice: ";
+		std::cout << "Your choice: ";
 		printtext("     ___                   ___", 40, 1);
 		printtext("    /  /\\     ___         /  /\\  ", 40, 2);
 		printtext("   /  /::\\   /__/\\       /  /::\\  ", 40, 3);
@@ -82,7 +83,7 @@ void menuStaff(User &user)
 		printtext("      |__|::/    \\  \\:\\/:/  ", 75, 20);
 		printtext("      /__/:/      \\  \\::/  ", 75, 21);
 		printtext("      \\__\\/        \\__\\/  ", 75, 22);
-		
+		gotoxy(14, 24);
 		std::cin >> option;
 		switch (option)
 		{
@@ -101,12 +102,8 @@ void menuStaff(User &user)
 			break;
 		case 4:
 			system("cls");
-			/*int k = 0;
-			do
-			{
-				k = RunMenuViewListClass(SelectCommand(MenuViewListClass()));
-			} while (k != 3);*/
-			RunMenuViewListClass(SelectCommand(MenuViewListClass()));
+			RunMenuViewListClass();
+			break;
 		case 5:
 			// lenh them khoa hoc
 			cin.ignore();
@@ -118,6 +115,9 @@ void menuStaff(User &user)
 			break;
 		case 7:
 			//them sinh vien vao lop
+			system("cls");
+			//AddStudentToClass();
+			RunMenuAddInfoStudentToClass();
 			break;
 		case 8: 
 			//lenh them hoc ki
