@@ -185,9 +185,9 @@ void MenuViewListClass()
 	printtext("                                                 ", 40, 9);
 	textBgColor(5, 15);
 	gotoxy(40, 12);
-	cout << "1. Create New Class In Year Semester" << endl;
+	cout << "1. Create New Class In School Year" << endl;
 	gotoxy(40, 14);
-	cout << "2. View List Classes In Year Semester" << endl;
+	cout << "2. View List Classes In School Year" << endl;
 	gotoxy(40, 16);
 	cout << "3. Exit" << endl;
 }
