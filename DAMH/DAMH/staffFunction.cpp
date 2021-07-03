@@ -1004,8 +1004,6 @@ void moveUp(string filename,int &currentLine,int columnNum,int indexB[],int y, s
     for (int i = 0; i < columnNum; i++) {
         printtext(column[i], indexB[i], y + lineInConsole);
     }    
-    
-    
 }
 
 void moveDown(string filename, int &currentLine, int columnNum, int indexB[],int y,string column[],int lineInConsole,int width,int x) {
