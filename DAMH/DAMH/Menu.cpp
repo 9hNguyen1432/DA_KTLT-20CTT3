@@ -28,14 +28,13 @@ void menuStaff(User &user)
 			<< "6. Create course registration session\n"
 			<< "7. Add student to class\n"
 			<< "8. Create semester\n "
-			<< "9. Edit student's information\n"
-			<< "10. Edit student's marks\n"
-			<< "11. View list of course,Delete a course \n"
+			<< "9. Edit student's marks\n"
+			<< "10. View list of course,Delete a course \n"
 			<< "update course information\n"
-			<< "12. Export student list\n"
-			<< "13. Import student list\n"
-			<< "14. View score board of a course\n"
-			<< "15. View score board of a class\n"
+			<< "11. Export student list\n"
+			<< "12. Import student list\n"
+			<< "13. View score board of a course\n"
+			<< "14. View score board of a class\n"
 			<< "0. Log out\n"
 			<< " -----------------------------\n";
 		std::cout << " your choice: ";
@@ -98,7 +97,7 @@ void menuStaff(User &user)
 		case 3:
 			// lenh them nam hoc
 			cin.ignore();
-			addSchoolYear();
+			addSchoolYear(SY);
 			break;
 		case 4:
 			system("cls");
@@ -123,36 +122,34 @@ void menuStaff(User &user)
 		case 8: 
 			//lenh them hoc ki
 			cin.ignore();
-			addSemester();
+			addSemester(SY.year, SY.semester.Name);
 			break;
 		case 9:
-			//lenh dieu chinh thong tin sinh vien
-			break;
-		case 10:
 			//edit diem sinh vien
 			listClass(SY);
 			break;
-		case 11:
+		case 10:
 			//view danh sachs hoc phan
 			cin.ignore();
 			listCourse(SY.year, SY.semester.Name);
 			break;
-		case 12:
+		case 11:
 			//xuat diem hoc sinh vao file
 			exportScoreboardInterface(SY.year,SY.semester.Name,2,2,1);
 			break;
-		case 13:
+		case 12:
 			//xuat diem hoc sinh vao file
 			cin.ignore();
 			importScoreBoardUI();
 			break;
-		case 14:
+		case 13:
 		{
 			int n = 0;
 			view_score_of_course_in_year(read_file_score_of_course(SY, "ABC4", n), n);
+			textBgColor(0, 15);
 			break;
 		}
-		case 15:
+		case 14:
 			//view diem cua lop hoc
 		case 0:
 			isExit = true;
@@ -239,7 +236,7 @@ void menuStudent(User &user)
 				else if (check == -1) printtext("IT'S NOT THE TIME TO START YET", 41, 17);
 				else printtext("It was late to register the course", 41, 17);
 				Sleep(1000);
-				menuStudent(user);
+				textBgColor(0, 15);
 			}
 			break;
 		}
