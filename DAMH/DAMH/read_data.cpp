@@ -381,7 +381,7 @@ Mark* read_file_score_of_course(SchoolYear SY, string IDcourse, int &n) {
 	if (!f.good()) {
 		return NULL;
 	}
-	n = countLine(fileName);
+	n = countLine(fileName)-1;
 	Mark* M=new Mark[n];
 	string temp;
 	getline(f, temp);
@@ -418,7 +418,7 @@ void view_10_score_of_course(Mark*M,int i,int n, int x, int y) {
 		}
 	}
 	else {
-		for (int j = 0; j < n%10-1; j++) {
+		for (int j = 0; j < n-i; j++) {
 			view_1_score_of_course(M[i + j], x, y+j);
 		}
 	}

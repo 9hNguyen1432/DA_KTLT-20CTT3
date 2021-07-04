@@ -414,10 +414,16 @@ void DisPlay_Course_Of_Student(SchoolYear Y, User A) {
 		}
 	} while (true);
 }
-void edit_score(User& A, SchoolYear SY, int line, Mark* M) {
+void edit_score(User& A, SchoolYear SY, Mark* M) {
 	char ch;
 	int line_now = 1;
 	int x = 15, y = 14;
+	int line = 0;
+	MarkNode* temp = A.info.phead;
+	while (temp != NULL) {
+		line++;
+		temp = temp->pNext;
+	}
 	drawRectangle(1, y + line_now, 115, 1, 14);
 	textBgColor(0, 14);
 	view_1_line(M[line_now - 1], x, y + line_now);
@@ -640,6 +646,8 @@ void edit_score_in_list_course(User& A, SchoolYear SY) {
 				textBgColor(0, 15);
 				return;
 			}
+			line_now = 0;
+			count = tab_now * 10;
 			drawRectangle(1, y + line_now, 115, 1, 14);
 			textBgColor(0, 14);
 			view_1_score_of_course(M[tab_now * 10], x, y);
@@ -666,7 +674,7 @@ void edit_score_in_list_course(User& A, SchoolYear SY) {
 				textBgColor(0, 14);
 				view_1_score_of_course(M[count], x, y + line_now);
 			}
-			else if (ch == 80 && line_now < 9) //down
+			else if (ch == 80 && line_now < 9 && count < n-1) //down
 			{
 				drawRectangle(1, y + line_now, 115, 1, 11);
 				textBgColor(0, 11);

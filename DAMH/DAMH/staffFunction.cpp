@@ -38,6 +38,7 @@ void CopyContentFileToFile(string src_path, string des_path)
 }
 
 void addSchoolYear(SchoolYear &Y) {
+
     SchoolYear schoolyear;
     char ch;    
     system("cls");
@@ -88,6 +89,7 @@ void addSchoolYear(SchoolYear &Y) {
     createFolder(nameFolder);
 
     fstream file;
+    fstream file1;
     string data;
     file.open("file_save//year-semester.csv", ios::app);
     file <<endl<< schoolyear.year << ",0";
@@ -105,7 +107,8 @@ void addSchoolYear(SchoolYear &Y) {
     CopyContentFileToFile("file_save/SchoolYear/" + Y.year + "/staff.csv", "file_save/SchoolYear/" + schoolyear.year + "/staff.csv");
     CopyContentFileToFile("file_save/SchoolYear/" + Y.year + "/class_info.csv", "file_save/SchoolYear/" + schoolyear.year + "/class_info.csv");
     Y.year = schoolyear.year;
-    Y.semester.Name="Semester0";
+    Y.semester.Name="Semester0";aa
+
     hidePointer();
     textBgColor(10, 11);
     printtext("CREATE SCHOOL YEAR SUCCESSFUL,PRESS ENTER TO BACK TO MENU !!!", 40, 14);
@@ -1779,7 +1782,8 @@ void showStudentInclass(SchoolYear Y,string classname) {
             A.info.sex = column[4];
             get_course(A, Y);
             textBgColor(0, 15);
-            edit_score(A, Y, 4, view_all_score_of_1_student(A, Y));
+            edit_score(A, Y, view_all_score_of_1_student(A, Y));
+
             showStudentInclass(Y, classname);
         }
     } while (true);

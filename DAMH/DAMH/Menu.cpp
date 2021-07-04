@@ -6,7 +6,7 @@
 #include"staffFunction.h"
 #include "Course_function.h"
 #include "ListClass.h"
-
+#include "AddStudent.h"
 void menuStaff(User &user)
 {	
 	showPointer();
@@ -20,8 +20,9 @@ void menuStaff(User &user)
 		showPointer();
 		system("cls");
 		std::cout << "==============================\n";
-		printtext(" 1. Profile info\n", 1, 8);
-		std::cout << "2. Change password\n"
+		gotoxy(0, 7);
+		std::cout<<"1. Profile info\n"
+			<< "2. Change password\n"
 			<< "3. Create school-year\n"
 			<< "4. Create class\n"
 			<< "5. Create course\n"
@@ -37,7 +38,7 @@ void menuStaff(User &user)
 			<< "14. View score board of a class\n"
 			<< "0. Log out\n"
 			<< " -----------------------------\n";
-		std::cout << " your choice: ";
+		std::cout << "Your choice: ";
 		printtext("     ___                   ___", 40, 1);
 		printtext("    /  /\\     ___         /  /\\  ", 40, 2);
 		printtext("   /  /::\\   /__/\\       /  /::\\  ", 40, 3);
@@ -82,7 +83,7 @@ void menuStaff(User &user)
 		printtext("      |__|::/    \\  \\:\\/:/  ", 75, 20);
 		printtext("      /__/:/      \\  \\::/  ", 75, 21);
 		printtext("      \\__\\/        \\__\\/  ", 75, 22);
-		
+		gotoxy(14, 24);
 		std::cin >> option;
 		switch (option)
 		{
@@ -101,12 +102,8 @@ void menuStaff(User &user)
 			break;
 		case 4:
 			system("cls");
-			/*int k = 0;
-			do
-			{
-				k = RunMenuViewListClass(SelectCommand(MenuViewListClass()));
-			} while (k != 3);*/
-			RunMenuViewListClass(SelectCommand(MenuViewListClass()));
+			RunMenuViewListClass();
+			break;
 		case 5:
 			// lenh them khoa hoc
 			cin.ignore();
@@ -118,6 +115,9 @@ void menuStaff(User &user)
 			break;
 		case 7:
 			//them sinh vien vao lop
+			system("cls");
+			//AddStudentToClass();
+			RunMenuAddInfoStudentToClass();
 			break;
 		case 8: 
 			//lenh them hoc ki
@@ -135,7 +135,7 @@ void menuStaff(User &user)
 			break;
 		case 11:
 			//xuat diem hoc sinh vao file
-			exportScoreboardInterface(SY.year,SY.semester.Name,2,2,1);
+			exportScoreboardInterface(SY.year, SY.semester.Name, 2, 2, 1);
 			break;
 		case 12:
 			//xuat diem hoc sinh vao file
@@ -151,6 +151,7 @@ void menuStaff(User &user)
 		}
 		case 14:
 			//view diem cua lop hoc
+			break;
 		case 0:
 			isExit = true;
 			break;
@@ -176,14 +177,12 @@ void menuStudent(User &user)
 		std::cout << "==================MENU============\n";
 		gotoxy(45, 9); std::cout << "1. Profile info\n";
 		gotoxy(45, 10); std::cout << "2. Change password\n";
-		gotoxy(45, 11); std::cout << "3. List of classes\n";
-		gotoxy(45, 12); std::cout << "4. List of student in class\n";
-		gotoxy(45, 13); std::cout << "5. List of student in a course\n";
-		gotoxy(45, 14); std::cout << "6. Score board\n";
-		gotoxy(45, 15); std::cout << "7. Enroll courses\n";
-		gotoxy(45, 16); std::cout << "8. List of enrolled courses\n";
-		gotoxy(45, 17); std::cout << "9. Remove courses\n";
-		gotoxy(45, 18); std::cout << "9. View your list of course\n";
+		gotoxy(45, 12); std::cout << "3. List of student in class\n";
+		gotoxy(45, 14); std::cout << "4. Score board\n";
+		gotoxy(45, 15); std::cout << "5. Enroll courses\n";
+		gotoxy(45, 16); std::cout << "6. List of enrolled courses\n";
+		gotoxy(45, 17); std::cout << "7. Remove courses\n";
+		gotoxy(45, 18); std::cout << "8. View your list of course\n";
 		gotoxy(45, 19); std::cout << "0. Log out\n";
 		gotoxy(45, 20); std::cout << " ---------------------\n";
 		
@@ -209,24 +208,17 @@ void menuStudent(User &user)
 			change_password(user);
 			break;
 		case 3:
-			// lenh show danh sach cac lop
+
 			break;
 		case 4:
-			//lenh show danh sach hoc sinh trong 1 lop
+			// lenh show bang diem
+			DisPlay_Mark_Of_Student( SY, user);
 			break;
 		case 5:
-			//lenh show danh sach hoc sinh trong 1 khoa hoc
-			break;
-		case 6: 
-			// lenh show bang diem
-			/*DisPlay_Mark_Of_Student( SY, user);*/
-			/*edit_score(user, SY,4, view_all_score_of_1_student(user, SY));*/
-			edit_score_in_list_course(user, SY);
-			break;
-		case 7:{
+		{
 			int check = checkCourseSession();
-			if (check==1){
-				enroll_course(user, SY,1);
+			if (check == 1) {
+				enroll_course(user, SY, 1);
 				system("pause");
 			}
 			else {
@@ -240,16 +232,20 @@ void menuStudent(User &user)
 			}
 			break;
 		}
-		case 8:
+		case 6: 
 			DisPlay_Course_Of_Student(SY, user);
+			//edit_score(user, SY, view_all_score_of_1_student(user, SY));
+			/*edit_score_in_list_course(user, SY);*/
 			break;
-		case 9:
+		case 7:
+		{
 			//lenh xoa bot khoa hoc da dang ki
 			enroll_course(user, SY, -1);
 			system("pause");
 			break;
-		case 10:
-			//xem khoa hoc:
+		}
+		case 8:
+			DisPlay_Course_Of_Student(SY, user);
 			break;
 		case 0:
 			isExit = true;
