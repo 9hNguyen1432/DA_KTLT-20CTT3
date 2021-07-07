@@ -80,69 +80,6 @@ void rewrite_course_of_student_file(User user, string fileName, string data, int
 	// renaming the updated file with the existing file name
 	rename(newName.c_str(), oldName.c_str());
 }
-//hàm ghi danh vào file khóa học tổng của staff, user là học sinh.
-//void rewrite_course_of_staff_file(User user, string fileName, string ID_course, int command_flag) {
-//	fstream file_prv, file_aft;
-//	string oldName = fileName + csv_tail;
-//	string newName = fileName + "new" + csv_tail;
-//	file_prv.open(oldName, ios::in);
-//	file_aft.open(newName, ios::out);
-//	string temp;
-//	bool flag_change = true;
-//	while (file_prv.eof() == false) {
-//		string str_num_of_student;
-//		int num_of_student;
-//		getline(file_prv, temp, ',');
-//		if (flag_change == true) {
-//			file_aft << temp;
-//			flag_change = false;
-//		}
-//		else {
-//			file_aft << '\n' << temp;
-//		}
-//		getline(file_prv, str_num_of_student);
-//		num_of_student = stoi(str_num_of_student);
-//		if (_strcmpi(temp.c_str(), ID_course.c_str()) != 0) {
-//			file_aft << ',' << str_num_of_student;
-//			for (int i = 0; i < num_of_student; i++) {
-//				getline(file_prv, temp);
-//				file_aft << '\n' << temp;
-//			}
-//		}
-//		else {
-//			if (command_flag >= 0) {
-//				num_of_student++;
-//				file_aft << ',' << to_string(num_of_student);
-//				for (int i = 0; i < num_of_student - 1; i++) {
-//					getline(file_prv, temp);
-//					file_aft << '\n' << temp;
-//				}
-//				file_aft << '\n' << user.ID << ',' << "20CTT333";
-//			}
-//			else {
-//				num_of_student--;
-//				file_aft << ',' << to_string(num_of_student);
-//				for (int i = 0; i < num_of_student + 1; i++) {
-//					getline(file_prv, temp, ',');
-//					if (_strcmpi(temp.c_str(), user.ID.c_str()) == 0) {
-//						getline(file_prv, temp);
-//					}
-//					else {
-//						file_aft << temp;
-//						getline(file_prv, temp);
-//						file_aft << '\n' << temp;
-//					}
-//				}
-//			}
-//		}
-//	}
-//	file_prv.close();
-//	file_aft.close();
-//	// removing the existing file
-//	remove(oldName.c_str());
-//	// renaming the updated file with the existing file name
-//	rename(newName.c_str(), oldName.c_str());
-//};
 void rewrite_course_file(User user, string fileName, int command_flag) {
 	fstream file_prv, file_aft;
 	string oldName = fileName + csv_tail;
@@ -215,9 +152,15 @@ void enroll_course(User& A, SchoolYear s_y, int command_flag) {
 		//nếu so sánh được mã môn nhập vào có trong danh sách lớp học, cho phép ghi danh:
 		if (_strcmpi(temp.c_str(), ID_course_input.c_str()) == 0) {
 			string Name;
+			string Num_of_creadit;
 			getline(file_course_info, Name, ',');
+			getline(file_course_info, Num_of_creadit, ',');
+			getline(file_course_info, Num_of_creadit, ',');
 			MarkNode* Mtemp = A.info.phead;
 			//kiểm tra xem trong danh sách môn học của sinh viên đã có môn này hay chưa
+			if (command_flag >=0) {
+				get_all_course(A, s_y);
+			}
 			realine_flag = true;
 			while (Mtemp != NULL) {
 				if (_strcmpi(temp.c_str(), Mtemp->data.ID.c_str()) == 0) {
@@ -235,7 +178,7 @@ void enroll_course(User& A, SchoolYear s_y, int command_flag) {
 			}
 			if (command_flag>=0){
 				//chưa có thì thêm vào danh sách.
-				add_Tail_List_Mark(A.info.phead, temp,Name);
+				add_Tail_List_Mark(A.info.phead, temp,Name, Num_of_creadit);
 				//ghi them vao file;
 				string file_cousre_of_class = class_path + A.info.Class;
 				rewrite_course_of_student_file(A, file_cousre_of_class, temp, 1);
@@ -611,8 +554,7 @@ void DisPlay_Mark_Of_Student(SchoolYear Y, User A) {
 	textBgColor(0, 15);
 }
 
-void edit_score_in_list_course(User& A, SchoolYear SY) {
-	string IDcourse = "ABC4";
+void edit_score_in_list_course(User& A, SchoolYear SY, string IDcourse) {
 	int n = 0;
 	Mark* M = read_file_score_of_course(SY, IDcourse, n);
 	if (M == NULL) {

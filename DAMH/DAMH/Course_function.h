@@ -13,6 +13,6 @@ void change_Year_Semester(SchoolYear&S);
 void DisPlay_Course_Of_Student(SchoolYear Y, User A);
 void edit_score(User& A, SchoolYear SY, Mark* M);
 void DisPlay_Mark_Of_Student(SchoolYear Y, User A);
-void edit_score_in_list_course(User& A, SchoolYear SY);
+void edit_score_in_list_course(User& A, SchoolYear SY, string IDcourse);
 #endif // !course_h
 

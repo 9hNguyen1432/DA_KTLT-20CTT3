@@ -7,6 +7,52 @@
 #include "Course_function.h"
 #include "ListClass.h"
 #include "AddStudent.h"
+void printASCIIStaffMeNu() {
+	printtext("     ___                   ___", 40, 1);
+	printtext("    /  /\\     ___         /  /\\  ", 40, 2);
+	printtext("   /  /::\\   /__/\\       /  /::\\  ", 40, 3);
+	printtext("  /__/:/\\:\\  \\  \\:\\     /  /:/\\:\\ ", 40, 4);
+	printtext(" _\\_ \\:\\ \\:\\  \\__\\:\\   /  /::\\ \\:\\", 40, 5);
+	printtext("/__/\\ \\:\\ \\:\\ /  /::\\ /__/:/\\:\\_\\:\\", 40, 6);
+	printtext("\\  \\:\\ \\:\\_\\//  /:/\\:\\\\__\\/  \\:\\/:/", 40, 7);
+	printtext(" \\  \\:\\_\\:\\ /  /:/__\\/     \\__\\::/ ", 40, 8);
+	printtext("  \\  \\:\\/://__/:/          /  /:/  ", 40, 9);
+	printtext("   \\  \\::/ \\__\\/          /__/:/   ", 40, 10);
+	printtext("    \\__\\/                 \\__\\/   ", 40, 11);
+
+	printtext("           ___          ___     ", 40, 12);
+	printtext("          /  /\\        /  /\\   ", 40, 13);
+	printtext("         /  /::\\      /  /::\\  ", 40, 14);
+	printtext("        /  /:/\\:\\    /  /:/\\:\\  ", 40, 15);
+	printtext("       /  /::\\ \\:\\  /  /::\\ \\:\\ ", 40, 16);
+	printtext("      /__/:/\\:\\ \\:\\/__/:/\\:\\ \\:\\", 40, 17);
+	printtext("      \\__\\/  \\:\\_\\/\\__\\/  \\:\\_\\/", 40, 18);
+	printtext("           \\  \\:\\       \\  \\:\\  ", 40, 19);
+	printtext("            \\__\\/        \\__\\/  ", 40, 20);
+
+	printtext("       ___          ___  ", 75, 1);
+	printtext("      /  /\\        /  /\\", 75, 2);
+	printtext("     /  /::|      /  /::\\ ", 75, 3);
+	printtext("    /  /:|:|     /  /:/\\:\\ ", 75, 4);
+	printtext("   /  /:/|:|__  /  /::\\ \\:\\", 75, 5);
+	printtext("  /__/:/_|::::\\/__/:/\\:\\ \\:\\", 75, 6);
+	printtext("  \\__\\/  /~~/:/\\  \\:\\ \\:\\_\\/", 75, 7);
+	printtext("        /  /:/  \\  \\:\\ \\:\\  ", 75, 8);
+	printtext("       /  /:/    \\  \:\\_\\/  ", 75, 9);
+	printtext("      /__/:/      \\  \\:\\    ", 75, 10);
+	printtext("      \\__\\/        \\__\/    ", 75, 11);
+	printtext("       ___          ___    ", 75, 12);
+	printtext("      /  /\\        /  /\\    ", 75, 13);
+	printtext("     /  /::|      /  /:/   ", 75, 14);
+	printtext("    /  /:|:|     /  /:/    ", 75, 15);
+	printtext("   /  /:/|:|__  /  /:/     ", 75, 16);
+	printtext("  /__/:/ |:| /\\/__/:/     /\\", 75, 17);
+	printtext("  \\__\\/  |:|/:/\\  \\:\\    /:/", 75, 18);
+	printtext("      |  |:/:/  \\  \\:\\  /:/ ", 75, 19);
+	printtext("      |__|::/    \\  \\:\\/:/  ", 75, 20);
+	printtext("      /__/:/      \\  \\::/  ", 75, 21);
+	printtext("      \\__\\/        \\__\\/  ", 75, 22);
+}
 void menuStaff(User &user)
 {	
 	showPointer();
@@ -39,50 +85,7 @@ void menuStaff(User &user)
 			<< "0. Log out\n"
 			<< " -----------------------------\n";
 		std::cout << "Your choice: ";
-		printtext("     ___                   ___", 40, 1);
-		printtext("    /  /\\     ___         /  /\\  ", 40, 2);
-		printtext("   /  /::\\   /__/\\       /  /::\\  ", 40, 3);
-		printtext("  /__/:/\\:\\  \\  \\:\\     /  /:/\\:\\ ", 40, 4);
-		printtext(" _\\_ \\:\\ \\:\\  \\__\\:\\   /  /::\\ \\:\\", 40, 5); 
-		printtext("/__/\\ \\:\\ \\:\\ /  /::\\ /__/:/\\:\\_\\:\\", 40, 6);
-		printtext("\\  \\:\\ \\:\\_\\//  /:/\\:\\\\__\\/  \\:\\/:/", 40, 7);
-		printtext(" \\  \\:\\_\\:\\ /  /:/__\\/     \\__\\::/ ", 40, 8);
-		printtext("  \\  \\:\\/://__/:/          /  /:/  ", 40, 9);
-		printtext("   \\  \\::/ \\__\\/          /__/:/   ", 40, 10);
-		printtext("    \\__\\/                 \\__\\/   ", 40, 11);
-		                                         
-		printtext("           ___          ___     ", 40, 12);
-		printtext("          /  /\\        /  /\\   ", 40, 13);
-		printtext("         /  /::\\      /  /::\\  ", 40, 14);
-		printtext("        /  /:/\\:\\    /  /:/\\:\\  ", 40, 15);
-		printtext("       /  /::\\ \\:\\  /  /::\\ \\:\\ ", 40, 16);
-		printtext("      /__/:/\\:\\ \\:\\/__/:/\\:\\ \\:\\", 40, 17);
-		printtext("      \\__\\/  \\:\\_\\/\\__\\/  \\:\\_\\/", 40, 18);
-		printtext("           \\  \\:\\       \\  \\:\\  ", 40, 19);
-		printtext("            \\__\\/        \\__\\/  ", 40, 20);
-		
-		printtext("       ___          ___  ", 75, 1);
-		printtext("      /  /\\        /  /\\", 75, 2);
-		printtext("     /  /::|      /  /::\\ ", 75,3);
-		printtext("    /  /:|:|     /  /:/\\:\\ ", 75, 4);
-		printtext("   /  /:/|:|__  /  /::\\ \\:\\", 75, 5);
-		printtext("  /__/:/_|::::\\/__/:/\\:\\ \\:\\", 75, 6);
-		printtext("  \\__\\/  /~~/:/\\  \\:\\ \\:\\_\\/", 75, 7);
-		printtext("        /  /:/  \\  \\:\\ \\:\\  ", 75, 8);
-		printtext("       /  /:/    \\  \:\\_\\/  ", 75, 9);
-		printtext("      /__/:/      \\  \\:\\    ", 75, 10);
-		printtext("      \\__\\/        \\__\/    ", 75, 11);
-		printtext("       ___          ___    ", 75, 12);
-		printtext("      /  /\\        /  /\\    ", 75, 13);
-		printtext("     /  /::|      /  /:/   ", 75, 14);
-		printtext("    /  /:|:|     /  /:/    ", 75, 15);
-		printtext("   /  /:/|:|__  /  /:/     ", 75, 16);
-		printtext("  /__/:/ |:| /\\/__/:/     /\\", 75, 17);
-		printtext("  \\__\\/  |:|/:/\\  \\:\\    /:/", 75, 18);
-		printtext("      |  |:/:/  \\  \\:\\  /:/ ", 75, 19);
-		printtext("      |__|::/    \\  \\:\\/:/  ", 75, 20);
-		printtext("      /__/:/      \\  \\::/  ", 75, 21);
-		printtext("      \\__\\/        \\__\\/  ", 75, 22);
+		printASCIIStaffMeNu();
 		gotoxy(14, 24);
 		std::cin >> option;
 		switch (option)
@@ -117,7 +120,7 @@ void menuStaff(User &user)
 			//them sinh vien vao lop
 			system("cls");
 			//AddStudentToClass();
-			RunMenuAddInfoStudentToClass();
+			/*RunMenuAddInfoStudentToClass();*/
 			break;
 		case 8: 
 			//lenh them hoc ki
@@ -126,7 +129,27 @@ void menuStaff(User &user)
 			break;
 		case 9:
 			//edit diem sinh vien
-			listClass(SY);
+			system("cls");
+			printASCIIStaffMeNu();
+			printtext("1. From List Class.",0,14);
+			printtext("2. From List Course.", 0, 15);
+			printtext("3. Exit to Menu.", 0, 16);
+			printtext("YOUR CHOICE: ", 0, 17);
+
+			cin >> option;
+			switch (option)
+			{
+			case 1: {
+				listClass(SY);
+				break;
+			}
+			case 2: {
+				string IDCourse = select_course(user, SY);
+				edit_score_in_list_course(user, SY, IDCourse);
+			}
+			default:
+				break;
+			}
 			break;
 		case 10:
 			//view danh sachs hoc phan
@@ -167,6 +190,7 @@ void menuStudent(User &user)
 	SchoolYear SY;
 	determineYearSemesterNow(SY.year, SY.semester.Name);
 	read_info(user,SY);
+	init_List_Mark(user.info.phead);
 	get_course(user,SY);
 	bool isExit = false;
 	int option;
@@ -212,6 +236,7 @@ void menuStudent(User &user)
 			break;
 		case 4:
 			// lenh show bang diem
+			get_all_course(user, SY);
 			DisPlay_Mark_Of_Student( SY, user);
 			break;
 		case 5:
