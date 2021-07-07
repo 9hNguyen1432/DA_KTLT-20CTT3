@@ -1,11 +1,5 @@
-#include "change_info.h"
 #include "ConsoleProcess.h"
-#include "Course_function.h"
 #include "Header.h"
-#include "ListClass.h"
-#include "listCourse.h"
-#include "login.h"
-#include "Menu.h"
 #include "AddStudent.h"
 #include <iostream>
 #include <iomanip>
@@ -28,10 +22,9 @@ void AddStudentToClass()
 	printtext("                                                 ", 40, 7);
 	textBgColor(0, 15);
 	gotoxy(55, 8);
-	cout << "ADD STUDENT TO CLASS";
+	cout << "=ADD STUDENT TO CLASS=";
 	string YearCourse;
 	string Class;
-
 	cin.ignore();
 	gotoxy(52, 10);
 	cout << "Select School Year:";
@@ -51,7 +44,7 @@ void AddStudentToClass()
 	if (check == false)
 	{
 		gotoxy(47, 12);
-		cout << "Don't Find School Year" << endl;
+		cout << "Don't Find School Year " << endl;
 		system("pause");
 	}
 	if (check == true)
@@ -130,7 +123,6 @@ void AddRandomInfoStudentToClass()
 	}
 	if (check == true)
 	{
-		char ch;
 		gotoxy(56, 12);
 		cout << "Select Class:";
 		getline(cin, Class);
@@ -155,8 +147,8 @@ void AddRandomInfoStudentToClass()
 		}
 		else
 		{
-			gotoxy(45, 14);
-			cout << "Random Info Student Has Been Imported To Class" << endl;
+			gotoxy(40, 14);
+			cout << "Random Information Student Has Been Imported To Class" << endl;
 			fstream ofs, ifs;
 			string NameClass = "file_save//SchoolYear//" + YearCourse + "//" + Class + csv_tail;
 			ofs.open(NameClass, ios::app);
@@ -196,9 +188,9 @@ void MenuAddInfoStudentToClass()
 	printtext("                                                 ", 40, 9);
 	textBgColor(5, 15);
 	gotoxy(40, 12);
-	cout << "1. Add 1 Student To Class" << endl;
+	cout << "1. Add One Student To Class" << endl;
 	gotoxy(40, 14);
-	cout << "2. Import Info Student From File  To Class" << endl;
+	cout << "2. Import Info Student From File To Class" << endl;
 	gotoxy(40, 16);
 	cout << "3. Exit" << endl;
 }

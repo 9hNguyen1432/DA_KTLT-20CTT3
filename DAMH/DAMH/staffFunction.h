@@ -15,15 +15,17 @@ using namespace std;
 
 void createFolder(string namefolder);
 
-void addSchoolYear();
+void CopyContentFileToFile(string src_path, string des_path);
 
-void insertSchoolYear(string& SchoolYear);
+void addSchoolYear(SchoolYear &Y);
 
-void insertDate(string& Date);
+int insertSchoolYear(string& SchoolYear);
 
-void insertNameSemester(string& name);
+int insertDate(string& Date);
 
-void addSemester();
+int insertNameSemester(string& name);
+
+void addSemester(string& yearNow, string& semesterNow);
 
 int checkSchoolYear(Semester semester);
 
@@ -39,7 +41,7 @@ void determineYearSemesterNow(string& Year, string& semester);
 
 void addCourse();
 
-void insertNum(int& n);
+int insertNum(int& n);
 
 int countLine(string filename);
 
@@ -57,13 +59,13 @@ void updateFileCourse(int currentColumn,int currentLine, string column[],string 
 
 void editInforCourse(int y, int currentLine, string column[], string year, string semester);
 
-void insertSession(string& data, int limit);
+int insertSession(string& data, int limit);
 
-void insertDay(string& data, int limit);
+int insertDay(string& data, int limit);
 
-void insertNum2(string& data, int limit);
+int insertNum2(string& data, int limit);
 
-void insertString(string& data, int limit);
+int insertString(string& data, int limit);
 
 void editCourse(string year, string semester);
 

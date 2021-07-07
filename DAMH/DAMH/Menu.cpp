@@ -74,7 +74,7 @@ void menuStaff(User &user)
 			<< "5. Create course\n"
 			<< "6. Create course registration session\n"
 			<< "7. Add student to class\n"
-			<< "8. Create semester\n"
+			<< "8. Create semester\n "
 			<< "9. Edit student's marks\n"
 			<< "10. View list of course,Delete a course \n"
 			<< "update course information\n"
@@ -101,7 +101,7 @@ void menuStaff(User &user)
 		case 3:
 			// lenh them nam hoc
 			cin.ignore();
-			addSchoolYear();
+			addSchoolYear(SY);
 			break;
 		case 4:
 			system("cls");
@@ -125,7 +125,7 @@ void menuStaff(User &user)
 		case 8: 
 			//lenh them hoc ki
 			cin.ignore();
-			addSemester();
+			addSemester(SY.year, SY.semester.Name);
 			break;
 		case 9:
 			//edit diem sinh vien
@@ -169,9 +169,9 @@ void menuStaff(User &user)
 		{
 			int n = 0;
 			view_score_of_course_in_year(read_file_score_of_course(SY, "ABC4", n), n);
+			textBgColor(0, 15);
 			break;
 		}
-
 		case 14:
 			//view diem cua lop hoc
 			break;
@@ -253,7 +253,7 @@ void menuStudent(User &user)
 				else if (check == -1) printtext("IT'S NOT THE TIME TO START YET", 41, 17);
 				else printtext("It was late to register the course", 41, 17);
 				Sleep(1000);
-				menuStudent(user);
+				textBgColor(0, 15);
 			}
 			break;
 		}
