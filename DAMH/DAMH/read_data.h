@@ -4,6 +4,8 @@
 #include"staffFunction.h"
 #include"ConsoleProcess.h"
 #include "Header.h"
+typedef Course* (*func_Get_course)(User, SchoolYear, int&);
+typedef void (*drawASCII)();
 const string csv_tail = ".csv";
 const string txt_tail = ".txt";
 void read_1_info(User& A, ifstream &f);
@@ -30,7 +32,13 @@ int view_score_of_course_in_year(Mark*M, int n);
 void save_Mark_With_List_Cousre(string IDcourse, Mark B, SchoolYear SY);
 void view_1_course_of_list_course(Course M, int x, int y);
 void view_10_course_of_list_course(Course* M, int i, int n, int x, int y);
-Course* read_file_List_course(SchoolYear SY, int& n);
-int view_course_in_year(Course* M, int n);
-string select_course(User& A, SchoolYear SY);
+Course* read_file_List_course(User A, SchoolYear SY, int& n);
+int view_course_in_year(Course* M, int n, drawASCII fun);
+Course* select_course(User A, SchoolYear SY, func_Get_course fun, drawASCII fundraw);
+void drawASCIIlistCourse();
+void drawASCIIenrolCourse();
+void drawASCIIsuccessful();
+void drawASCIIfailEnrol();
+void drawASCIIdeleteCourse();
+Course* get_course_of_student(User A, SchoolYear SY, int& n);
 #endif

@@ -3,7 +3,7 @@
 void rewrite_course_of_student_file(User user, string fileName, string data, int command_flag);
 //hàm ghi danh vào file khóa học tổng của staff, user là học sinh.
 void rewrite_course_file(User user, string fileName, int command_flag);
-void enroll_course(User& A, SchoolYear s_y, int command_flag);
+void enroll_course(User& A, SchoolYear s_y);
 void MoveUpMenu(int X, int& Y);
 void MoveDownMenu(int X, int& Y);
 int MoveAndChoose(int a, string A[], int _X, int _Y);
@@ -14,5 +14,6 @@ void DisPlay_Course_Of_Student(SchoolYear Y, User A);
 void edit_score(User& A, SchoolYear SY, Mark* M);
 void DisPlay_Mark_Of_Student(SchoolYear Y, User A);
 void edit_score_in_list_course(User& A, SchoolYear SY, string IDcourse);
+void delete_course(User& A, SchoolYear s_y);
 #endif // !course_h
 

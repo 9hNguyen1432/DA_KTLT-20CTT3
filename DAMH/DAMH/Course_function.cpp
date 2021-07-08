@@ -111,7 +111,7 @@ void rewrite_course_file(User user, string fileName, int command_flag) {
 		}
 	}
 	if (command_flag >= 0) {
-		temp = user.info.IDstd + ',' + user.info.name + ',' + user.info.Class;
+		temp = user.info.IDstd + ',' + user.info.name + ',' + user.info.Bir+','+ user.info.sex+','+ user.info.IDsocial;
 		if (flag_change == true) {
 			file_aft << temp;
 			flag_change = false;
@@ -127,89 +127,89 @@ void rewrite_course_file(User user, string fileName, int command_flag) {
 	// renaming the updated file with the existing file name
 	rename(newName.c_str(), oldName.c_str());
 }
-void enroll_course(User& A, SchoolYear s_y, int command_flag) {
-	string semester_path = "file_save/SchoolYear/" + s_y.year + '/' + s_y.semester.Name + '/';
-	string class_path = semester_path + "Class/";
-	string course_path = semester_path + "Course/";
-	//hàm trang trí
-	//hàm hiện danh sách các môn học.
-	string ID_course_input;
-	if (command_flag >= 0) {
-		viewCourse();
-		cout << "\nEnter ID course you want to enroll: ";
-	}
-	else {
-		read_course(A, s_y);
-		cout << "\nEnter ID course you want to delete: ";
-	}
-	insertUserName(ID_course_input);
-	fstream file_course_info;
-	file_course_info.open(semester_path + "course_info.csv", ios::in);
-	string temp;
-	bool realine_flag = false, delete_flag = false;
-	while (file_course_info.eof() == false) {
-		getline(file_course_info, temp, ',');//đọc mã môn học
-		//nếu so sánh được mã môn nhập vào có trong danh sách lớp học, cho phép ghi danh:
-		if (_strcmpi(temp.c_str(), ID_course_input.c_str()) == 0) {
-			string Name;
-			string Num_of_creadit;
-			getline(file_course_info, Name, ',');
-			getline(file_course_info, Num_of_creadit, ',');
-			getline(file_course_info, Num_of_creadit, ',');
-			MarkNode* Mtemp = A.info.phead;
-			//kiểm tra xem trong danh sách môn học của sinh viên đã có môn này hay chưa
-			if (command_flag >=0) {
-				get_all_course(A, s_y);
-			}
-			realine_flag = true;
-			while (Mtemp != NULL) {
-				if (_strcmpi(temp.c_str(), Mtemp->data.ID.c_str()) == 0) {
-					//nếu có thì return.
-					if (command_flag >=0) {
-						cout << "\nFailed!! The course has been registered before.";
-						return;
-					}
-					else {
-						delete_flag = true;
-						break;
-					}
-				}
-				Mtemp = Mtemp->pNext;
-			}
-			if (command_flag>=0){
-				//chưa có thì thêm vào danh sách.
-				add_Tail_List_Mark(A.info.phead, temp,Name, Num_of_creadit);
-				//ghi them vao file;
-				string file_cousre_of_class = class_path + A.info.Class;
-				rewrite_course_of_student_file(A, file_cousre_of_class, temp, 1);
-				string file_cousre = course_path + temp;
-				rewrite_course_file(A, file_cousre, 1);
-				cout << "\nSuccessfully!!!!";
-			}
-			else {
-				if (delete_flag == true) {
-					delete_Mark_node(A.info.phead, temp);
-					string file_cousre_of_class = class_path + A.info.Class;
-					rewrite_course_of_student_file(A, file_cousre_of_class, temp, -1);
-					string file_cousre = course_path + temp;
-					rewrite_course_file(A, file_cousre, -1);
-					cout << "\nSuccessfully!!!!";
-				}
-				else {
-					cout << "\nYou have not registered for this course yet!!";
-				}
-			}
-		}
-		// ngược lại so sánh không hợp lệ, đọc hết dòng, chạy đến dòng tiếp theo
-		else {
-			getline(file_course_info, temp);
-		}
-	}
-	if (realine_flag == false) {
-		cout << "\nFailed!! Invalid ID course";
-		return;
-	}
-}
+//void enroll_course(User& A, SchoolYear s_y, int command_flag) {
+//	string semester_path = "file_save/SchoolYear/" + s_y.year + '/' + s_y.semester.Name + '/';
+//	string class_path = semester_path + "Class/";
+//	string course_path = semester_path + "Course/";
+//	//hàm trang trí
+//	//hàm hiện danh sách các môn học.
+//	string ID_course_input;
+//	if (command_flag >= 0) {
+//		viewCourse();
+//		cout << "\nEnter ID course you want to enroll: ";
+//	}
+//	else {
+//		read_course(A, s_y);
+//		cout << "\nEnter ID course you want to delete: ";
+//	}
+//	insertUserName(ID_course_input);
+//	fstream file_course_info;
+//	file_course_info.open(semester_path + "course_info.csv", ios::in);
+//	string temp;
+//	bool realine_flag = false, delete_flag = false;
+//	while (file_course_info.eof() == false) {
+//		getline(file_course_info, temp, ',');//đọc mã môn học
+//		//nếu so sánh được mã môn nhập vào có trong danh sách lớp học, cho phép ghi danh:
+//		if (_strcmpi(temp.c_str(), ID_course_input.c_str()) == 0) {
+//			string Name;
+//			string Num_of_creadit;
+//			getline(file_course_info, Name, ',');
+//			getline(file_course_info, Num_of_creadit, ',');
+//			getline(file_course_info, Num_of_creadit, ',');
+//			MarkNode* Mtemp = A.info.phead;
+//			//kiểm tra xem trong danh sách môn học của sinh viên đã có môn này hay chưa
+//			if (command_flag >=0) {
+//				get_all_course(A, s_y);
+//			}
+//			realine_flag = true;
+//			while (Mtemp != NULL) {
+//				if (_strcmpi(temp.c_str(), Mtemp->data.ID.c_str()) == 0) {
+//					//nếu có thì return.
+//					if (command_flag >=0) {
+//						cout << "\nFailed!! The course has been registered before.";
+//						return;
+//					}
+//					else {
+//						delete_flag = true;
+//						break;
+//					}
+//				}
+//				Mtemp = Mtemp->pNext;
+//			}
+//			if (command_flag>=0){
+//				//chưa có thì thêm vào danh sách.
+//				add_Tail_List_Mark(A.info.phead, temp,Name, Num_of_creadit);
+//				//ghi them vao file;
+//				string file_cousre_of_class = class_path + A.info.Class;
+//				rewrite_course_of_student_file(A, file_cousre_of_class, temp, 1);
+//				string file_cousre = course_path + temp;
+//				rewrite_course_file(A, file_cousre, 1);
+//				cout << "\nSuccessfully!!!!";
+//			}
+//			else {
+//				if (delete_flag == true) {
+//					delete_Mark_node(A.info.phead, temp);
+//					string file_cousre_of_class = class_path + A.info.Class;
+//					rewrite_course_of_student_file(A, file_cousre_of_class, temp, -1);
+//					string file_cousre = course_path + temp;
+//					rewrite_course_file(A, file_cousre, -1);
+//					cout << "\nSuccessfully!!!!";
+//				}
+//				else {
+//					cout << "\nYou have not registered for this course yet!!";
+//				}
+//			}
+//		}
+//		// ngược lại so sánh không hợp lệ, đọc hết dòng, chạy đến dòng tiếp theo
+//		else {
+//			getline(file_course_info, temp);
+//		}
+//	}
+//	if (realine_flag == false) {
+//		cout << "\nFailed!! Invalid ID course";
+//		return;
+//	}
+//}
 void MoveUpMenu(int X, int& Y) {
 	Y = Y - 2;
 	gotoxy(X, Y);
@@ -336,6 +336,7 @@ void DisPlay_Course_Of_Student(SchoolYear Y, User A) {
 	char ch;
 	do {
 		hidePointer();
+		get_course(A, Y);
 		read_course(A, Y);
 		drawRectangle(27, 29, 60, 1, 10);
 		textColor(496);
@@ -740,4 +741,56 @@ void edit_score_in_list_course(User& A, SchoolYear SY, string IDcourse) {
 		}
 	} while (true);
 	textBgColor(0, 15);
+}
+void enroll_course(User& A, SchoolYear s_y) {
+	string semester_path = "file_save/SchoolYear/" + s_y.year + '/' + s_y.semester.Name + '/';
+	string class_path = semester_path + "Class/";
+	string course_path = semester_path + "Course/";
+	//hàm trang trí
+	//hàm hiện danh sách các môn học.
+
+	Course* course_input = select_course(A,s_y, &read_file_List_course, &drawASCIIenrolCourse);
+	if (course_input == NULL) {
+		return;
+	}
+	//kiểm tra xem trong danh sách môn học của sinh viên đã có môn này hay chưa
+	get_all_course(A, s_y);
+	MarkNode* Mtemp = A.info.phead;
+	while (Mtemp != NULL) {
+		if (_strcmpi(course_input->ID_course.c_str(), Mtemp->data.ID.c_str()) == 0) {
+		//nếu có thì return.
+			drawASCIIfailEnrol();
+			Sleep(1800);
+			return;
+		}
+		Mtemp = Mtemp->pNext;
+	}
+	//chưa có thì thêm vào danh sách.
+	add_Tail_List_Mark(A.info.phead, course_input->ID_course, course_input->name, to_string(course_input->Num_of_creadit));
+	//ghi them vao file;
+	string file_cousre_of_class = class_path + A.info.Class;
+	rewrite_course_of_student_file(A, file_cousre_of_class, course_input->ID_course, 1);
+	string file_cousre = course_path + course_input->ID_course;
+	rewrite_course_file(A, file_cousre, 1);
+	drawASCIIsuccessful();		// ngược lại so sánh không hợp lệ, đọc hết dòng, chạy đến dòng tiếp theo
+	Sleep(1800);
+}
+void delete_course(User& A, SchoolYear s_y) {
+	string semester_path = "file_save/SchoolYear/" + s_y.year + '/' + s_y.semester.Name + '/';
+	string class_path = semester_path + "Class/";
+	string course_path = semester_path + "Course/";
+	//hàm trang trí
+	//hàm hiện danh sách các môn học.
+	Course* course_input= select_course(A, s_y, &get_course_of_student, &drawASCIIdeleteCourse);
+	if (course_input == NULL) {
+		return;
+	}
+	delete_Mark_node(A.info.phead, course_input->ID_course);
+	string file_cousre_of_class = class_path + A.info.Class;
+	rewrite_course_of_student_file(A, file_cousre_of_class, course_input->ID_course, -1);
+	string file_cousre = course_path + course_input->ID_course;
+	rewrite_course_file(A, file_cousre, -1);
+	drawASCIIsuccessful();
+	Sleep(1800);
+	return;
 }

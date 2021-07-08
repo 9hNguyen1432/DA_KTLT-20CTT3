@@ -107,7 +107,7 @@ void addSchoolYear(SchoolYear &Y) {
     CopyContentFileToFile("file_save/SchoolYear/" + Y.year + "/staff.csv", "file_save/SchoolYear/" + schoolyear.year + "/staff.csv");
     CopyContentFileToFile("file_save/SchoolYear/" + Y.year + "/class_info.csv", "file_save/SchoolYear/" + schoolyear.year + "/class_info.csv");
     Y.year = schoolyear.year;
-    Y.semester.Name="Semester0";aa
+    Y.semester.Name="Semester0";
 
     hidePointer();
     textBgColor(10, 11);

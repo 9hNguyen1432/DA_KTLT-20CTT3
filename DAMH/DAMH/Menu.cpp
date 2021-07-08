@@ -144,8 +144,8 @@ void menuStaff(User &user)
 				break;
 			}
 			case 2: {
-				string IDCourse = select_course(user, SY);
-				edit_score_in_list_course(user, SY, IDCourse);
+				Course* SLC = select_course(user, SY, &read_file_List_course,&drawASCIIlistCourse);
+				edit_score_in_list_course(user, SY, SLC->ID_course);
 			}
 			default:
 				break;
@@ -201,14 +201,14 @@ void menuStudent(User &user)
 		std::cout << "==================MENU============\n";
 		gotoxy(45, 9); std::cout << "1. Profile info\n";
 		gotoxy(45, 10); std::cout << "2. Change password\n";
-		gotoxy(45, 12); std::cout << "3. List of student in class\n";
-		gotoxy(45, 14); std::cout << "4. Score board\n";
-		gotoxy(45, 15); std::cout << "5. Enroll courses\n";
-		gotoxy(45, 16); std::cout << "6. List of enrolled courses\n";
-		gotoxy(45, 17); std::cout << "7. Remove courses\n";
-		gotoxy(45, 18); std::cout << "8. View your list of course\n";
-		gotoxy(45, 19); std::cout << "0. Log out\n";
-		gotoxy(45, 20); std::cout << " ---------------------\n";
+		gotoxy(45, 11); std::cout << "3. List of student in class\n";
+		gotoxy(45, 12); std::cout << "4. Score board\n";
+		gotoxy(45, 13); std::cout << "5. Enroll courses\n";
+		gotoxy(45, 14); std::cout << "6. List of enrolled courses\n";
+		gotoxy(45, 15); std::cout << "7. Remove courses\n";
+		gotoxy(45, 16); std::cout << "8. View your list of course\n";
+		gotoxy(45, 17); std::cout << "0. Log out\n";
+		gotoxy(45, 18); std::cout << " ---------------------\n";
 		
 		gotoxy(45, 20); std::cout << " your choice: ";
 		printtext(" ______     ______   __  __     _____     ______     __   __     ______  ", 20, 1);
@@ -241,9 +241,10 @@ void menuStudent(User &user)
 			break;
 		case 5:
 		{
-			int check = checkCourseSession();
+			enroll_course(user, SY);
+			/*int check = checkCourseSession();
 			if (check == 1) {
-				enroll_course(user, SY, 1);
+				enroll_course(user, SY);
 				system("pause");
 			}
 			else {
@@ -255,6 +256,7 @@ void menuStudent(User &user)
 				Sleep(1000);
 				textBgColor(0, 15);
 			}
+			break;*/
 			break;
 		}
 		case 6: 
@@ -265,8 +267,7 @@ void menuStudent(User &user)
 		case 7:
 		{
 			//lenh xoa bot khoa hoc da dang ki
-			enroll_course(user, SY, -1);
-			system("pause");
+			delete_course(user, SY);
 			break;
 		}
 		case 8:

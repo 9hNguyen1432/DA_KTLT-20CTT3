@@ -582,7 +582,7 @@ void view_10_course_of_list_course(Course* M, int i, int n, int x, int y) {
 	}
 
 }
-Course* read_file_List_course(SchoolYear SY, int& n) {
+Course* read_file_List_course(User A, SchoolYear SY, int& n) {
 	string fileName = "file_save/SchoolYear/" + SY.year + '/' + SY.semester.Name + "/course_info"  + csv_tail;
 	ifstream f;
 	f.open(fileName, ios::in);
@@ -608,18 +608,63 @@ Course* read_file_List_course(SchoolYear SY, int& n) {
 	f.close();
 	return M;
 }
-int view_course_in_year(Course* M, int n) {
+void drawASCIIlistCourse() {
+	textBgColor(4, 6);
+	printtext(" _     ___ ____ _____    ____ ___  _   _ ____  ____  _____ ", 30, 2);
+	printtext("| |   |_ _/ ___|_   _|  / ___/ _ \\| | | |  _ \\/ ___|| ____|", 30, 3);
+	printtext("| |    | |\\___ \\ | |   | |  | | | | | | | |_) \\___ \\|  _|  ", 30, 4);
+	printtext("| |___ | | ___) || |   | |__| |_| | |_| |  _ < ___) | |___ ", 30, 5);
+	printtext("|_____|___|____/ |_|    \\____\\___/ \\___/|_| \\_\\____/|_____|", 30, 6);
+	printtext("                                                           ", 30, 7);
+}
+void drawASCIIenrolCourse() {
+	textBgColor(4, 6);
+	printtext("                                 __                                                   ", 20, 3);
+	printtext("  ___    ____    _____  ____    / /         _____  ____   __  __   _____   _____  ___ ", 20, 4);
+	printtext(" / _ \\  / __ \\  / ___/ / __ \\  / /         / ___/ / __ \\ / / / /  / ___/  / ___/ / _ \\", 20, 5);
+	printtext("/  __/ / / / / / /    / /_/ / / /         / /__  / /_/ // /_/ /  / /     (__  ) /  __/", 20, 6);
+	printtext("\\___/ /_/ /_/ /_/     \\____/ /_/          \\___/  \\____/ \\__,_/  /_/     /____/  \\___/ ", 20, 7);
+	printtext("                                                                                      ", 20, 8);
+	printtext("Choose the course you want to enrol. Enter to choose.", 35, 28);
+}
+void drawASCIIsuccessful() {
+	textBgColor(6, 0);
+	printtext("                                                        ____            __", 20, 15);
+	printtext("   _____  __  __  _____  _____  ___    _____   _____   / __/  __  __   / /", 20, 16);
+	printtext("  / ___/ / / / / / ___/ / ___/ / _ \\  / ___/  / ___/  / /_   / / / /  / / ", 20, 17);
+	printtext(" (__  ) / /_/ / / /__  / /__  /  __/ (__  )  (__  )  / __/  / /_/ /  / /  ", 20, 18);
+	printtext("/____/  \\__,_/  \\___/  \\___/  \\___/ /____/  /____/  /_/     \\__,_/  /_/   ", 20, 19);
+	printtext("                                                                          ", 20, 20);
+	textBgColor(0, 15);
+}
+void drawASCIIfailEnrol() {
+	textBgColor(6, 0);
+	printtext("    ______            _     __             __    __    __", 35, 15);
+	printtext("   / ____/  ____ _   (_)   / /  ___   ____/ /   / /   / /", 35, 16);
+	printtext("  / /_     / __ `/  / /   / /  / _ \\ / __  /   / /   / / ", 35, 17);
+	printtext(" / __/    / /_/ /  / /   / /  /  __// /_/ /   /_/   /_/  ", 35, 18);
+	printtext("/_/       \\__,_/  /_/   /_/   \\___/ \\__,_/   (_)   (_)   ", 35, 19);
+	printtext("                                                         ", 35, 20);
+	printtext("        The course has been registered before.           ", 35, 21);
+	printtext("                                                         ", 35, 22);
+	textBgColor(0, 15);
+}
+void drawASCIIdeleteCourse() {
+	textBgColor(4, 6);
+	printtext("    ____           __         __                 ______                                     ", 20, 5);
+	printtext("   / __ \\  ___    / /  ___   / /_  ___          / ____/  ____   __  __   _____   _____  ___ ", 20, 6);
+	printtext("  / / / / / _ \\  / /  / _ \\ / __/ / _ \\        / /      / __ \\ / / / /  / ___/  / ___/ / _ \\", 20, 7);
+	printtext(" / /_/ / /  __/ / /  /  __// /_  /  __/       / /___   / /_/ // /_/ /  / /     (__  ) /  __/", 20, 8);
+	printtext("/_____/  \\___/ /_/   \\___/ \\__/  \\___/        \\____/   \\____/ \\__,_/  /_/     /____/  \\___/ ", 20, 9);
+	printtext("                                                                                            ", 20, 10);
+	printtext("Choose the course you want to delete. Enter to choose.", 35, 28);
+}
+int view_course_in_year(Course* M, int n, drawASCII fun) {
 	textBgColor(0, 15);
 	system("cls");
 	int x = 1;
 	int y = 14;
-	textBgColor(4, 6);
-	printtext(" _     ___ ____ _____    ____ ___  _   _ ____  ____  _____", 30, 2);
-	printtext("| |   |_ _/ ___|_   _|  / ___/ _ \\| | | |  _ \\/ ___|| ____|", 30, 3);
-	printtext("| |    | |\\___ \\ | |   | |  | | | | | | | |_) \\___ \\|  _|", 30, 4);
-	printtext("| |___ | | ___) || |   | |__| |_| | |_| |  _ < ___) | |___", 30, 5);
-	printtext("|_____|___|____/ |_|    \\____\\___/ \\___/|_| \\_\\____/|_____|", 30, 6);
-	printtext("                                                          ", 25, 7);
+	fun();
 	drawRectangle(0, y - 2, 120, 13, 11);
 	textBgColor(0, 11);
 	printtext("ID COURSE", x+2, y - 1);
@@ -660,21 +705,21 @@ int view_course_in_year(Course* M, int n) {
 		}
 	} while (true);
 }
-string select_course(User& A, SchoolYear SY) {
+Course* select_course(User A, SchoolYear SY, func_Get_course fun, drawASCII fundraw) {
 	int n = 0;
-	Course* M = read_file_List_course(SY, n);
+	Course* M = fun(A, SY, n);
 	if (M == NULL) {
 		//thong báo mở file thất bại
 		cout << "Fail!! The teacher has not entered the score for this course!! ";
-		return "";
+		return NULL;
 	}
 	char ch;
 	int line_now = 0;
 	int x = 1, y = 14;
-	int tab_now = view_course_in_year(M, n);
+	int tab_now = view_course_in_year(M, n, fundraw);
 	if (tab_now == -1) {
 		textBgColor(0, 15);
-		return "";
+		return NULL;
 	}
 	drawRectangle(1, y + line_now, 115, 1, 14);
 	textBgColor(0, 14);
@@ -683,16 +728,16 @@ string select_course(User& A, SchoolYear SY) {
 	do {
 		if (tab_now == -1) {
 			textBgColor(0, 15);
-			return "";
+			return NULL;
 		}
 		hidePointer();
 		ch = _getch();
 		//[ESC]
 		if (ch == 27) {
-			tab_now = view_course_in_year(M, n);
+			tab_now = view_course_in_year(M, n, fundraw);
 			if (tab_now == -1) {
 				textBgColor(0, 15);
-				return "";
+				return NULL;
 			}
 			line_now = 0;
 			count = tab_now * 10;
@@ -743,9 +788,49 @@ string select_course(User& A, SchoolYear SY) {
 				view_1_course_of_list_course(M[count], x, y + line_now);
 			}
 			if (ch == 13) {
-				return M[count].ID_course;
+				return &M[count];
 			}
 		}
 	} while (true);
 	textBgColor(0, 15);
+}
+Course* get_course_of_student(User A, SchoolYear SY, int& n) {	
+	string fileName = "file_save/SchoolYear/" + SY.year + '/' + SY.semester.Name + "/course_info" + csv_tail;
+	ifstream f;
+	f.open(fileName, ios::in);
+	if (!f.good()) {
+		return NULL;
+	}
+	string temp;
+	get_course(A, SY);
+	n = 0;
+	MarkNode* count = A.info.phead;
+	while (count != NULL) {
+		n++;
+		count = count->pNext;
+	}
+	count = A.info.phead;
+	Course* M = new Course[n];
+	int i = 0;
+	while (i<n &&!f.eof()) {
+		getline(f, M[i].ID_course, ',');
+		if (_strcmpi(M[i].ID_course.c_str(), count->data.ID.c_str()) == 0) {
+			getline(f, M[i].name, ',');
+			getline(f, M[i].teacher, ',');
+			getline(f, temp, ',');
+			M[i].Num_of_creadit = atoi(temp.c_str());
+			getline(f, temp, ',');
+			M[i].Max_student = atoi(temp.c_str());
+			getline(f, M[i].DayOfWeek, ',');
+			getline(f, M[i].session[0], ',');
+			getline(f, M[i].session[1]);
+			i++;
+			count = count->pNext;
+		}
+		else {
+			getline(f, temp);
+		}
+	}
+	f.close();
+	return M;
 }
