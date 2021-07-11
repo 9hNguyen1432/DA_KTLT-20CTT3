@@ -40,5 +40,10 @@ void drawASCIIenrolCourse();
 void drawASCIIsuccessful();
 void drawASCIIfailEnrol();
 void drawASCIIdeleteCourse();
+void drawASCIIStaffMenu();
+void drawASCIIchangeYear();
+void drawASCIIeditscore();
+void drawASCIIchangeSemester();
+void drawASCIImenuStudent();
 Course* get_course_of_student(User A, SchoolYear SY, int& n);
 #endif

@@ -1349,12 +1349,12 @@ int checkCourseSession() {
         if (stoi(data, 0, 10) == 0) return 0;//not open session yet
         else {
             getline(file, data);
-            string dateStart = data.substr(13, 10);
+            string dateStart = data.substr(12, 10);
             getline(file, data);
-            string dateEnd = data.substr(10, 10);
-            if (checkTimeStart(dateStart.substr(0, 2), dateStart.substr(3, 2), dateStart.substr(6, 2)) == false) return -1;//It's not time to start yet
+            string dateEnd = data.substr(9, 10);
+            if (checkTimeStart(dateStart.substr(0, 2), dateStart.substr(3, 2), dateStart.substr(6, 4)) == false) return -1;//It's not time to start yet
             else {
-                if (checkTimeEnd(dateEnd.substr(0, 2), dateEnd.substr(3, 2), dateEnd.substr(6, 2)) == false) return -2;//It was late to register the course
+                if (checkTimeEnd(dateEnd.substr(0, 2), dateEnd.substr(3, 2), dateEnd.substr(6, 4)) == false) return -2;//It was late to register the course
                 else return 1;//can register the course 
             }
         }
@@ -1775,6 +1775,7 @@ void showStudentInclass(SchoolYear Y,string classname) {
         if (ch == 13) {
             User A;
             A.ID = column[1];
+            A.info.IDstd = column[1];
             A.info.Class = classname;
             A.info.IDsocial = column[5];
             A.info.Bir = column[3];

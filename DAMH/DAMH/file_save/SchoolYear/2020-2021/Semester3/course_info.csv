@@ -1,8 +1,10 @@
 ID,COURSE NAME,TEACHER NAME,NUMBER OF CREDITS,MAX STUDENT,DAY,SESSION1,SESSION2
 MTH007,toan roi rac,aaaaaaaaaaaaaaa,4,50,TUS,S1,S3
+MTH006,toan roi rac 4,aaBbbbbbbbbaaaaa,4,50,TUS,S1,S3
 HP1000,hoc phan moi,nguyen van a,463,20,MON,S2,S4
 HP3,hoc phan 3, Nguyen Thi D,2,40,WED,S1,S4
 ABC4,Nhap mon lap trinh 2,Le van chanh 2,3,100,WED,S2,S5
+ABC3,Nhap mon lap trinh 3,Le van chanh 3,3,100,WED,S2,S5
 MTH0007,Dai So Tuyen Tinh,Le Van Hop,3,100,MON,S2,S4
 MTH0016,TH Dai So Tuyen Tinh,Nguyen Cao Dang,1,50,WED,S2,S5
 MTH0015,TH Toan Roi Rac,Nguyen Cao Dang,1,50,WED,S2,S5

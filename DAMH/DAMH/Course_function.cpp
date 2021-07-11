@@ -210,18 +210,24 @@ void rewrite_course_file(User user, string fileName, int command_flag) {
 //		return;
 //	}
 //}
-void MoveUpMenu(int X, int& Y) {
-	Y = Y - 2;
+void MoveUpMenu(int X, int& Y, int dis) {
+	Y = Y - (dis+1);
 	gotoxy(X, Y);
 }
-void MoveDownMenu(int X, int& Y) {
-	Y = Y + 2;
+void MoveDownMenu(int X, int& Y, int dis) {
+	Y = Y + (dis+1);
 	gotoxy(X, Y);
 }
-int MoveAndChoose(int a, string A[], int _X, int _Y) { //ham di chuyen len xuong va chon doi tuong trong cac dang menu
+int MoveAndChoose(int a, string A[], int _X, int _Y, int dis) { //ham di chuyen len xuong va chon doi tuong trong cac dang menu
 	char _COMMAND;
 	int X = _X, Y = _Y;
 	int i = 0;
+	int maxlength = A[0].length();
+	for (int j = 1; j < a; j++) {
+		if (maxlength < A[j].length()) {
+			maxlength = A[j].length();
+		}
+	}
 	while (1) {
 		_COMMAND = toupper(_getch());
 		if (_COMMAND == 27) {
@@ -230,24 +236,30 @@ int MoveAndChoose(int a, string A[], int _X, int _Y) { //ham di chuyen len xuong
 		else {
 			if (i >= 0 && i < a && Y <= 23 + a) {
 				if (_COMMAND == 72 && Y > _Y) {
-					textColor(496);
+					drawRectangle(X, Y, maxlength, 1, 6);
 					gotoxy(X, Y);
+					textBgColor(0, 6);
 					cout << A[i];
-					MoveUpMenu(X, Y);
+					MoveUpMenu(X, Y,dis);
 					i--;
-					textColor(15);
-					cout << A[i];
-					textColor(496);
-				}
-				else if (_COMMAND == 80 && Y < _Y + 2 * (a - 1)) {
-					textColor(496);
+					drawRectangle(X, Y, maxlength, 1, 0);
+					textBgColor(6, 0);
 					gotoxy(X, Y);
 					cout << A[i];
-					MoveDownMenu(X, Y);
-					i++;
-					textColor(15);
+					textBgColor(0, 15);
+				}
+				else if (_COMMAND == 80 && Y < _Y + (dis+1) * (a - 1)) {
+					drawRectangle(X, Y, maxlength, 1, 6);
+					gotoxy(X, Y);
+					textBgColor(0, 6);
 					cout << A[i];
-					textColor(496);
+					MoveDownMenu(X, Y, dis);
+					i++;
+					drawRectangle(X, Y, maxlength, 1, 0);
+					textBgColor(6, 0);
+					gotoxy(X, Y);
+					cout << A[i];
+					textBgColor(0, 15);
 				}
 				else if (_COMMAND == 13) {
 					return i;
@@ -256,16 +268,28 @@ int MoveAndChoose(int a, string A[], int _X, int _Y) { //ham di chuyen len xuong
 		}
 	}
 }
-void drawMenuYear(string* S, int n, int x, int y) {
+void drawMenu(string* S, int n, int x, int y, int dis, drawASCII fun) {
 	hidePointer();
+
+	int maxlength = S[0].length();
+	for (int j = 1; j < n; j++) {
+		if (maxlength < S[j].length()) {
+			maxlength = S[j].length();
+		}
+	}
+	maxlength += 20;
+	fun();
+	drawRectangle(x-10, y, maxlength, n+(n-1)*dis, 6);
 	for (int i = 0; i < n; i++) {
 		if (i == 0) {
-			textColor(15);
-			printtext(S[i], x, y + 2 * i);
-			textColor(496);
+			drawRectangle(x, y, maxlength-20, 1, 0);
+			textBgColor(6, 0);
+			printtext(S[i], x, y + (dis + 1) * i);
 		}
 		else
-			printtext(S[i], x, y + 2 * i);
+			textBgColor(0, 6);
+			printtext(S[i], x, y + (dis+1) * i);
+			textBgColor(0, 15);
 	}
 }
 int getyearData(string* data1, int* data2, string filename) {
@@ -292,16 +316,9 @@ void change_Year_Semester(SchoolYear &S) {
 	semester = new int[n];
 	getyearData(year, semester, filename);
 	system("cls");
-	textColor(46);
-	printtext("   ______    __                                        __  __                      ", 15, 4);
-	printtext("  / ____/   / /_   ____ _   ____    ____ _  ___        \\ \\/ /  ___   ____ _   _____", 15, 5);
-	printtext(" / /       / __ \\ / __ `/  / __ \\  / __ `/ / _ \\        \\  /  / _ \\ / __ `/  / ___/", 15, 6);
-	printtext("/ /___    / / / // /_/ /  / / / / / /_/ / /  __/        / /  /  __// /_/ /  / /    ", 15, 7);
-	printtext("\\____/   /_/ /_/ \\__,_/  /_/ /_/  \\__, /  \\___/        /_/   \\___/ \\__,_/  /_/     ", 15, 8);
-	printtext("                                 /____/                                            ", 15, 9);
-	textColor(496);
-	drawMenuYear(year, n, 55, 15);
-	int A = MoveAndChoose(n, year, 55, 15);
+
+	drawMenu(year, n, 55, 15,1, &drawASCIIchangeYear);
+	int A = MoveAndChoose(n, year, 55, 15,1);
 	if (A == -1) {
 		return;
 	}
@@ -310,22 +327,9 @@ void change_Year_Semester(SchoolYear &S) {
 		semester_of_year[i] = "Semester" + to_string(i + 1);
 	}
 	system("cls");
-	textColor(46);
-	printtext("   ______    __                                 ", 35, 5);
-	printtext("  / ____/   / /_   ____ _   ____    ____ _  ___ ", 35, 6);
-	printtext(" / /       / __ \\ / __ `/  / __ \\  / __ `/ / _ \\", 35, 7);
-	printtext("/ /___    / / / // /_/ /  / / / / / /_/ / /  __/", 35, 8);
-	printtext("\\____/   /_/ /_/ \\__,_/  /_/ /_/  \\__, /  \\___/ ", 35, 9);
-	printtext("                                 /____/         ", 35, 10);
-	printtext("   _____                                   __               ", 30, 23);
-	printtext("  / ___/  ___    ____ ___   ___    _____  / /_  ___    _____", 30, 24);
-	printtext("  \\__ \\  / _ \\  / __ `__ \\ / _ \\  / ___/ / __/ / _ \\  / ___/", 30, 25);
-	printtext(" ___/ / /  __/ / / / / / //  __/ (__  ) / /_  /  __/ / /    ", 30, 26);
-	printtext("/____/  \\___/ /_/ /_/ /_/ \\___/ /____/  \\__/  \\___/ /_/     ", 30, 27);
-	printtext("                                                            ", 30, 28);
-	textColor(496);
-	drawMenuYear(semester_of_year, semester[A], 55, 15);
-	int i=MoveAndChoose(semester[A], semester_of_year, 55, 15);
+
+	drawMenu(semester_of_year, semester[A], 55, 15,1,&drawASCIIchangeSemester);
+	int i=MoveAndChoose(semester[A], semester_of_year, 55, 15,1);
 	if (i==-1) {
 		return;
 	}
