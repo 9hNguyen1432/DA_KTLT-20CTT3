@@ -11,6 +11,7 @@ void read_1_info(User& A, ifstream &f) {
 	getline(f, A.info.Bir, ',');
 	getline(f, A.info.sex, ',');
 	getline(f, A.info.IDsocial);
+	A.info.phead = NULL;
 }
 //
 void read_info(User& A,SchoolYear SY) {
@@ -136,11 +137,12 @@ void read1CourseInfor(Course& A, ifstream& f)
 void init_List_Mark(MarkNode*& head) {
 	head = NULL;
 }
-void add_Tail_List_Mark(MarkNode*& head, string ID , string name) {
+void add_Tail_List_Mark(MarkNode*& head, string ID , string name, string num_of_creadit) {
 	//khởi tạo 1 node
 	MarkNode* n1 = new MarkNode;
 	n1->data.ID = ID;
 	n1->data.Name = name;
+	n1->data.C = num_of_creadit;
 	n1->data.Midterm_Mark = 0;
 	n1->data.Final_Mark = 0;
 	n1->data.Other_Mark = 0;
@@ -158,18 +160,23 @@ void add_Tail_List_Mark(MarkNode*& head, string ID , string name) {
 		temp->pNext = n1;
 	}
 }
-void get_course(User& A, SchoolYear s_y) {
+int get_course(User& A, SchoolYear s_y, int flag) {
 	ifstream f;
 	string semester_path = "file_save/SchoolYear/" + s_y.year + '/' + s_y.semester.Name + '/';
 	string class_path = semester_path + "Class/";
 	string course_path = semester_path + "Course/";
-	string fileName = class_path + A.info.Class + csv_tail;// chỉ là thử nghiệm, sau khi có hàm đọc học kì sẽ thay đổi.
+	string fileName = class_path + A.info.Class + csv_tail;
 	f.open(fileName, ios::in);
-	init_List_Mark(A.info.phead);
+	if (!f.is_open()) {
+		return -1;
+	}
+	if (flag == 0) {
+		init_List_Mark(A.info.phead);
+	}
 	while (f.eof() == false) {
 		string temp;
 		getline(f, temp, ',');
-		if (temp.compare(A.ID) != 0) {
+		if (temp.compare(A.info.IDstd) != 0) {
 			getline(f, temp);
 		}
 		else {
@@ -186,17 +193,20 @@ void get_course(User& A, SchoolYear s_y) {
 					string fileName = "file_save/SchoolYear/" + s_y.year + "/" + s_y.semester.Name + "/course_info.csv";
 					fi.open(fileName, ios::in);
 					string temp;
+					string num_of_creadit;
 					while (!fi.eof()) {
 						getline(fi, temp, ',');
 						if (_strcmpi(temp.c_str(), IDtemp.c_str()) == 0) {
 							getline(fi, temp, ',');
+							getline(fi, num_of_creadit, ',');
+							getline(fi, num_of_creadit, ',');
 							break;
 						}
 						else {
 							getline(fi, temp);
 						}
 					}
-					add_Tail_List_Mark(A.info.phead, IDtemp, temp);
+					add_Tail_List_Mark(A.info.phead, IDtemp, temp, num_of_creadit);
 					IDtemp = "";
 					fi.close();
 				}
@@ -207,6 +217,42 @@ void get_course(User& A, SchoolYear s_y) {
 		}
 	}
 	f.close();
+	return 0;
+}
+void Back_A_Semester(SchoolYear& S) {
+	if (S.semester.Name.back() == '1' || S.semester.Name.back() == '0') {
+		string year = "";
+		for (int i = 0; i < 4; i++) {
+			year += S.year[i];
+		}
+		int Y = atoi(year.c_str());
+		Y--;
+		S.year = to_string(Y) + "-" + year;
+		S.semester.Name = "Semester3";
+	}
+	else {
+		if (S.semester.Name.back() == '2') {
+			S.semester.Name.pop_back();
+			S.semester.Name.push_back('1');
+		}
+		else if (S.semester.Name.back() == '3') {
+			S.semester.Name.pop_back();
+			S.semester.Name.push_back('2');
+		}
+	}
+}
+void get_all_course(User& A,SchoolYear SY) {
+	init_List_Mark(A.info.phead);
+	int i = 0;
+	int count = 0;
+	do {
+		i = get_course(A, SY, 1);
+		if (i == -1) {
+			break;
+		}
+		get_score(A, SY, count);
+		Back_A_Semester(SY);
+	} while (i != -1);
 }
 void delete_Mark_node(MarkNode*& head, string ID) {
 	MarkNode** Dp = &head;
@@ -512,4 +558,349 @@ void save_Mark_With_List_Cousre(string IDcourse, Mark B, SchoolYear SY) {
 	remove(oldName.c_str());
 	// renaming the updated file with the existing file name
 	rename(newName.c_str(), oldName.c_str());
+}
+void view_1_course_of_list_course(Course M, int x, int y) {
+	printtext(M.ID_course, x, y);
+	printtext(M.name, x + 8, y);//12 ki tu cho id
+	printtext(M.teacher, x + 33, y);
+	printtext(to_string(M.Num_of_creadit), x + 59, y);//30 ki tu cho ten
+	printtext(to_string(M.Max_student), x + 75, y);//14 ki tu cho 1 diem
+	printtext(M.DayOfWeek, x + 87, y);//14 ki tu cho 1 diem
+	printtext(M.session[0], x + 97, y);//14 ki tu cho 1 diem
+	printtext(M.session[1], x + 107, y);
+}
+void view_10_course_of_list_course(Course* M, int i, int n, int x, int y) {
+	if (n - i >= 10) {
+		for (int j = 0; j < 10; j++) {
+			view_1_course_of_list_course(M[i + j], x, y + j);
+		}
+	}
+	else {
+		for (int j = 0; j < n - i; j++) {
+			view_1_course_of_list_course(M[i + j], x, y + j);
+		}
+	}
+
+}
+Course* read_file_List_course(User A, SchoolYear SY, int& n) {
+	string fileName = "file_save/SchoolYear/" + SY.year + '/' + SY.semester.Name + "/course_info"  + csv_tail;
+	ifstream f;
+	f.open(fileName, ios::in);
+	if (!f.good()) {
+		return NULL;
+	}
+	n = countLine(fileName) - 1;
+	Course* M = new Course[n];
+	string temp;
+	getline(f, temp);
+	for (int i = 0; i < n; i++) {
+		getline(f, M[i].ID_course, ',');
+		getline(f, M[i].name, ',');
+		getline(f, M[i].teacher, ',');
+		getline(f, temp, ',');
+		M[i].Num_of_creadit = atoi(temp.c_str());
+		getline(f, temp, ',');
+		M[i].Max_student = atoi(temp.c_str());
+		getline(f, M[i].DayOfWeek, ',');
+		getline(f, M[i].session[0], ',');
+		getline(f, M[i].session[1]);
+	}
+	f.close();
+	return M;
+}
+void drawASCIIlistCourse() {
+	textBgColor(4, 6);
+	printtext(" _     ___ ____ _____    ____ ___  _   _ ____  ____  _____ ", 30, 2);
+	printtext("| |   |_ _/ ___|_   _|  / ___/ _ \\| | | |  _ \\/ ___|| ____|", 30, 3);
+	printtext("| |    | |\\___ \\ | |   | |  | | | | | | | |_) \\___ \\|  _|  ", 30, 4);
+	printtext("| |___ | | ___) || |   | |__| |_| | |_| |  _ < ___) | |___ ", 30, 5);
+	printtext("|_____|___|____/ |_|    \\____\\___/ \\___/|_| \\_\\____/|_____|", 30, 6);
+	printtext("                                                           ", 30, 7);
+}
+void drawASCIIenrolCourse() {
+	textBgColor(4, 6);
+	printtext("                                 __                                                   ", 20, 3);
+	printtext("  ___    ____    _____  ____    / /         _____  ____   __  __   _____   _____  ___ ", 20, 4);
+	printtext(" / _ \\  / __ \\  / ___/ / __ \\  / /         / ___/ / __ \\ / / / /  / ___/  / ___/ / _ \\", 20, 5);
+	printtext("/  __/ / / / / / /    / /_/ / / /         / /__  / /_/ // /_/ /  / /     (__  ) /  __/", 20, 6);
+	printtext("\\___/ /_/ /_/ /_/     \\____/ /_/          \\___/  \\____/ \\__,_/  /_/     /____/  \\___/ ", 20, 7);
+	printtext("                                                                                      ", 20, 8);
+	printtext("Choose the course you want to enrol. Enter to choose.", 35, 28);
+}
+void drawASCIIsuccessful() {
+	textBgColor(6, 0);
+	printtext("                                                        ____            __", 20, 15);
+	printtext("   _____  __  __  _____  _____  ___    _____   _____   / __/  __  __   / /", 20, 16);
+	printtext("  / ___/ / / / / / ___/ / ___/ / _ \\  / ___/  / ___/  / /_   / / / /  / / ", 20, 17);
+	printtext(" (__  ) / /_/ / / /__  / /__  /  __/ (__  )  (__  )  / __/  / /_/ /  / /  ", 20, 18);
+	printtext("/____/  \\__,_/  \\___/  \\___/  \\___/ /____/  /____/  /_/     \\__,_/  /_/   ", 20, 19);
+	printtext("                                                                          ", 20, 20);
+	textBgColor(0, 15);
+}
+void drawASCIIfailEnrol() {
+	textBgColor(6, 0);
+	printtext("    ______            _     __             __    __    __", 35, 15);
+	printtext("   / ____/  ____ _   (_)   / /  ___   ____/ /   / /   / /", 35, 16);
+	printtext("  / /_     / __ `/  / /   / /  / _ \\ / __  /   / /   / / ", 35, 17);
+	printtext(" / __/    / /_/ /  / /   / /  /  __// /_/ /   /_/   /_/  ", 35, 18);
+	printtext("/_/       \\__,_/  /_/   /_/   \\___/ \\__,_/   (_)   (_)   ", 35, 19);
+	printtext("                                                         ", 35, 20);
+	printtext("        The course has been registered before.           ", 35, 21);
+	printtext("                                                         ", 35, 22);
+	textBgColor(0, 15);
+}
+void drawASCIIdeleteCourse() {
+	textBgColor(4, 6);
+	printtext("    ____           __         __                 ______                                     ", 20, 5);
+	printtext("   / __ \\  ___    / /  ___   / /_  ___          / ____/  ____   __  __   _____   _____  ___ ", 20, 6);
+	printtext("  / / / / / _ \\  / /  / _ \\ / __/ / _ \\        / /      / __ \\ / / / /  / ___/  / ___/ / _ \\", 20, 7);
+	printtext(" / /_/ / /  __/ / /  /  __// /_  /  __/       / /___   / /_/ // /_/ /  / /     (__  ) /  __/", 20, 8);
+	printtext("/_____/  \\___/ /_/   \\___/ \\__/  \\___/        \\____/   \\____/ \\__,_/  /_/     /____/  \\___/ ", 20, 9);
+	printtext("                                                                                            ", 20, 10);
+	printtext("Choose the course you want to delete. Enter to choose.", 35, 28);
+}
+void drawASCIIStaffMenu() {
+	drawRectangle(3, 1, 115, 5, 0);
+	drawRectangle(3, 24, 115, 5, 0);
+	textBgColor(6, 0);
+	printtext(" __    __     ______     __   __     __  __    ", 35, 1);
+	printtext("/\\ \"-./  \\   /\\  ___\\   /\\ \"-.\\ \\   /\\ \\/\\ \\   ", 35, 2);
+	printtext("\\ \\ \\-./\\ \\  \\ \\  __\\   \\ \\ \\-.  \\  \\ \\ \\_\\ \\  ", 35, 3);
+	printtext(" \\ \\_\\ \\ \\_\\  \\ \\_____\\  \\ \\_\\\\\"\\_\\  \\ \\_____\\ ", 35, 4);
+	printtext("  \\/_/  \\/_/   \\/_____/   \\/_/ \\/_/   \\/_____/ ", 35, 5);
+	printtext(" ______     ______   ______     ______   ______  ", 35, 24);
+	printtext("/\\  ___\\   /\\__  _\\ /\\  __ \\   /\\  ___\\ /\\  ___\\ ", 35, 25);
+	printtext("\\ \\___  \\  \\/_/\\ \\/ \\ \\  __ \\  \\ \\  __\\ \\ \\  __\\ ", 35, 26);
+	printtext(" \\/\\_____\\    \\ \\_\\  \\ \\_\\ \\_\\  \\ \\_\\    \\ \\_\\   ", 35, 27);
+	printtext("  \\/_____/     \\/_/   \\/_/\\/_/   \\/_/     \\/_/   ", 35, 28);
+	//printtext("                                                 ", 30, 29);
+	textBgColor(0, 15);
+}
+void drawASCIIchangeYear() {
+	textColor(46);
+	printtext("   ______    __                                        __  __                      ", 15, 4);
+	printtext("  / ____/   / /_   ____ _   ____    ____ _  ___        \\ \\/ /  ___   ____ _   _____", 15, 5);
+	printtext(" / /       / __ \\ / __ `/  / __ \\  / __ `/ / _ \\        \\  /  / _ \\ / __ `/  / ___/", 15, 6);
+	printtext("/ /___    / / / // /_/ /  / / / / / /_/ / /  __/        / /  /  __// /_/ /  / /    ", 15, 7);
+	printtext("\\____/   /_/ /_/ \\__,_/  /_/ /_/  \\__, /  \\___/        /_/   \\___/ \\__,_/  /_/     ", 15, 8);
+	printtext("                                 /____/                                            ", 15, 9);
+	textColor(496);
+}
+void drawASCIIchangeSemester() {
+	textColor(46);
+	printtext("   ______    __                                 ", 35, 5);
+	printtext("  / ____/   / /_   ____ _   ____    ____ _  ___ ", 35, 6);
+	printtext(" / /       / __ \\ / __ `/  / __ \\  / __ `/ / _ \\", 35, 7);
+	printtext("/ /___    / / / // /_/ /  / / / / / /_/ / /  __/", 35, 8);
+	printtext("\\____/   /_/ /_/ \\__,_/  /_/ /_/  \\__, /  \\___/ ", 35, 9);
+	printtext("                                 /____/         ", 35, 10);
+	printtext("   _____                                   __               ", 30, 23);
+	printtext("  / ___/  ___    ____ ___   ___    _____  / /_  ___    _____", 30, 24);
+	printtext("  \\__ \\  / _ \\  / __ `__ \\ / _ \\  / ___/ / __/ / _ \\  / ___/", 30, 25);
+	printtext(" ___/ / /  __/ / / / / / //  __/ (__  ) / /_  /  __/ / /    ", 30, 26);
+	printtext("/____/  \\___/ /_/ /_/ /_/ \\___/ /____/  \\__/  \\___/ /_/     ", 30, 27);
+	printtext("                                                            ", 30, 28);
+	textColor(496);
+}
+void drawASCIIeditscore() {
+	textBgColor(6, 0);
+	printtext("    ______    ____     ____  ______          _____   ______   ____     ____     ______", 20, 4);
+	printtext("   / ____/   / __ \\   /  _/ /_  __/         / ___/  / ____/  / __ \\   / __ \\   / ____/", 20, 5);
+	printtext("  / __/     / / / /   / /    / /            \\__ \\  / /      / / / /  / /_/ /  / __/   ", 20, 6);
+	printtext(" / /___    / /_/ /  _/ /    / /            ___/ / / /___   / /_/ /  / _, _/  / /___   ", 20, 7);
+	printtext("/_____/   /_____/  /___/   /_/            /____/  \\____/   \\____/  /_/ |_|  /_____/   ", 20, 8);
+	printtext("                                                                                      ", 20, 9);
+	textBgColor(0, 15);
+}
+void drawASCIImenuStudent() {
+
+	drawRectangle(3, 1, 115, 5, 0);
+	drawRectangle(3, 23, 115, 5, 0);
+	textBgColor(6, 0);
+	printtext(" ______     ______   __  __     _____     ______     __   __     ______  ", 23, 1);
+	printtext("/\\  ___\\   /\\__  _\\ /\\ \\/\\ \\   /\\  __-.  /\\  ___\\   /\\ \"-.\\ \\   /\\__  _\\ ", 23, 2);
+	printtext("\\ \\___  \\  \\/_/\\ \\/ \\ \\ \\_\\ \\  \\ \\ \\/\\ \\ \\ \\  __\\   \\ \\ \\-.  \\  \\/_/\\ \\/ ", 23, 3);
+	printtext(" \\/\\_____\\    \\ \\_\\  \\ \\_____\\  \\ \\____-  \\ \\_____\\  \\ \\_\\\\\"\\_\\    \\ \\_\\ ", 23, 4);
+	printtext("  \\/_____/     \\/_/   \\/_____/   \\/____/   \\/_____/   \\/_/ \\/_/     \\/_/", 23, 5);
+	printtext(" __    __     ______     __   __     __  __    ", 35, 23);
+	printtext("/\\ \"-./  \\   /\\  ___\\   /\\ \"-.\\ \\   /\\ \\/\\ \\", 35, 24);
+	printtext("\\ \\ \\-./\\ \\  \\ \\  __\\   \\ \\ \\-.  \\  \\ \\ \\_\\ \\ ", 35, 25);
+	printtext(" \\ \\_\\ \\ \\_\\  \\ \\_____\\  \\ \\_\\\\\"\\_\\  \\ \\_____\\ ", 35, 26);
+	printtext("  \\/_/  \\/_/   \\/_____/   \\/_/ \\/_/   \\/_____/ ", 35, 27);
+	textBgColor(0, 15);
+}
+int view_course_in_year(Course* M, int n, drawASCII fun) {
+	textBgColor(0, 15);
+	system("cls");
+	int x = 1;
+	int y = 14;
+	fun();
+	drawRectangle(0, y - 2, 120, 13, 11);
+	textBgColor(0, 11);
+	printtext("ID COURSE", x+2, y - 1);
+	printtext("COURSE NAME", x + 12 , y - 1);//12 ki tu cho id
+	printtext("TEACHER NAME", x + 35, y - 1);
+	printtext("NUMBER OF CREDITS", x + 50, y - 1);//30 ki tu cho ten
+	printtext("MAX STUDENT", x + 72, y - 1);
+	printtext("DAY", x + 87, y - 1);//14 ki tu cho 1 diem
+	printtext("SESSION 1", x + 94, y - 1);//14 ki tu cho 1 diem
+	printtext("SESSION 2", x + 104, y - 1);//14 ki tu cho 1 diem
+	char ch;
+	int tab_now = 0;
+	view_10_course_of_list_course(M, tab_now * 10, n, x, y);
+	do {
+		hidePointer();
+		ch = _getch();
+		//[ESC]
+		if (ch == 27) {
+			return-1;
+		}
+		else {
+			//Control Up down 
+			if (ch == 72 && tab_now > 0) //up
+			{
+				tab_now--;
+				drawRectangle(0, y, 120, 11, 11);
+				view_10_course_of_list_course(M, tab_now * 10, n, x, y);
+			}
+			if (ch == 80 && tab_now < n / 10) //down
+			{
+				tab_now++;
+				drawRectangle(0, y, 120, 11, 11);
+				view_10_course_of_list_course(M, tab_now * 10, n, x, y);
+			}
+			if (ch == 13) {
+				return tab_now;
+			}
+		}
+	} while (true);
+}
+Course* select_course(User A, SchoolYear SY, func_Get_course fun, drawASCII fundraw) {
+	int n = 0;
+	Course* M = fun(A, SY, n);
+	if (M == NULL) {
+		//thong báo mở file thất bại
+		cout << "Fail!! The teacher has not entered the score for this course!! ";
+		return NULL;
+	}
+	char ch;
+	int line_now = 0;
+	int x = 1, y = 14;
+	int tab_now = view_course_in_year(M, n, fundraw);
+	if (tab_now == -1) {
+		textBgColor(0, 15);
+		return NULL;
+	}
+	drawRectangle(1, y + line_now, 115, 1, 14);
+	textBgColor(0, 14);
+	view_1_course_of_list_course(M[tab_now * 10], x, y);
+	int count = tab_now * 10;
+	do {
+		if (tab_now == -1) {
+			textBgColor(0, 15);
+			return NULL;
+		}
+		hidePointer();
+		ch = _getch();
+		//[ESC]
+		if (ch == 27) {
+			tab_now = view_course_in_year(M, n, fundraw);
+			if (tab_now == -1) {
+				textBgColor(0, 15);
+				return NULL;
+			}
+			line_now = 0;
+			count = tab_now * 10;
+			drawRectangle(1, y + line_now, 115, 1, 14);
+			textBgColor(0, 14);
+			view_1_course_of_list_course(M[tab_now * 10], x, y);
+		}
+		else {
+			//Control Up down 
+			if (ch == 72 && line_now > 0) //up
+			{
+				drawRectangle(1, y + line_now, 115, 1, 11);
+				textBgColor(0, 11);
+				view_1_course_of_list_course(M[count], x, y + line_now);
+
+				line_now--;
+				count--;
+				drawRectangle(1, y + line_now, 115, 1, 14);
+				textBgColor(0, 14);
+				view_1_course_of_list_course(M[count], x, y + line_now);
+			}
+			else if (ch == 72 && line_now == 0 && count > 0) {
+				count--;
+				drawRectangle(0, y, 120, 11, 11);
+				view_10_course_of_list_course(M, count, n, x, y);
+				drawRectangle(1, y + line_now, 115, 1, 14);
+				textBgColor(0, 14);
+				view_1_course_of_list_course(M[count], x, y + line_now);
+			}
+			else if (ch == 80 && line_now < 9 && count < n - 1) //down
+			{
+				drawRectangle(1, y + line_now, 115, 1, 11);
+				textBgColor(0, 11);
+				view_1_course_of_list_course(M[count], x, y + line_now);
+
+				line_now++;
+				count++;
+				drawRectangle(1, y + line_now, 115, 1, 14);
+				textBgColor(0, 14);
+				view_1_course_of_list_course(M[count], x, y + line_now);
+			}
+			else if (ch == 80 && line_now == 9 && count < n - 2) {
+				count++;
+				drawRectangle(0, y, 120, 11, 11);
+				view_10_course_of_list_course(M, count - 9, n, x, y);
+				drawRectangle(1, y + line_now, 115, 1, 14);
+				textBgColor(0, 14);
+				view_1_course_of_list_course(M[count], x, y + line_now);
+			}
+			if (ch == 13) {
+				return &M[count];
+			}
+		}
+	} while (true);
+	textBgColor(0, 15);
+}
+Course* get_course_of_student(User A, SchoolYear SY, int& n) {	
+	string fileName = "file_save/SchoolYear/" + SY.year + '/' + SY.semester.Name + "/course_info" + csv_tail;
+	ifstream f;
+	f.open(fileName, ios::in);
+	if (!f.good()) {
+		return NULL;
+	}
+	string temp;
+	get_course(A, SY);
+	n = 0;
+	MarkNode* count = A.info.phead;
+	while (count != NULL) {
+		n++;
+		count = count->pNext;
+	}
+	count = A.info.phead;
+	Course* M = new Course[n];
+	int i = 0;
+	while (i<n &&!f.eof()) {
+		getline(f, M[i].ID_course, ',');
+		if (_strcmpi(M[i].ID_course.c_str(), count->data.ID.c_str()) == 0) {
+			getline(f, M[i].name, ',');
+			getline(f, M[i].teacher, ',');
+			getline(f, temp, ',');
+			M[i].Num_of_creadit = atoi(temp.c_str());
+			getline(f, temp, ',');
+			M[i].Max_student = atoi(temp.c_str());
+			getline(f, M[i].DayOfWeek, ',');
+			getline(f, M[i].session[0], ',');
+			getline(f, M[i].session[1]);
+			i++;
+			count = count->pNext;
+		}
+		else {
+			getline(f, temp);
+		}
+	}
+	f.close();
+	return M;
 }
