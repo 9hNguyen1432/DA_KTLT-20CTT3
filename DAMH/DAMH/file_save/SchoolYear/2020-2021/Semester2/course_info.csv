@@ -1,9 +1,18 @@
-ID,COURSE NAME,TEACHER NAME,NUMBER OF CREDITS,MAX STUDENT,DAY,SESSION1,SESSION2
-CHE0001,Hoa Dai Cuong 1,Nguyen Thanh Trung,3,100,MON,S2,S4
-BAA0017,Phap Luat Dai Cuong,Thien An,3,100,WED,S2,S5
-BIO0001,Sinh Dai Cuong 1,Nguyen Thi Truc,3,100,WED,S2,S5
-PHY0002,Vat Li 2,Kim Ngan,3,100,SUN,S6,S9
-MTH0013,TH Xac Suat Thong Ke,Le Van Chanh,1,50,TUE,S8,S11
-CSC0002,Ki Thuat Lap Trinh,Hoang Dung,4,100,WED,S9,S12
-BAA0001,The Duc 1,TTTDTT,2,150,THU,S10,S13
-THC0001,Tin Hoc Co So,TT Tin Hoc,3,150,TUE,S10,S13
+﻿ID,COURSE NAME,TEACHER NAME,NUMBER OF CREDITS,MAX STUDENT,DAY,SESSION1,SESSION2
+MTH007,toan roi rac,nguyen cao dang,4,200,TUS,S1,S3
+HP1000,vi tich phan 1b,nguyen van a,3,200,MON,S2,S4
+HP3,vi tich phan 2b, Nguyen Thi D,2,200,WED,S1,S4
+ABC2,Nhap mon lap trinh ,Le van chanh 2,3,200,WED,S2,S5
+ABC4,Nhap mon CNTT,Le van chanh 4,3,200,FRI,S4,S7
+SHK,Sinh 1,Le Van Ngoc,3,200,FRI,S1,S2
+HHK,Hoa 1,Le Ngoc Van,3,200,TUS,S3,S7
+TTT,toan cao cap,Le Van Hop,3,200,MON,S7,S3
+SHS,sinh 2,Thuy Duong,3,200,MON,S5,S9
+HHS,hoa 2,le Day Hoa,3,200,TUS,S2,S5
+TUD,toan ung dung,Le Van Hop,3,200,THU,S1,S7
+PLDC,phap luat dai cuong,Thien An,2,200,THU,S1,S5
+MMT,mang may tinh,Le Van Thu,4,200,MON,S1,S4
+HHC,hoa hu co,Pham Xuan,4,200,TUS,S5,S9
+SCC,sinh cao cap,Le Van Ngoc,4,200,WED,S2,S4
+TTK,toan thong ke,Nguyen Nhut Hung,4,200,FRI,S4,s7
+HCM,TT HCM,Thien An,3,200,SAT,S5,s8
