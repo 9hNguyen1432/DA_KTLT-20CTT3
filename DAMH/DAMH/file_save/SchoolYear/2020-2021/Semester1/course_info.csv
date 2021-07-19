@@ -1,6 +1,9 @@
-﻿ID,COURSE NAME,TEACHER NAME,NUMBER OF CREDITS,MAX STUDENT,DAY,SESSION1,SESSION2
-MTH007,toan roi rac,nguyen cao dang,4,50,TUS,S1,S3
-HP1000,hoc phan moi,nguyen van a,3,20,MON,S2,S4
-HP3,hoc phan 3, Nguyen Thi D,2,40,WED,S1,S4
-ABC2,Nhap mon lap trinh 2,Le van chanh 2,3,100,WED,S2,S5
-ABC4,Nhap mon lap trinh 4,Le van chanh 4,3,100,FRI,S4,S7
+ID,COURSE NAME,TEACHER NAME,NUMBER OF CREDITS,MAX STUDENT,DAY,SESSION1,SESSION2
+BIO0002,Sinh Dai Cuong 2,Nguyen Minh,3,100,MON,S2,S4
+BAA0003,Anh Van,TTNN,3,100,WED,S2,S5
+MTH0003,Xac Suat Thong Ke,Nguyen Cao Dang,3,100,WED,S2,S5
+CHE0002,Hoa Dai Cuong 2,Phan Thanh Bui,3,100,SUN,S6,S9
+BAA0004,Kinh Te Dai Cuong,Nguyen Kim Chung,2,100,TUE,S8,S11
+CSC0003,Mo Dau Lap Trinh,Truong Toan Thinh,4,100,WED,S9,S12
+BAA0002,The Duc 2,TTTDTT,2,150,THU,S10,S13
+HPH0001,Hoa Phan Tich 1,Tran Thanh Tri,3,150,TUE,S10,S13
