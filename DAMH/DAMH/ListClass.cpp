@@ -85,7 +85,7 @@ void CreateNewClass()
 		getline(cin, name);
 		fstream file1;
 		bool check = true;
-		file1.open("file_save//SchoolYear//" + Year + "//ListClassOfYear.csv", ios::in);
+		file1.open("file_save//SchoolYear//" + Year + "//Class_Infor.csv", ios::in);
 		string NameClass;
 		while (!file1.eof())
 		{
@@ -108,7 +108,7 @@ void CreateNewClass()
 			f1 << "No" << "," << "ID" << "," << "Name" << "," << "Birth" << "," << "Sex" << "," << "IDSocial" << endl;
 			f1.close();
 			fstream file;
-			file.open("file_save//SchoolYear//" + Year + "//ListClassOfYear.csv", ios::app);
+			file.open("file_save//SchoolYear//" + Year + "//Class_Infor.csv", ios::app);
 			file << name << endl;
 			file.close();
 			gotoxy(38, 16);
@@ -159,7 +159,7 @@ void ViewListClasses()
 	{
 		gotoxy(44, 14);
 		cout << "===== LIST CLASSES IN " << selection << " =======" << endl;
-		f.open("file_save//SchoolYear//" + selection + "//ListClassOfYear.csv", ios::in);
+		f.open("file_save//SchoolYear//" + selection + "//Class_Infor.csv", ios::in);
 		int i = 15;
 		while (!f.eof())
 		{
