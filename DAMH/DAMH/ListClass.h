@@ -23,4 +23,5 @@ void ViewListClasses();
 void MenuViewListClass();
 int RunMenuViewListClass();
 void AddRandomInfoStudentToClass();
+int CheckRowInFile(string filename);
 
