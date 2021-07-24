@@ -87,6 +87,10 @@ void AddStudentToClass()
 			file2.open(ClassSem, ios::app);
 			file2 << count << "," << data.ID << "," << data.name << "," << data.Birth << "," << data.sex << "," << data.IDsocial << endl;
 			file2.close();
+			fstream file3;
+			file3.open("file_save//login_info.cvs", ios::app);
+			file3 << data.ID << "," << data.ID << "," << "1" << "," << Class << endl;
+			file3.close();
 
 		}
 	}
