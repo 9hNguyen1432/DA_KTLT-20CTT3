@@ -68,7 +68,7 @@ void menuStaff(User &user)
 			//them sinh vien vao lop
 			system("cls");
 			//AddStudentToClass();
-			/*RunMenuAddInfoStudentToClass();*/
+			RunMenuAddInfoStudentToClass();
 			break;
 		case 8: 
 			//lenh them hoc ki
