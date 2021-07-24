@@ -49,7 +49,6 @@ void menuStaff(User &user)
 			break;
 		case 3:
 			// lenh them nam hoc
-			cin.ignore();
 			addSchoolYear(SY);
 			break;
 		case 4:
@@ -146,14 +145,13 @@ void menuStudent(User &user)
 		system("cls");
 		string menuStudent[]= { "0. Log out", "1. Profile info"
 		 , "2. Change password"
-		 , "3. List of student in class"
-		 , "4. Score board"
-		 , "5. Enroll courses"
-		 , "6. List of enrolled courses"
-		 , "7. Remove courses"
-		 , "8. View your list of course" };
-		drawMenu(menuStudent, 9, 45, 9, 0, &drawASCIImenuStudent);
-		option = MoveAndChoose(9, menuStudent, 45, 9, 0);
+		 , "3. Score board"
+		 , "4. Enroll courses"
+		 , "5. List of enrolled courses"
+		 , "6. Remove courses"
+		 , "7. View your list of course" };
+		drawMenu(menuStudent, 8, 45, 10, 0, &drawASCIImenuStudent);
+		option = MoveAndChoose(8, menuStudent, 45, 10, 0);
 		switch (option)
 		{
 		case 1:
@@ -163,14 +161,10 @@ void menuStudent(User &user)
 			change_password(user);
 			break;
 		case 3:
-
-			break;
-		case 4:
 			// lenh show bang diem
-			get_all_course(user, SY);
 			DisPlay_Mark_Of_Student( SY, user);
 			break;
-		case 5:
+		case 4:
 		{
 			//enroll_course(user, SY);
 			int check = checkCourseSession();
@@ -190,18 +184,32 @@ void menuStudent(User &user)
 			break;
 
 		}
-		case 6: 
+		case 5: 
 			DisPlay_Course_Of_Student(SY, user);
 			//edit_score(user, SY, view_all_score_of_1_student(user, SY));
 			//edit_score_in_list_course(user, SY);
 			break;
-		case 7:
+		case 6:
 		{
 			//lenh xoa bot khoa hoc da dang ki
-			delete_course(user, SY);
+			int check = checkCourseSession();
+			if (check == 1) {
+				delete_course(user, SY);
+				system("pause");
+			}
+			else {
+				drawRectangle(40, 15, 25, 5, 4);
+				textBgColor(15, 4);
+				if (check == 0) printtext("NOT OPEN REGISTER COURSE YET", 41, 17);
+				else if (check == -1) printtext("IT'S NOT THE TIME TO START YET", 41, 17);
+				else printtext("It was late to register the course", 41, 17);
+				Sleep(1000);
+				textBgColor(0, 15);
+			}
+
 			break;
 		}
-		case 8:
+		case 7:
 			DisPlay_Course_Of_Student(SY, user);
 			break;
 		case 0:
@@ -211,6 +219,5 @@ void menuStudent(User &user)
 			break;
 		}
 	} while (!isExit);
-	std::cin.ignore();
 	repeatLogin(user);
 }

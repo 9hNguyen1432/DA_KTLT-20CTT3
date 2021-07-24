@@ -43,21 +43,29 @@ void Output_info(User A) {
 	printtext(" _            ___                                     _               ", 20, 2);
 	printtext("(_)          / __)                               _   (_)              ", 20, 3);
 	printtext(" _  ____   _| |__   ___    ____  ____   _____  _| |_  _   ___   ____  ", 20, 4);
-	printtext("| ||  _ \\ (_   __) / _ \\  / ___)|    \\ (____ |(_   _)| | / _ \\ |  _ \\ ", 20, 5);
+	printtext("| ||  _  \\(_   __) / _ \\  / ___)|    \\ (____ |(_   _)| | / _ \\ |  _ \\ ", 20, 5);
 	printtext("| || | | |  | |   | |_| || |    | | | |/ ___ |  | |_ | || |_| || | | |", 20, 6);
-	printtext("|_||_| |_|  |_|    \\___/ |_|    |_|_|_|\\_____|   \\__)|_| \\___/ |_| |_|", 20, 7);
-	drawRectangle(30, 12, 50, 16, 11);
-	printtext("Ho va ten: " + A.info.name, 35, 15);
+	printtext("|_||_| |_|  |_|    \\___/ |_|    |_|_|_|\\_____|  \\___)|_| \\___/ |_| |_|", 20, 7);
+
+
+	int a = 0;
 	if (A.role == 1) {
-		printtext("Ma so sinh vien: " + A.info.IDstd, 35, 17);
+		drawRectangle(30, 12, 50, 16, 11);
+		printtext("Ma so sinh vien: " + A.info.IDstd, 35, 15);
+		printtext("Lop: " + A.info.Class, 35, 17);
+		a = 2;
+		printtext("Chuc vu: Hoc sinh", 35, 21 + a);
 	}
 	else {
-		printtext("email : " + A.info.IDstd + "@hcmus.edu.vn", 35, 17);
+		drawRectangle(30, 12, 50, 13, 11);
+		printtext("Email : " + A.info.IDstd + "@hcmus.edu.vn", 35, 15);
+		printtext("Chuc vu: Admin", 35, 21 + a);
 	}
-	printtext("ngay sinh: " + A.info.Bir, 35, 19);
-	printtext("gioi tinh: " + A.info.sex, 35, 21);
-	printtext("chuc vu: " + (A.role == 1) ? "Hoc sinh" : "Admin", 35, 23);
-	printtext("CMND/CCCD: " + A.info.IDsocial, 35, 25);
+	printtext("Ho va ten: " + A.info.name, 35, 13);
+	printtext("Ngay sinh: " + A.info.Bir, 35, 17 + a);
+	printtext("Gioi tinh: " + A.info.sex, 35, 19 + a);
+
+	printtext("CMND/CCCD: " + A.info.IDsocial, 35, 23 + a);
 	textBgColor(0, 15);
 	system("pause");
 }
@@ -70,16 +78,7 @@ void read_course(User A, SchoolYear y)
 	printtext(" \\ \\/ / /  {}  \\| { } || {}  }   /  ___\}/  {}  \\| { } || {}  \}{ {__  | {_  ", 20, 5);
 	printtext("  }  {  \\      /| {_} || .-. \\   \\     }\\      /| {_} || .-. \\.-._} }| {__ ", 20, 6);
 	printtext("  `--'   `----' `-----'`-' `-'    `---'  `----' `-----'`-' `-'`----' `----'", 20, 7);
-	textBgColor(0, 15);
-	/*string fileName, fileName2, flag, flag2;
-	Course co;
-	fileName = "file_save/Class/20CTT3_course_1_2020.csv";
-	ifstream courseFile;
-	int i = 1;
-	courseFile.open(fileName, ios::in);
-
-	if (!courseFile.is_open())
-		std::cout << "reading file error!";*/
+	drawRectangle(1, 14, 115, 2, 6);
 	gotoxy(1, 15); std::cout << "N.o";
 	gotoxy(8, 15); std::cout << "Id course";
 	gotoxy(19, 15); std::cout << "Course name";
@@ -103,6 +102,7 @@ void read_course(User A, SchoolYear y)
 			read1CourseInfor(co, fi);
 			if (_strcmpi(co.ID_course.c_str(),tempo->data.ID.c_str()) == 0)
 			{
+				drawRectangle(1, 15+i, 115, 2, 6);
 				gotoxy(1, 15 + i); std::cout << i;
 				gotoxy(8, 15 + i); std::cout << co.ID_course;
 				gotoxy(19, 15 + i); std::cout << co.name;
@@ -116,6 +116,7 @@ void read_course(User A, SchoolYear y)
 			}
 		}
 		fi.close();
+		textBgColor(0, 15);
 	}
 }
 
