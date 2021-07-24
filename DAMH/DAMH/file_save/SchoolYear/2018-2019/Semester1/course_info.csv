@@ -1,7 +1,7 @@
 ﻿ID,COURSE NAME,TEACHER NAME,NUMBER OF CREDITS,MAX STUDENT,DAY,SESSION1,SESSION2
-HP3,vi tich phan 2b, Nguyen Thi D,2,200,WED,S1,S4
-ABC2,Nhap mon lap trinh ,Le van chanh 2,3,200,WED,S2,S5
-ABC4,Nhap mon CNTT,Le van chanh 4,3,200,FRI,S4,S7
-HHK,Hoa 1,Le Ngoc Van,3,200,TUS,S3,S7
-HHS,hoa 2,le Day Hoa,3,200,TUS,S2,S5
-HHC,hoa hu co,Pham Xuan,4,200,TUS,S5,S9
+PHY01,Vat li 1,Nguyen Thi D,2,200,WED,S1,S4
+CHE01,Hoa 1,Le van chanh 2,3,200,WED,S2,S5
+HHK,Moi truong,Phan Nguyen D,3,200,FRI,S4,S7
+HHS,Tin hoc,Le Ngoc Van,3,200,TUS,S3,S7
+ABC4,Tieng anh ,Le Day Hoa,3,200,TUS,S2,S5
+HCM,Tu tuong HCM,Pham Xuan,4,200,TUS,S5,S9
