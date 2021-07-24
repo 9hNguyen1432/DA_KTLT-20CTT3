@@ -31,12 +31,14 @@ void AddStudentToClass()
 	cout << "Enter School Year:";
 	getline(cin, YearCourse);
 	fstream file;
-	file.open("file_save//year.csv", ios::in);
+	file.open("file_save//year-semester.csv", ios::in);
 	string Year;
+	string tempSemester;
 	bool check = false;
 	while (!file.eof())
 	{
-		getline(file, Year);
+		getline(file, Year, ',');
+		getline(file, tempSemester);
 		if (YearCourse == Year)
 		{
 			check = true;
@@ -113,12 +115,14 @@ void AddRandomInfoStudentToClass()
 	cout << "Enter School Year:";
 	getline(cin, YearCourse);
 	fstream file;
-	file.open("file_save//year.csv", ios::in);
+	file.open("file_save//year-semester.csv", ios::in);
 	string Year;
+	string tempSemester;
 	bool check = false;
 	while (!file.eof())
 	{
-		getline(file, Year);
+		getline(file, Year, ',');
+		getline(file, tempSemester);
 		if (YearCourse == Year)
 		{
 			check = true;
@@ -193,7 +197,7 @@ void AddRandomInfoStudentToClass()
 				{
 					IDSt = MasoNam + 120300;
 				}
-				
+
 			}
 			if (CheckNameClass == "SHH")
 			{
@@ -259,7 +263,7 @@ void AddRandomInfoStudentToClass()
 				long MSSV = IDSt + count;
 				ofs << count << ",";
 				ofs << MSSV << ",";
-				finput << MSSV << "," << MSSV <<"," << "1" <<"," << Class << endl;
+				finput << MSSV << "," << MSSV << "," << "1" << "," << Class << endl;
 				getline(ifs, NameSt, ',');
 				ofs << NameSt << ",";
 				getline(ifs, BirthSt, ',');

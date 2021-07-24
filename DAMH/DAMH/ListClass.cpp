@@ -76,12 +76,14 @@ void CreateNewClass()
 	cout << "Enter School Year:";
 	getline(cin, Year);
 	fstream fs;
-	fs.open("file_save//year.csv", ios::in);
+	fs.open("file_save//year-semester.csv", ios::in);
 	bool checkYear = false;
 	string tempYear;
+	string tempSemester;
 	while (!fs.eof())
 	{
-		getline(fs, tempYear);
+		getline(fs, tempYear, ',');
+		getline(fs, tempSemester);
 		if (Year == tempYear)
 		{
 			checkYear = true;
@@ -94,8 +96,8 @@ void CreateNewClass()
 	}
 	if (checkYear == true)
 	{
-		gotoxy(43, 14);
-		cout << "Enter Name Of Class(Ex:20CTT1,..): ";
+		gotoxy(43, 13);
+		cout << "Enter Name Of Class(CTT,HOH,TTH,SHH): ";
 		getline(cin, name);
 		fstream file1;
 		bool check = true;
@@ -126,14 +128,14 @@ void CreateNewClass()
 			f1 << "No" << "," << "ID" << "," << "Name" << "," << "Birth" << "," << "Sex" << "," << "IDSocial" << endl;
 			f1.close();
 			string NameMajor;
-			gotoxy(43, 15);
+			gotoxy(43, 14);
 			cout << "Enter Name Of Major: ";
 			getline(cin, NameMajor);
 			int numberStudent, yearStudent;
-			gotoxy(43, 16);
+			gotoxy(43, 15);
 			cout << "Enter Number of Student: ";
 			cin >> numberStudent;
-			gotoxy(43, 17);
+			gotoxy(43, 16);
 			cout << "Enter Year: ";
 			cin >> yearStudent;
 
@@ -141,7 +143,7 @@ void CreateNewClass()
 			string filename = "file_save//SchoolYear//" + Year + "//class_info.csv";
 			int count = CheckRowInFile(filename);
 			file.open("file_save//SchoolYear//" + Year + "//class_info.csv", ios::app);
-			file << count <<"," << name <<","<< NameMajor << "," << numberStudent << "," << yearStudent << endl;
+			file << count << "," << name << "," << NameMajor << "," << numberStudent << "," << yearStudent << endl;
 			file.close();
 			gotoxy(38, 19);
 			cout << "CREATE CLASS SUCCESSFUL,PRESS ENTER TO BACK TO MENU !!!" << endl;
@@ -171,11 +173,13 @@ void ViewListClasses()
 	getline(cin, selection);
 	fstream file;
 	string year;
+	string tempSemester;
 	bool check = false;
-	file.open("file_save//year.csv", ios::in);
+	file.open("file_save//year-semester.csv", ios::in);
 	while (!file.eof())
 	{
-		getline(file, year);
+		getline(file, year,',');
+		getline(file, tempSemester);
 		if (selection == year)
 		{
 			check = true;

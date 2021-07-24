@@ -93,10 +93,6 @@ void addSchoolYear(SchoolYear& Y) {
     file << endl << schoolyear.year << ",0";
     file.close();
 
-    fstream fss;
-    fss.open("file_save//year.csv", ios::app);
-    fss << schoolyear.year << endl;
-    fss.close();
 
     file.open("file_save/SchoolYear/" + Y.year + "/class_info.csv", ios::in);
     getline(file, data);
