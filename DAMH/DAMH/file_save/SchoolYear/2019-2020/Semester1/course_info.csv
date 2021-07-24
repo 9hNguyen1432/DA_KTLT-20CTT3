@@ -1,18 +1,16 @@
 ﻿ID,COURSE NAME,TEACHER NAME,NUMBER OF CREDITS,MAX STUDENT,DAY,SESSION1,SESSION2
-MTH007,toan roi rac,nguyen cao dang,4,200,TUS,S1,S3
-HP1000,vi tich phan 1b,nguyen van a,3,200,MON,S2,S4
-HP3,vi tich phan 2b, Nguyen Thi D,2,200,WED,S1,S4
-ABC2,Nhap mon lap trinh ,Le van chanh 2,3,200,WED,S2,S5
-ABC4,Nhap mon CNTT,Le van chanh 4,3,200,FRI,S4,S7
-SHK,Sinh 1,Le Van Ngoc,3,200,FRI,S1,S2
-HHK,Hoa 1,Le Ngoc Van,3,200,TUS,S3,S7
-TTT,toan cao cap,Le Van Hop,3,200,MON,S7,S3
-SHS,sinh 2,Thuy Duong,3,200,MON,S5,S9
-HHS,hoa 2,le Day Hoa,3,200,TUS,S2,S5
-TUD,toan ung dung,Le Van Hop,3,200,THU,S1,S7
-PLDC,phap luat dai cuong,Thien An,2,200,THU,S1,S5
-HCM,tu tuong Ho Chi Minh,Thien An,2,200,FRI,S1,S4
-MMT,mang may tinh,Le Van Thu,4,200,MON,S1,S4
-HHC,hoa hu co,Pham Xuan,4,200,TUS,S5,S9
-SCC,sinh cao cap,Le Van Ngoc,4,200,WED,S2,S4
-TTK,toan thong ke,Nguyen Nhut Hung,4,200,FRI,S4,s7
+HHK,Moi truong,Nguyen Cao,4,200,TUS,S1,S3
+HHS,Tin hoc,Nguyen Thi D,2,200,WED,S1,S4
+HP3,Nang cao,Le Van Ngoc,3,200,FRI,S1,S2
+PLDC,Phap luat dai cuong,Le Ngoc Van,3,200,TUS,S3,S7
+SHK,Sinh huu co,Phan Ngoc Tinh,3,200,TUS,S4,S8
+SHS,Dong vat hoc,Le Van Hop,3,200,MON,S7,S3
+PHY02,Vat li 2,Thuy Duong,3,200,MON,S5,S9
+CHE02,Hoa 2,Le Day Hoa,3,200,TUS,S2,S5
+SSC,Thuc vat hoc,Le Van Hop,3,200,THU,S1,S7
+TLDC,Tam li dai cuong,Thien An,2,200,THU,S1,S5
+CSC05,Co so nganh,Phan Tuan Dung,2,200,FRI,S1,S4
+KTDC,Kinh te dai cuong,Le Van Thu,4,200,MON,S1,S4
+HP1000,Hoc phan moi,Pham Xuan,4,200,TUS,S5,S9
+MMT,Mang may tinh,Le Van Ngoc,4,200,WED,S2,S4
+MTH007,Toan roi rac,Nguyen Nhut Hung,4,200,FRI,S4,S7
