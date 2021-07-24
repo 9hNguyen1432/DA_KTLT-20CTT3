@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <string>
 #include <fstream>
+#include "ListClass.h"
 
 using namespace std;
 const string csv_tail = ".csv";
@@ -27,15 +28,17 @@ void AddStudentToClass()
 	string Class;
 	cin.ignore();
 	gotoxy(52, 10);
-	cout << "Select School Year:";
+	cout << "Enter School Year:";
 	getline(cin, YearCourse);
 	fstream file;
-	file.open("file_save//year.csv", ios::in);
+	file.open("file_save//year-semester.csv", ios::in);
 	string Year;
+	string tempSemester;
 	bool check = false;
 	while (!file.eof())
 	{
-		getline(file, Year);
+		getline(file, Year, ',');
+		getline(file, tempSemester);
 		if (YearCourse == Year)
 		{
 			check = true;
@@ -50,18 +53,21 @@ void AddStudentToClass()
 	if (check == true)
 	{
 		char ch;
-		gotoxy(56, 12);
-		cout << "Select Class:";
+		gotoxy(52, 12);
+		cout << "Enter Name Of Class:";
 		getline(cin, Class);
-		string yearSem = "file_save//SchoolYear//" + YearCourse + "//ListClassOfYear.csv";
 		fstream file1;
-		string Cla;
 		bool check1 = false;
-		file1.open(yearSem, ios::in);
+		file1.open("file_save//SchoolYear//" + YearCourse + "//class_info.csv", ios::in);
+		string stt, NameClass, major, number, year;
 		while (!file1.eof())
 		{
-			getline(file1, Cla);
-			if (Class == Cla)
+			getline(file1, stt, ',');
+			getline(file1, NameClass, ',');
+			getline(file1, major, ',');
+			getline(file1, number, ',');
+			file1 >> year;
+			if (Class == NameClass)
 			{
 				check1 = true;
 			}
@@ -79,9 +85,14 @@ void AddStudentToClass()
 			system("pause");
 			string ClassSem = "file_save//SchoolYear//" + YearCourse + "//" + Class + csv_tail;
 			fstream file2;
+			int count = CheckRowInFile(ClassSem);
 			file2.open(ClassSem, ios::app);
-			file2 << "0" << "," << data.ID << "," << data.name << "," << data.Birth << "," << data.sex << "," << data.IDsocial << endl;
+			file2 << count << "," << data.ID << "," << data.name << "," << data.Birth << "," << data.sex << "," << data.IDsocial << endl;
 			file2.close();
+			fstream file3;
+			file3.open("file_save//login_info.cvs", ios::app);
+			file3 << data.ID << "," << data.ID << "," << "1" << "," << Class << endl;
+			file3.close();
 
 		}
 	}
@@ -101,15 +112,17 @@ void AddRandomInfoStudentToClass()
 	string Class;
 	cin.ignore();
 	gotoxy(52, 10);
-	cout << "Select School Year:";
+	cout << "Enter School Year:";
 	getline(cin, YearCourse);
 	fstream file;
-	file.open("file_save//year.csv", ios::in);
+	file.open("file_save//year-semester.csv", ios::in);
 	string Year;
+	string tempSemester;
 	bool check = false;
 	while (!file.eof())
 	{
-		getline(file, Year);
+		getline(file, Year, ',');
+		getline(file, tempSemester);
 		if (YearCourse == Year)
 		{
 			check = true;
@@ -123,18 +136,21 @@ void AddRandomInfoStudentToClass()
 	}
 	if (check == true)
 	{
-		gotoxy(56, 12);
-		cout << "Select Class:";
+		gotoxy(52, 12);
+		cout << "Enter Name Of Class:";
 		getline(cin, Class);
-		string yearSem = "file_save//SchoolYear//" + YearCourse + "//ListClassOfYear.csv";
 		fstream file1;
-		string Cla;
 		bool check1 = false;
-		file1.open(yearSem, ios::in);
+		file1.open("file_save//SchoolYear//" + YearCourse + "//class_info.csv", ios::in);
+		string stt, NameClass, major, number, year;
 		while (!file1.eof())
 		{
-			getline(file1, Cla);
-			if (Class == Cla)
+			getline(file1, stt, ',');
+			getline(file1, NameClass, ',');
+			getline(file1, major, ',');
+			getline(file1, number, ',');
+			file1 >> year;
+			if (Class == NameClass)
 			{
 				check1 = true;
 			}
@@ -153,23 +169,111 @@ void AddRandomInfoStudentToClass()
 			string NameClass = "file_save//SchoolYear//" + YearCourse + "//" + Class + csv_tail;
 			ofs.open(NameClass, ios::app);
 			ifs.open("file_save//InforNewStudent.csv", ios::in);
-			Database info;
-			int count = 0;
-			while (!ifs.eof() && (count != 30))
+			string  NameSt, BirthSt, SexSt, IdSocialSt;
+			int count = CheckRowInFile(NameClass);
+			int IDSt;
+			string CheckYear = { YearCourse };
+			string CheckNameYear = { CheckYear[2] , CheckYear[3] };
+			long MasoNam;
+			MasoNam = atoi(CheckNameYear.c_str()) * 1000000;
+			string str = { Class };
+			string CheckNameClass = { str[2] , str[3] , str[4] };
+			string CheckSTTClass = { str[5] };
+			if (CheckNameClass == "CTT")
 			{
-				getline(ifs, info.No, ',');
-				ofs << info.No << ',';
-				getline(ifs, info.ID, ',');
-				ofs << info.ID << ',';
-				getline(ifs, info.name, ',');
-				ofs << info.name << ',';
-				getline(ifs, info.Birth, ',');
-				ofs << info.Birth << ",";
-				getline(ifs, info.sex, ',');
-				ofs << info.sex << ',';
-				ifs >> info.IDsocial;
-				ofs << info.IDsocial;
-				count += 1;
+				if (CheckSTTClass == "1")
+				{
+					IDSt = MasoNam + 120000;
+				}
+				if (CheckSTTClass == "2")
+				{
+					IDSt = MasoNam + 120100;
+				}
+				if (CheckSTTClass == "3")
+				{
+					IDSt = MasoNam + 120200;
+				}
+				if (CheckSTTClass == "4")
+				{
+					IDSt = MasoNam + 120300;
+				}
+
+			}
+			if (CheckNameClass == "SHH")
+			{
+				if (CheckSTTClass == "1")
+				{
+					IDSt = MasoNam + 150000;
+				}
+				if (CheckSTTClass == "2")
+				{
+					IDSt = MasoNam + 150100;
+				}
+				if (CheckSTTClass == "3")
+				{
+					IDSt = MasoNam + 150200;
+				}
+				if (CheckSTTClass == "4")
+				{
+					IDSt = MasoNam + 150300;
+				}
+			}
+			if (CheckNameClass == "HOH")
+			{
+				if (CheckSTTClass == "1")
+				{
+					IDSt = MasoNam + 150000;
+				}
+				if (CheckSTTClass == "2")
+				{
+					IDSt = MasoNam + 150100;
+				}
+				if (CheckSTTClass == "3")
+				{
+					IDSt = MasoNam + 150200;
+				}
+				if (CheckSTTClass == "4")
+				{
+					IDSt = MasoNam + 150300;
+				}
+			}
+			if (CheckNameClass == "TTH")
+			{
+				if (CheckSTTClass == "1")
+				{
+					IDSt = MasoNam + 110000;
+				}
+				if (CheckSTTClass == "2")
+				{
+					IDSt = MasoNam + 110100;
+				}
+				if (CheckSTTClass == "3")
+				{
+					IDSt = MasoNam + 110200;
+				}
+				if (CheckSTTClass == "4")
+				{
+					IDSt = MasoNam + 110300;
+				}
+			}
+			while (count != 31)
+			{
+				fstream finput;
+				finput.open("file_save//login_info.csv", ios::app);
+				long MSSV = IDSt + count;
+				ofs << count << ",";
+				ofs << MSSV << ",";
+				finput << MSSV << "," << MSSV << "," << "1" << "," << Class << endl;
+				getline(ifs, NameSt, ',');
+				ofs << NameSt << ",";
+				getline(ifs, BirthSt, ',');
+				ofs << BirthSt << ",";
+				getline(ifs, SexSt, ',');
+				ofs << SexSt << ',';
+				getline(ifs, IdSocialSt);
+				ofs << IdSocialSt << endl;
+				count++;
+				finput.close();
 			}
 			ifs.close();
 			ofs.close();
