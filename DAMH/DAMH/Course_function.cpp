@@ -356,7 +356,13 @@ void DisPlay_Course_Of_Student(SchoolYear Y, User A) {
 			if (ch == 'c' || ch == 'C') //up
 			{
 				change_Year_Semester(Y);
-				get_course(A, Y);
+				int a = get_course(A, Y);
+				if (a == -1) {
+					drawRectangle(3, 14, 115, 3, 4);
+					printtext("Invalid school year ", 50, 15);
+					Sleep(1800);
+					determineYearSemesterNow(Y.year, Y.semester.Name);
+				}
 				read_course(A, Y);
 			}
 		}
@@ -551,7 +557,13 @@ void DisPlay_Mark_Of_Student(SchoolYear Y, User A) {
 			if (ch == 'c' || ch == 'C') 
 			{
 				change_Year_Semester(Y);
-				get_course(A, Y);
+				int a = get_course(A, Y);
+				if (a == -1) {
+					drawRectangle(3, 14, 115, 3, 4);
+					printtext("Invalid school year ", 50, 15);
+					Sleep(1800);
+					determineYearSemesterNow(Y.year, Y.semester.Name);
+				}
 				view_all_score_of_1_student(A, Y);
 			}
 		}
