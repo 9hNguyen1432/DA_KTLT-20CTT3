@@ -135,6 +135,13 @@ void menuStudent(User &user)
 	showPointer();
 	SchoolYear SY;
 	determineYearSemesterNow(SY.year, SY.semester.Name);
+	if (SY.semester.Name == "Semester0") {
+		drawRectangle(3, 14, 115, 3, 4);
+		printtext("The school year hasn't started yet ", 40, 15);
+		Sleep(1800);
+		repeatLogin(user);
+		return;
+	}
 	read_info(user,SY);
 	init_List_Mark(user.info.phead);
 	get_course(user,SY);
