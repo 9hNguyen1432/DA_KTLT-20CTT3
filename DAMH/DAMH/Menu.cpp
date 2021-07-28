@@ -57,7 +57,6 @@ void menuStaff(User &user)
 			break;
 		case 5:
 			// lenh them khoa hoc
-			cin.ignore();
 			addCourse();
 			break;
 		case 6:
@@ -72,7 +71,6 @@ void menuStaff(User &user)
 			break;
 		case 8: 
 			//lenh them hoc ki
-			cin.ignore();
 			addSemester(SY.year, SY.semester.Name);
 			break;
 		case 9:
@@ -100,7 +98,6 @@ void menuStaff(User &user)
 		}
 		case 10:
 			//view danh sachs hoc phan
-			cin.ignore();
 			listCourse(SY.year, SY.semester.Name);
 			break;
 		case 11:
@@ -109,7 +106,6 @@ void menuStaff(User &user)
 			break;
 		case 12:
 			//xuat diem hoc sinh vao file
-			cin.ignore();
 			importScoreBoardUI();
 			break;
 		case 13:
@@ -121,6 +117,7 @@ void menuStaff(User &user)
 		}
 		case 14:
 			//view diem cua lop hoc
+			listClassUseFor14(SY);
 			break;
 		case 0:
 			isExit = true;
