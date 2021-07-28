@@ -19,26 +19,26 @@ struct Database {
 	string sex;
 	string IDsocial;
 };
-
+void drawASCIIMenuView();
 Database Imput()
 {
 	Database data;
-	gotoxy(53, 14);
+	gotoxy(53, 17);
 	cout << "IMPUT INFORMATION STUDENT" << endl;
 	cin.ignore();
-	gotoxy(58, 15);
+	gotoxy(58, 18);
 	cout << "Mssv:";
 	getline(cin, data.ID);
-	gotoxy(58, 16);
+	gotoxy(58, 19);
 	cout << "Name:";
 	getline(cin, data.name);
-	gotoxy(58, 17);
+	gotoxy(58, 20);
 	cout << "Birth:";
 	getline(cin, data.Birth);
-	gotoxy(58, 18);
+	gotoxy(58, 21);
 	cout << "Sex:";
 	getline(cin, data.sex);
-	gotoxy(58, 19);
+	gotoxy(58, 22);
 	cout << "IDsocial:";
 	getline(cin, data.IDsocial);
 	return data;
@@ -62,18 +62,15 @@ void CreateNewClass()
 {
 	string name;
 	system("cls");
-	textBgColor(1, 10);
-	printtext("   ______    __       ____         _____   _____ ", 40, 4);
-	printtext("  / ____/   / /      / /\\ \\      / ____/  / ___/ ", 40, 5);
-	printtext(" / /       / /      / /__\\ \\     \\ \\      \\ \\    ", 40, 6);
-	printtext("/ /___    / /____  / /____\\ \\   __\\ \\    __\\ \\   ", 40, 7);
-	printtext("\\____/   /______/ /_/      \\_\\ /____/   /____/   ", 40, 8);
-	printtext("                                                 ", 40, 9);
+	drawASCIIMenuView();
 	string Year;
+	textBgColor(0, 11);
+	drawRectangle(35, 12, 60, 12, 11);
 	gotoxy(43, 12);
-	textBgColor(5, 15);
-	cin.ignore();
+	//cin.ignore();
 	cout << "Enter School Year:";
+	drawRectangle(43, 13, 45, 1, 15);
+	gotoxy(43, 13);
 	getline(cin, Year);
 	fstream fs;
 	fs.open("file_save//year-semester.csv", ios::in);
@@ -91,13 +88,16 @@ void CreateNewClass()
 	}
 	if (checkYear == false)
 	{
-		gotoxy(40, 14);
-		cout << "SCHOOL YEAR DON'T EXIT!! PLEASE TRY AGAIN" << endl;
+		gotoxy(43, 14);
+		cout << "SCHOOL YEAR DON'T EXIST!! PLEASE TRY AGAIN" << endl;
 	}
 	if (checkYear == true)
 	{
-		gotoxy(43, 13);
+		textBgColor(0, 11);
+		gotoxy(43, 14);
 		cout << "Enter Name Of Class(CTT,HOH,TTH,SHH): ";
+		drawRectangle(43, 15, 45, 1, 15);
+		gotoxy(43, 15);
 		getline(cin, name);
 		fstream file1;
 		bool check = true;
@@ -117,8 +117,8 @@ void CreateNewClass()
 		}
 		if (check == false)
 		{
-			gotoxy(40, 16);
-			cout << "CLASS EXIT! PLEASE TRY AGAIN" << endl;
+			gotoxy(43, 16);
+			cout << "CLASS EXIST! PLEASE TRY AGAIN" << endl;
 		}
 		if (check == true)
 		{
@@ -128,15 +128,24 @@ void CreateNewClass()
 			f1 << "No" << "," << "ID" << "," << "Name" << "," << "Birth" << "," << "Sex" << "," << "IDSocial" << endl;
 			f1.close();
 			string NameMajor;
-			gotoxy(43, 14);
+			textBgColor(0, 11);
+			gotoxy(43, 16);
 			cout << "Enter Name Of Major: ";
+			drawRectangle(43, 17, 45, 1, 15);
+			gotoxy(43, 17);
 			getline(cin, NameMajor);
 			int numberStudent, yearStudent;
-			gotoxy(43, 15);
+			textBgColor(0, 11);
+			gotoxy(43, 18);
 			cout << "Enter Number of Student: ";
+			drawRectangle(43, 19, 45, 1, 15);
+			gotoxy(43, 19);
 			cin >> numberStudent;
-			gotoxy(43, 16);
+			textBgColor(0, 11);
+			gotoxy(43, 20);
 			cout << "Enter Year: ";
+			drawRectangle(43, 21, 45, 1, 15);
+			gotoxy(43, 21);
 			cin >> yearStudent;
 
 			fstream file;
@@ -145,7 +154,7 @@ void CreateNewClass()
 			file.open("file_save//SchoolYear//" + Year + "//class_info.csv", ios::app);
 			file << count << "," << name << "," << NameMajor << "," << numberStudent << "," << yearStudent << endl;
 			file.close();
-			gotoxy(38, 19);
+			gotoxy(43, 23);
 			cout << "CREATE CLASS SUCCESSFUL,PRESS ENTER TO BACK TO MENU !!!" << endl;
 		}
 	}
@@ -155,21 +164,19 @@ void CreateNewClass()
 
 void ViewListClasses()
 {
-	textBgColor(1, 10);
-	printtext("   ______    __       ____         _____   _____ ", 40, 4);
-	printtext("  / ____/   / /      / /\\ \\      / ____/  / ___/ ", 40, 5);
-	printtext(" / /       / /      / /__\\ \\     \\ \\      \\ \\    ", 40, 6);
-	printtext("/ /___    / /____  / /____\\ \\   __\\ \\    __\\ \\   ", 40, 7);
-	printtext("\\____/   /______/ /_/      \\_\\ /____/   /____/   ", 40, 8);
-	printtext("                                                 ", 40, 9);
+	drawASCIIMenuView();
 	textBgColor(5, 15);
 	fstream f;
 	string selection;
 	gotoxy(50, 10);
 	cout << "VIEW LIST CLASS IN SCHOOL YEAR";
+	drawRectangle(35, 12, 60, 3, 11);
+	textBgColor(0, 11);
 	gotoxy(43, 12);
-	cin.ignore();
-	cout << "Enter School Year: ";
+	//cin.ignore();
+	cout << "Enter School Year:";
+	drawRectangle(43, 13, 45, 1, 15);
+	gotoxy(43, 13);
 	getline(cin, selection);
 	fstream file;
 	string year;
@@ -188,15 +195,15 @@ void ViewListClasses()
 	if (check == false)
 	{
 		textBgColor(10, 11);
-		gotoxy(45, 14);
-		cout << "Your Selection Is Fail" << endl;
+		gotoxy(43, 14);
+		cout << "SCHOOL YEAR DON'T EXIST" << endl;
 	}
 	else
 	{
-		gotoxy(44, 14);
+		gotoxy(44, 15);
 		cout << "===== LIST CLASSES IN " << selection << " =======" << endl;
 		f.open("file_save//SchoolYear//" + selection + "//class_info.csv", ios::in);
-		int i = 15;
+		int i = 16;
 		while (!f.eof())
 		{
 			string stt, NameClass, major, number, year;
@@ -214,39 +221,34 @@ void ViewListClasses()
 	}
 }
 
-void MenuViewListClass()
+void drawASCIIMenuView()
 {
-	textBgColor(1, 10);
+	textBgColor(0, 6);
 	printtext("   ______    __       ____         _____   _____ ", 40, 4);
 	printtext("  / ____/   / /      / /\\ \\      / ____/  / ___/ ", 40, 5);
 	printtext(" / /       / /      / /__\\ \\     \\ \\      \\ \\    ", 40, 6);
 	printtext("/ /___    / /____  / /____\\ \\   __\\ \\    __\\ \\   ", 40, 7);
 	printtext("\\____/   /______/ /_/      \\_\\ /____/   /____/   ", 40, 8);
 	printtext("                                                 ", 40, 9);
-	textBgColor(5, 15);
-	gotoxy(40, 12);
-	cout << "1. Create New Class In School Year" << endl;
-	gotoxy(40, 14);
-	cout << "2. View List Classes In School Year" << endl;
-	gotoxy(40, 16);
-	cout << "3. Exit" << endl;
 }
-
-
-
 int RunMenuViewListClass()
 {
 	char ch;
+	int command;
+	
 	while (true)
 	{
-		int command;
-		MenuViewListClass();
-		gotoxy(40, 18);
-		cout << "Please Select Your Command: ";
-		cin >> command;
+		showPointer();
+		system("cls");
+		gotoxy(40, 12);
+		string MenuView[] = { "0. Create New Class",
+			"1. View List Classes",
+			"2. Exit" };
+		drawMenu(MenuView, 3, 55, 12, 0, &drawASCIIMenuView);
+		command = MoveAndChoose(3, MenuView, 55, 12, 0);
 		switch (command)
 		{
-		case 1:
+		case 0:
 		{
 			system("cls");
 			CreateNewClass();
@@ -254,7 +256,7 @@ int RunMenuViewListClass()
 			system("cls");
 			break;
 		}
-		case 2:
+		case 1:
 		{
 			system("cls");
 			ViewListClasses();
@@ -262,7 +264,7 @@ int RunMenuViewListClass()
 			system("cls");
 			break;
 		}
-		case 3:
+		case 2:
 		{
 			textBgColor(10, 11);
 			printtext("YOU WANT TO EXIT, PRESS ENTER TO BACK TO MENU !!!", 40, 20);

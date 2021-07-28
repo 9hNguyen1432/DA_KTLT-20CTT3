@@ -10,5 +10,4 @@
 
 void AddStudentToClass();
 void AddRandomInfoStudentToClass();
-void MenuAddInfoStudentToClass();
 int RunMenuAddInfoStudentToClass();
