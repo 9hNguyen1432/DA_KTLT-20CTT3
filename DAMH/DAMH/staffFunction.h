@@ -91,7 +91,7 @@ void listClass(SchoolYear Y, fun_show_class Fun);
 
 void showStudentInclass(SchoolYear Y, string classname);
 
-void drawListStudent(int columnNum, SchoolYear Y, string filename, int y, int indexA[], int indexB[], int line, int columnNotNeed, int flagLine);
+void drawListStudent(int columnNum, SchoolYear Y, string filename, int y, int indexA[], int indexB[], int line, int flagLine);
 
 void getLineInfoForStudent(string filename, SchoolYear Y, int line, string column[], int columnNum);
 
