@@ -14,21 +14,15 @@ const string csv_tail = ".csv";
 
 void AddStudentToClass()
 {
-	textBgColor(1, 10);
-	printtext("   ______    __       ____         _____   _____ ", 40, 2);
-	printtext("  / ____/   / /      / /\\ \\      / ____/  / ___/ ", 40, 3);
-	printtext(" / /       / /      / /__\\ \\     \\ \\      \\ \\    ", 40, 4);
-	printtext("/ /___    / /____  / /____\\ \\   __\\ \\    __\\ \\   ", 40, 5);
-	printtext("\\____/   /______/ /_/      \\_\\ /____/   /____/   ", 40, 6);
-	printtext("                                                 ", 40, 7);
+	drawASCIIMenuView();
 	textBgColor(0, 15);
-	gotoxy(55, 8);
-	cout << "=ADD STUDENT TO CLASS=";
 	string YearCourse;
 	string Class;
-	cin.ignore();
-	gotoxy(52, 10);
+	drawRectangle(35, 11, 60, 5, 11);
+	gotoxy(43, 11);
 	cout << "Enter School Year:";
+	drawRectangle(43, 12, 45, 1, 15);
+	gotoxy(43, 12);
 	getline(cin, YearCourse);
 	fstream file;
 	file.open("file_save//year-semester.csv", ios::in);
@@ -46,15 +40,17 @@ void AddStudentToClass()
 	}
 	if (check == false)
 	{
-		gotoxy(47, 12);
+		gotoxy(43, 13);
 		cout << "Don't Find School Year " << endl;
 		system("pause");
 	}
 	if (check == true)
 	{
-		char ch;
-		gotoxy(52, 12);
+		textBgColor(0, 11);
+		gotoxy(43, 13);
 		cout << "Enter Name Of Class:";
+		drawRectangle(43, 14, 45, 1, 15);
+		gotoxy(43, 14);
 		getline(cin, Class);
 		fstream file1;
 		bool check1 = false;
@@ -74,7 +70,7 @@ void AddStudentToClass()
 		}
 		if (check1 == false)
 		{
-			gotoxy(52, 14);
+			gotoxy(43, 15);
 			cout << "Don't Find Class" << endl;
 			system("pause");
 		}
@@ -100,19 +96,15 @@ void AddStudentToClass()
 
 void AddRandomInfoStudentToClass()
 {
-	textBgColor(1, 10);
-	printtext("   ______    __       ____         _____   _____ ", 40, 4);
-	printtext("  / ____/   / /      / /\\ \\      / ____/  / ___/ ", 40, 5);
-	printtext(" / /       / /      / /__\\ \\     \\ \\      \\ \\    ", 40, 6);
-	printtext("/ /___    / /____  / /____\\ \\   __\\ \\    __\\ \\   ", 40, 7);
-	printtext("\\____/   /______/ /_/      \\_\\ /____/   /____/   ", 40, 8);
-	printtext("                                                 ", 40, 9);
+	drawASCIIMenuView();
 	textBgColor(5, 15);
 	string YearCourse;
 	string Class;
-	cin.ignore();
-	gotoxy(52, 10);
+	drawRectangle(35, 11, 60, 7, 11);
+	gotoxy(43, 11);
 	cout << "Enter School Year:";
+	drawRectangle(43, 12, 45, 1, 15);
+	gotoxy(43, 12);
 	getline(cin, YearCourse);
 	fstream file;
 	file.open("file_save//year-semester.csv", ios::in);
@@ -130,14 +122,17 @@ void AddRandomInfoStudentToClass()
 	}
 	if (check == false)
 	{
-		gotoxy(47, 12);
+		gotoxy(43, 13);
 		cout << "Don't Find School Year" << endl;
 		system("pause");
 	}
 	if (check == true)
 	{
-		gotoxy(52, 12);
+		textBgColor(0, 11);
+		gotoxy(43, 13);
 		cout << "Enter Name Of Class:";
+		drawRectangle(43, 14, 45, 1, 15);
+		gotoxy(43, 14);
 		getline(cin, Class);
 		fstream file1;
 		bool check1 = false;
@@ -157,14 +152,14 @@ void AddRandomInfoStudentToClass()
 		}
 		if (check1 == false)
 		{
-			gotoxy(56, 14);
+			gotoxy(43, 15);
 			cout << "Don't Find Class" << endl;
 			system("pause");
 		}
 		else
 		{
-			gotoxy(40, 14);
-			cout << "Random Information Student Has Been Imported To Class" << endl;
+			gotoxy(43, 16);
+			cout << "Random Info Student Has Been Imported To Class" << endl;
 			fstream ofs, ifs;
 			string NameClass = "file_save//SchoolYear//" + YearCourse + "//" + Class + csv_tail;
 			ofs.open(NameClass, ios::app);
@@ -281,38 +276,24 @@ void AddRandomInfoStudentToClass()
 	}
 }
 
-void MenuAddInfoStudentToClass()
-{
-	textBgColor(1, 10);
-	printtext("   ______    __       ____         _____   _____ ", 40, 4);
-	printtext("  / ____/   / /      / /\\ \\      / ____/  / ___/ ", 40, 5);
-	printtext(" / /       / /      / /__\\ \\     \\ \\      \\ \\    ", 40, 6);
-	printtext("/ /___    / /____  / /____\\ \\   __\\ \\    __\\ \\   ", 40, 7);
-	printtext("\\____/   /______/ /_/      \\_\\ /____/   /____/   ", 40, 8);
-	printtext("                                                 ", 40, 9);
-	textBgColor(5, 15);
-	gotoxy(40, 12);
-	cout << "1. Add One Student To Class" << endl;
-	gotoxy(40, 14);
-	cout << "2. Import Info Student From File To Class" << endl;
-	gotoxy(40, 16);
-	cout << "3. Exit" << endl;
-}
 
 int RunMenuAddInfoStudentToClass()
 {
 	char ch;
+	int command;
 	while (true)
 	{
-
-		int command;
-		MenuAddInfoStudentToClass();
-		gotoxy(40, 18);
-		cout << "Please Select Your Command: ";
-		cin >> command;
+		showPointer();
+		system("cls");
+		gotoxy(40, 12);
+		string MenuAdd[] = { "0. Add One Student To Class",
+		"1. Import Info Student From File To Class",
+		"2. Exit" };
+		drawMenu(MenuAdd, 3, 45, 12, 0, &drawASCIIMenuView);
+		command = MoveAndChoose(3, MenuAdd, 45, 12, 0);
 		switch (command)
 		{
-		case 1:
+		case 0:
 		{
 			system("cls");
 			AddStudentToClass();
@@ -320,7 +301,7 @@ int RunMenuAddInfoStudentToClass()
 			system("cls");
 			break;
 		}
-		case 2:
+		case 1:
 		{
 			system("cls");
 			AddRandomInfoStudentToClass();
@@ -328,7 +309,7 @@ int RunMenuAddInfoStudentToClass()
 			system("cls");
 			break;
 		}
-		case 3:
+		case 2:
 		{
 			textBgColor(10, 11);
 			printtext("YOU WANT TO EXIT, PRESS ENTER TO BACK TO MENU !!!", 40, 20);
