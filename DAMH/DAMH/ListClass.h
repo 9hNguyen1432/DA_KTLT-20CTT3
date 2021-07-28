@@ -20,8 +20,7 @@ Database Imput();
 void AddStudentToClass();
 void CreateNewClass();
 void ViewListClasses();
-void MenuViewListClass();
 int RunMenuViewListClass();
 void AddRandomInfoStudentToClass();
 int CheckRowInFile(string filename);
-
+void drawASCIIMenuView();
