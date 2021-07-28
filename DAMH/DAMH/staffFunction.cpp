@@ -1976,6 +1976,7 @@ void getLineInfoForStudent(string filename, SchoolYear Y, int line, string colum
                 }
                 temp = temp->pNext;
             }
+            if (NumCredit == 0) NumCredit = 1;
             TotalMark = TotalMark / float(NumCredit);
             float semesterGPA = (TotalMark / 10) * 4;
             float overallGPA = 0;
@@ -2015,7 +2016,7 @@ void showScoreOfClass(SchoolYear Y, string classname) {
     int lineNum = countLine(filename);
     int y = 11;
     drawRectangle(8, 10, 100, 15, 11);
-    int a[6] = { 8,18,44,63,80,95 };
+    int a[6] = { 8,18,36,63,80,95 };
     int b[6] = { 8,18,36,64,80,95 };
     drawListStudent(6, Y, filename, y, a, b, lineNum, 2);
     hidePointer();
