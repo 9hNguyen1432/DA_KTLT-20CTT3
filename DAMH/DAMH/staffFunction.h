@@ -69,7 +69,7 @@ int insertString(string& data, int limit);
 
 void editCourse(string year, string semester);
 
-void deleteCourse(string filename, int currentLine, string year, string semester);
+void deleteCourse(string filename, string courseName, int currentLine, string year, string semester);
 
 void viewCourse();
 
@@ -98,3 +98,11 @@ void getLineInfoForStudent(string filename, SchoolYear Y, int line, string colum
 void get_all_course_student(User& B, SchoolYear SY, float& overallGPA);
 
 void showScoreOfClass(SchoolYear Y, string classname);
+
+void listClassUseFor14(SchoolYear Y);
+
+void showScoreOfClassPreventive(SchoolYear Y, string classname);
+
+void deleteFile(string filename);
+
+void renameFile(string oldName, string newName);
