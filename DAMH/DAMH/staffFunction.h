@@ -12,7 +12,7 @@
 #include <ctime>
 
 using namespace std;
-
+typedef void (*fun_show_class)(SchoolYear, string);
 void createFolder(string namefolder);
 
 void CopyContentFileToFile(string src_path, string des_path);
@@ -87,7 +87,7 @@ void importScoreBoard(string year, string semester, string courseID);
 
 void importScoreBoardUI();
 
-void listClass(SchoolYear Y);
+void listClass(SchoolYear Y, fun_show_class Fun);
 
 void showStudentInclass(SchoolYear Y, string classname);
 

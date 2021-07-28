@@ -1,5 +1,5 @@
-﻿ID,COURSE NAME,TEACHER NAME,NUMBER OF CREDITS,MAX STUDENT,DAY,SESSION1,SESSION2
-TLDC,Tam li dai cuong,nguyen cao dang,4,200,TUS,S1,S3
+ID,COURSE NAME,TEACHER NAME,NUMBER OF CREDITS,MAX STUDENT,DAY,SESSION1,SESSION2
+TLDC,tam li dai cuong,nguyen thi A,4,100,TUS,S1,S3
 CSC05,Co so nganh,nguyen van a,3,200,MON,S2,S4
 KTDC,Kinh te dai cuong, Nguyen Thi D,2,200,WED,S1,S4
 PHY02,Vat li 2,Le van chanh 2,3,200,WED,S2,S5
@@ -19,4 +19,3 @@ MMT,Mang may tinh,Thien An,3,200,SAT,S5,S8
 MTH007,Toan roi rac,Le Van Luyen,3,200,TUE,S6,S9
 ABC2,Tieng trung,TTNN,3,200,MON,S7,S10
 CHE01,Hoa 1,Phan D,3,200,TUE,S8,S11
-PHY01,Vat li 1,Nguyen Ngan Thi,3,200,WED,S9,S12

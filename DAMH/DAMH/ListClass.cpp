@@ -6,6 +6,7 @@
 #include <fstream>
 #include"ConsoleProcess.h"
 #include "Course_function.h"
+#include "staffFunction.h"
 
 using namespace std;
 
@@ -258,9 +259,10 @@ int RunMenuViewListClass()
 		}
 		case 1:
 		{
+			SchoolYear SY;
+			determineYearSemesterNow(SY.year, SY.semester.Name);
 			system("cls");
-			ViewListClasses();
-			system("pause");
+			listClass(SY, &showStudentInclass);
 			system("cls");
 			break;
 		}

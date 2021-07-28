@@ -21,10 +21,11 @@ void menuStaff(User &user)
 		showPointer();
 		system("cls");
 		gotoxy(0, 7);
-		string MenuStaff[] = { "0. Log out","1. Profile info",
+		string MenuStaff[] = { "0. Log out",
+	"1. Profile info",
  "2. Change password",
  "3. Create school-year",
- "4. Create class",
+ "4. CLASS",
  "5. Create course",
  "6. Create course registration session",
  "7. Add student to class",
@@ -83,7 +84,7 @@ void menuStaff(User &user)
 			switch (choose)
 			{
 			case 0: {
-				listClass(SY);
+				listClass(SY, &showScoreOfClass);
 				break;
 			}
 			case 1: {

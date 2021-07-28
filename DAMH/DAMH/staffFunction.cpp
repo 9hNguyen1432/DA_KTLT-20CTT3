@@ -1604,7 +1604,7 @@ void exportSB(string SchoolYear, string Semester, string CourseID) {
 void importScoreBoard(string year, string semester, string courseID) {
     fstream file, fileScore;
     file.open("Score//Import//" + year + "_" + semester + "_" + courseID + ".csv", ios::in);
-    fileScore.open("file_save//SchoolYear//" + year + "//" + semester + "//Course//Scoreboard//" + courseID + ".csv", ios::app);
+    fileScore.open("file_save//SchoolYear//" + year + "//" + semester + "//Course//score//" + courseID + ".csv", ios::app);
     string data;
     getline(file, data);
     fileScore << data;
@@ -1687,7 +1687,7 @@ void importScoreBoardUI() {
     textBgColor(0, 15);
 }
 
-void listClass(SchoolYear Y) {
+void listClass(SchoolYear Y, fun_show_class Fun) {
     string year = Y.year, semester = Y.semester.Name;
     char ch;
     hidePointer();
@@ -1770,13 +1770,13 @@ void listClass(SchoolYear Y) {
         }
         if (ch == 13) {
             textBgColor(0, 15);
-            showScoreOfClass(Y, column[1]);
-            listClass(Y);
+            Fun(Y, column[1]);
+            listClass(Y,Fun);
         }
         if (ch == 'c') {
             textBgColor(0, 15);
             change_Year_Semester(Y);
-            listClass(Y);
+            listClass(Y, Fun);
         }
     } while (true);
     textBgColor(0, 15);
