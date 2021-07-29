@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string>
 #include <fstream>
+#include "staffFunction.h"
 
 using namespace std;
 
@@ -19,7 +20,6 @@ struct Database {
 Database Imput();
 void AddStudentToClass();
 void CreateNewClass();
-void ViewListClasses();
 int RunMenuViewListClass();
 void AddRandomInfoStudentToClass();
 int CheckRowInFile(string filename);

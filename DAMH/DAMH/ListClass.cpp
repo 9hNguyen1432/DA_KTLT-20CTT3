@@ -6,6 +6,7 @@
 #include <fstream>
 #include"ConsoleProcess.h"
 #include "Course_function.h"
+#include "staffFunction.h"
 
 using namespace std;
 
@@ -67,7 +68,6 @@ void CreateNewClass()
 	textBgColor(0, 11);
 	drawRectangle(35, 12, 60, 12, 11);
 	gotoxy(43, 12);
-	//cin.ignore();
 	cout << "Enter School Year:";
 	drawRectangle(43, 13, 45, 1, 15);
 	gotoxy(43, 13);
@@ -88,8 +88,9 @@ void CreateNewClass()
 	}
 	if (checkYear == false)
 	{
-		gotoxy(43, 14);
+		gotoxy(43, 15);
 		cout << "SCHOOL YEAR DON'T EXIST!! PLEASE TRY AGAIN" << endl;
+		system("pause");
 	}
 	if (checkYear == true)
 	{
@@ -99,127 +100,83 @@ void CreateNewClass()
 		drawRectangle(43, 15, 45, 1, 15);
 		gotoxy(43, 15);
 		getline(cin, name);
-		fstream file1;
-		bool check = true;
-		file1.open("file_save//SchoolYear//" + Year + "//class_info.csv", ios::in);
-		string stt, NameClass, major, number, year;
-		while (!file1.eof())
+		string str = { name };
+		string CheckNameClass = { str[2] , str[3] , str[4] };
+		if (CheckNameClass == "CTT" || CheckNameClass == "HOH"
+			|| CheckNameClass == "TTH" || CheckNameClass == "SHH")
 		{
-			getline(file1, stt, ',');
-			getline(file1, NameClass, ',');
-			getline(file1, major, ',');
-			getline(file1, number, ',');
-			file1 >> year;
-			if (name == NameClass)
-			{
-				check = false;
-			}
-		}
-		if (check == false)
-		{
-			gotoxy(43, 16);
-			cout << "CLASS EXIST! PLEASE TRY AGAIN" << endl;
-		}
-		if (check == true)
-		{
-			string FileName = "file_save//SchoolYear//" + Year + "//" + name + csv_tail;
-			fstream f1;
-			f1.open(FileName, ios::out);
-			f1 << "No" << "," << "ID" << "," << "Name" << "," << "Birth" << "," << "Sex" << "," << "IDSocial" << endl;
-			f1.close();
-			string NameMajor;
-			textBgColor(0, 11);
-			gotoxy(43, 16);
-			cout << "Enter Name Of Major: ";
-			drawRectangle(43, 17, 45, 1, 15);
-			gotoxy(43, 17);
-			getline(cin, NameMajor);
-			int numberStudent, yearStudent;
-			textBgColor(0, 11);
-			gotoxy(43, 18);
-			cout << "Enter Number of Student: ";
-			drawRectangle(43, 19, 45, 1, 15);
-			gotoxy(43, 19);
-			cin >> numberStudent;
-			textBgColor(0, 11);
-			gotoxy(43, 20);
-			cout << "Enter Year: ";
-			drawRectangle(43, 21, 45, 1, 15);
-			gotoxy(43, 21);
-			cin >> yearStudent;
-
-			fstream file;
-			string filename = "file_save//SchoolYear//" + Year + "//class_info.csv";
-			int count = CheckRowInFile(filename);
-			file.open("file_save//SchoolYear//" + Year + "//class_info.csv", ios::app);
-			file << count << "," << name << "," << NameMajor << "," << numberStudent << "," << yearStudent << endl;
-			file.close();
-			gotoxy(43, 23);
-			cout << "CREATE CLASS SUCCESSFUL,PRESS ENTER TO BACK TO MENU !!!" << endl;
-		}
-	}
-
-}
-
-
-void ViewListClasses()
-{
-	drawASCIIMenuView();
-	textBgColor(5, 15);
-	fstream f;
-	string selection;
-	gotoxy(50, 10);
-	cout << "VIEW LIST CLASS IN SCHOOL YEAR";
-	drawRectangle(35, 12, 60, 3, 11);
-	textBgColor(0, 11);
-	gotoxy(43, 12);
-	//cin.ignore();
-	cout << "Enter School Year:";
-	drawRectangle(43, 13, 45, 1, 15);
-	gotoxy(43, 13);
-	getline(cin, selection);
-	fstream file;
-	string year;
-	string tempSemester;
-	bool check = false;
-	file.open("file_save//year-semester.csv", ios::in);
-	while (!file.eof())
-	{
-		getline(file, year,',');
-		getline(file, tempSemester);
-		if (selection == year)
-		{
-			check = true;
-		}
-	}
-	if (check == false)
-	{
-		textBgColor(10, 11);
-		gotoxy(43, 14);
-		cout << "SCHOOL YEAR DON'T EXIST" << endl;
-	}
-	else
-	{
-		gotoxy(44, 15);
-		cout << "===== LIST CLASSES IN " << selection << " =======" << endl;
-		f.open("file_save//SchoolYear//" + selection + "//class_info.csv", ios::in);
-		int i = 16;
-		while (!f.eof())
-		{
+			fstream file1;
+			bool check = true;
+			file1.open("file_save//SchoolYear//" + Year + "//class_info.csv", ios::in);
 			string stt, NameClass, major, number, year;
-			getline(f, stt, ',');
-			getline(f, NameClass, ',');
-			getline(f, major, ',');
-			getline(f, number, ',');
-			f >> year;
-			gotoxy(61, i);
-			cout << NameClass << endl;
-			i++;
+			while (!file1.eof())
+			{
+				getline(file1, stt, ',');
+				getline(file1, NameClass, ',');
+				getline(file1, major, ',');
+				getline(file1, number, ',');
+				file1 >> year;
+				if (name == NameClass)
+				{
+					check = false;
+				}
+			}
+			if (check == false)
+			{
+				gotoxy(43, 16);
+				cout << "CLASS EXIST! PLEASE TRY AGAIN" << endl;
+			}
+			if (check == true)
+			{
+				string FileName = "file_save//SchoolYear//" + Year + "//" + name + csv_tail;
+				fstream f1;
+				f1.open(FileName, ios::out);
+				f1 << "No" << "," << "ID" << "," << "Name" << "," << "Birth" << "," << "Sex" << "," << "IDSocial" << endl;
+				f1.close();
+				string NameMajor;
+				textBgColor(0, 11);
+				gotoxy(43, 16);
+				cout << "Enter Name Of Major: ";
+				drawRectangle(43, 17, 45, 1, 15);
+				gotoxy(43, 17);
+				getline(cin, NameMajor);
+				int numberStudent, yearStudent;
+				textBgColor(0, 11);
+				gotoxy(43, 18);
+				cout << "Enter Number Of Student: ";
+				drawRectangle(43, 19, 45, 1, 15);
+				gotoxy(43, 19);
+				cin >> numberStudent;
+				textBgColor(0, 11);
+				gotoxy(43, 20);
+				cout << "Enter Year: ";
+				drawRectangle(43, 21, 45, 1, 15);
+				gotoxy(43, 21);
+				cin >> yearStudent;
+
+				fstream file;
+				string filename = "file_save//SchoolYear//" + Year + "//class_info.csv";
+				int count = CheckRowInFile(filename);
+				file.open("file_save//SchoolYear//" + Year + "//class_info.csv", ios::app);
+				file << count << "," << name << "," << NameMajor << "," << numberStudent << "," << yearStudent << endl;
+				file.close();
+				gotoxy(43, 23);
+				cout << "CREATE CLASS SUCCESSFUL,PRESS ENTER TO BACK TO MENU !!!" << endl;
+			}
+			
 		}
-		cout << endl;
-		f.close();
+		else
+		{
+			gotoxy(43, 17);
+			cout << "Name class is malformed!! Try again" << endl;
+			system("pause");
+		}
+		
 	}
+
 }
+
+
 
 void drawASCIIMenuView()
 {
@@ -252,15 +209,15 @@ int RunMenuViewListClass()
 		{
 			system("cls");
 			CreateNewClass();
-			system("pause");
 			system("cls");
 			break;
 		}
 		case 1:
 		{
+			SchoolYear SY;
+			determineYearSemesterNow(SY.year, SY.semester.Name);
 			system("cls");
-			ViewListClasses();
-			system("pause");
+			listClass(SY, &showStudentInclass);
 			system("cls");
 			break;
 		}
