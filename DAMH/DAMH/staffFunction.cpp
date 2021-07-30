@@ -1900,17 +1900,17 @@ void get_all_course_student(User& B, SchoolYear SY, float& overallGPA) {
             break;
         }
         get_score(B, SY, count);
-        //Tinh diem trung binh 1 ki hoc ma sinh vien da hoc
-        MarkNode* temp = B.info.phead;
-        while (temp != NULL) {
-            if (temp->data.Total_Mark != 0) {
-                NumCredit += stoi(temp->data.C, 0, 10);
-                overallGPA += stoi(temp->data.C, 0, 10) * temp->data.Total_Mark;
-            }
-            temp = temp->pNext;
-        }
         Back_A_Semester(SY);
     } while (i != -1);
+    //Tinh diem trung binh 1 ki hoc ma sinh vien da hoc
+    MarkNode* temp = B.info.phead;
+    while (temp != NULL) {
+        if (temp->data.Total_Mark != 0) {
+            NumCredit += stoi(temp->data.C, 0, 10);
+            overallGPA += stoi(temp->data.C, 0, 10) * temp->data.Total_Mark;
+        }
+        temp = temp->pNext;
+    }
     overallGPA = ((overallGPA / NumCredit) / 10) * 4;
 }
 

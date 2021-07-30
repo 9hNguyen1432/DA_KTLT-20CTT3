@@ -1,9 +1,10 @@
 #ifndef readdata_h
 #define readdata_h
-#include <string>
+
 #include"staffFunction.h"
 #include"ConsoleProcess.h"
 #include "Header.h"
+using namespace std;
 typedef Course* (*func_Get_course)(User, SchoolYear, int&);
 typedef void (*drawASCII)();
 const string csv_tail = ".csv";
