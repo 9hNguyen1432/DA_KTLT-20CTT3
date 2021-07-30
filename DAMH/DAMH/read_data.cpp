@@ -1,4 +1,4 @@
-﻿
+﻿#include <string>
 #include "read_data.h"
 
 
@@ -161,63 +161,102 @@ void add_Tail_List_Mark(MarkNode*& head, string ID , string name, string num_of_
 		temp->pNext = n1;
 	}
 }
+//bool checkCourseInSemester(User A, SchoolYear SY){
+//	ifstream f;
+//	string semester_path = "file_save/SchoolYear/" + SY.year + '/' + SY.semester.Name + '/';
+//	string class_path = semester_path + "Class/";
+//	string fileName = class_path + A.info.Class + csv_tail;
+//	f.open(fileName, ios::in);
+//	if (!f.is_open()) {
+//		return true;
+//	}
+//	while (!f.eof()) {
+//		getline(f, temp);
+//	}
+//
+//}
 int get_course(User& A, SchoolYear s_y, int flag) {
 	ifstream f;
 	string semester_path = "file_save/SchoolYear/" + s_y.year + '/' + s_y.semester.Name + '/';
 	string class_path = semester_path + "Class/";
 	string course_path = semester_path + "Course/";
 	string fileName = class_path + A.info.Class + csv_tail;
+	bool IDflag = false;
 	f.open(fileName, ios::in);
 	if (!f.is_open()) {
+		drawRectangle(3, 14, 115, 3, 4);
+		printtext("Can't open infomation file.", 47, 15);
+		textBgColor(0, 15);
+		Sleep(1800);
 		return -1;
 	}
 	if (flag == 0) {
 		init_List_Mark(A.info.phead);
 	}
 	while (f.eof() == false) {
-		string temp;
-		getline(f, temp, ',');
-		if (temp.compare(A.info.IDstd) != 0) {
-			getline(f, temp);
-		}
-		else {
-			string temp1;
-			getline(f, temp1);
-			string IDtemp = "";
-			for (int i = 0; i < temp1.length(); i++) {
-				if (temp1[i] == ',' || i == temp1.length() - 1)
-				{
+		string temp = "";
+		string temp1;
+		getline(f, temp1);
+		string IDtemp = "";
+		for (int i = 0; i < temp1.length(); i++) {
+			if (temp1[i] == ',' || i == temp1.length() - 1)
+			{
+				if (IDflag == false) {
 					if (i == temp1.length() - 1) {
 						IDtemp += temp1[i];
+					}
+					if (_strcmpi(IDtemp.c_str(), A.info.IDstd.c_str()) != 0) {
+						break;
+					}
+					else {
+						if (i == temp1.length() - 1) {
+							drawRectangle(3, 14, 115, 3, 4);
+							printtext("You have not enrolled any course yet.", 45, 15);
+							textBgColor(0, 15);
+							Sleep(1800);
+							return -1;
+						}
+					}
+					IDflag = true;
+				}
+				else {
+					if (i == temp1.length() - 1) {
+						temp += temp1[i];
 					}
 					ifstream fi;
 					string fileName = "file_save/SchoolYear/" + s_y.year + "/" + s_y.semester.Name + "/course_info.csv";
 					fi.open(fileName, ios::in);
-					string temp;
+					string tam;
 					string num_of_creadit;
 					while (!fi.eof()) {
-						getline(fi, temp, ',');
-						if (_strcmpi(temp.c_str(), IDtemp.c_str()) == 0) {
-							getline(fi, temp, ',');
+						getline(fi, tam, ',');
+						if (_strcmpi(tam.c_str(), temp.c_str()) == 0) {
+							getline(fi, tam, ',');
 							getline(fi, num_of_creadit, ',');
 							getline(fi, num_of_creadit, ',');
 							break;
 						}
 						else {
-							getline(fi, temp);
+							getline(fi, tam);
 						}
 					}
-					add_Tail_List_Mark(A.info.phead, IDtemp, temp, num_of_creadit);
-					IDtemp = "";
+					add_Tail_List_Mark(A.info.phead, temp, tam, num_of_creadit);
+					temp = "";
 					fi.close();
 				}
-				else if (temp1[i] != ',') {
+			}
+			else if (temp1[i] != ',') {
+				if (IDflag == false) {
 					IDtemp += temp1[i];
 				}
+				else {
+					temp += temp1[i];
+				}
 			}
+
 		}
+		f.close();
 	}
-	f.close();
 	return 0;
 }
 void Back_A_Semester(SchoolYear& S) {
@@ -510,7 +549,7 @@ int view_score_of_course_in_year(Mark* M, int n) {
 				drawRectangle(0, y , 120, 11, 11);
 				view_10_score_of_course(M, tab_now*10, n, x, y);
 			}
-			if (ch == 80 && tab_now < n/10) //down
+			if (ch == 80 && tab_now < (n-1)/10) //down
 			{
 				tab_now++;
 				drawRectangle(0, y, 120, 11, 11);
@@ -588,9 +627,20 @@ Course* read_file_List_course(User A, SchoolYear SY, int& n) {
 	ifstream f;
 	f.open(fileName, ios::in);
 	if (!f.good()) {
+		drawRectangle(3, 14, 115, 3, 4);
+		printtext("Can't open information file.", 47, 15);
+		textBgColor(0, 15);
+		Sleep(1800);
 		return NULL;
 	}
 	n = countLine(fileName) - 1;
+	if (n == 0) {
+		drawRectangle(3, 14, 115, 3, 4);
+		printtext("There isn't course now.", 50, 15);
+		textBgColor(0, 15);
+		Sleep(1800);
+		return NULL;
+	}
 	Course* M = new Course[n];
 	string temp;
 	getline(f, temp);
@@ -731,6 +781,9 @@ void drawASCIImenuStudent() {
 	textBgColor(0, 15);
 }
 int view_course_in_year(Course* M, int n, drawASCII fun) {
+	if (M == NULL) {
+		return -1;
+	}
 	textBgColor(0, 15);
 	system("cls");
 	int x = 1;
@@ -764,7 +817,7 @@ int view_course_in_year(Course* M, int n, drawASCII fun) {
 				drawRectangle(0, y, 120, 11, 11);
 				view_10_course_of_list_course(M, tab_now * 10, n, x, y);
 			}
-			if (ch == 80 && tab_now < n / 10) //down
+			if (ch == 80 && tab_now < (n-1) / 10) //down
 			{
 				tab_now++;
 				drawRectangle(0, y, 120, 11, 11);
@@ -781,7 +834,7 @@ Course* select_course(User A, SchoolYear SY, func_Get_course fun, drawASCII fund
 	Course* M = fun(A, SY, n);
 	if (M == NULL) {
 		//thong báo mở file thất bại
-		cout << "Fail!! The teacher has not entered the score for this course!! ";
+
 		return NULL;
 	}
 	char ch;
@@ -850,7 +903,7 @@ Course* select_course(User A, SchoolYear SY, func_Get_course fun, drawASCII fund
 				textBgColor(0, 14);
 				view_1_course_of_list_course(M[count], x, y + line_now);
 			}
-			else if (ch == 80 && line_now == 9 && count < n - 2) {
+			else if (ch == 80 && line_now == 9 && count < n - 1) {
 				count++;
 				drawRectangle(0, y, 120, 11, 11);
 				view_10_course_of_list_course(M, count - 9, n, x, y);
@@ -874,6 +927,9 @@ Course* get_course_of_student(User A, SchoolYear SY, int& n) {
 	}
 	string temp;
 	get_course(A, SY);
+	if (A.info.phead == NULL) {
+		return NULL;
+	}
 	n = 0;
 	MarkNode* count = A.info.phead;
 	while (count != NULL) {

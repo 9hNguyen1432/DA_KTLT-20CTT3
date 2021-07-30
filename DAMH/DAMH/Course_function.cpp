@@ -338,10 +338,10 @@ void change_Year_Semester(SchoolYear &S) {
 }
 void DisPlay_Course_Of_Student(SchoolYear Y, User A) {
 	char ch;
+	hidePointer();
+	get_course(A, Y);
+	read_course(A, Y);
 	do {
-		hidePointer();
-		get_course(A, Y);
-		read_course(A, Y);
 		drawRectangle(27, 29, 60, 1, 10);
 		textColor(496);
 		string text = Y.semester.Name + "; Year: " + Y.year + ".   Press[C] to change!";
@@ -360,6 +360,7 @@ void DisPlay_Course_Of_Student(SchoolYear Y, User A) {
 				if (a == -1) {
 					drawRectangle(3, 14, 115, 3, 4);
 					printtext("Invalid school year ", 50, 15);
+					textBgColor(0, 15);
 					Sleep(1800);
 					determineYearSemesterNow(Y.year, Y.semester.Name);
 				}
@@ -541,9 +542,10 @@ void edit_score(User& A, SchoolYear SY, Mark* M) {
 }
 void DisPlay_Mark_Of_Student(SchoolYear Y, User A) {
 	char ch;
+	int a = get_course(A, Y);
+	view_all_score_of_1_student(A, Y);
 	do {
 		hidePointer();
-		view_all_score_of_1_student(A, Y);
 		drawRectangle(27, 29, 60, 1, 6);
 		textColor(499);
 		string text = Y.semester.Name + "; Year: " + Y.year + ".   Press[C] to change!";
@@ -561,6 +563,7 @@ void DisPlay_Mark_Of_Student(SchoolYear Y, User A) {
 				if (a == -1) {
 					drawRectangle(3, 14, 115, 3, 4);
 					printtext("Invalid school year ", 50, 15);
+					textBgColor(0, 15);
 					Sleep(1800);
 					determineYearSemesterNow(Y.year, Y.semester.Name);
 				}
@@ -645,7 +648,7 @@ void edit_score_in_list_course(User& A, SchoolYear SY, string IDcourse) {
 				textBgColor(0, 14);
 				view_1_score_of_course(M[count], x, y+line_now);
 			}
-			else if (ch == 80 && line_now == 9 && count < n-2) {
+			else if (ch == 80 && line_now == 9 && count < n-1) {
 				count++;
 				drawRectangle(0, y, 120, 11, 11);
 				view_10_score_of_course(M, count-9, n, x, y);
@@ -788,7 +791,7 @@ void enroll_course(User& A, SchoolYear s_y) {
 	rewrite_course_of_student_file(A, file_cousre_of_class, course_input->ID_course, 1);
 	string file_cousre = course_path + course_input->ID_course;
 	rewrite_course_file(A, file_cousre, 1);
-	drawASCIIsuccessful();		// ngược lại so sánh không hợp lệ, đọc hết dòng, chạy đến dòng tiếp theo
+	drawASCIIsuccessful();
 	Sleep(1800);
 }
 void delete_course(User& A, SchoolYear s_y) {
@@ -809,4 +812,16 @@ void delete_course(User& A, SchoolYear s_y) {
 	drawASCIIsuccessful();
 	Sleep(1800);
 	return;
+}
+void viewStudentInCourse(SchoolYear SY) {
+	User A;
+	Course* SLC = select_course(A,SY, &read_file_List_course, &drawASCIIlistCourse);
+	if (SLC == NULL) {
+		drawRectangle(3, 14, 115, 3, 4);
+		printtext("There isn't course now.", 50, 15);
+		textBgColor(0, 15);
+		Sleep(1800);
+		return;
+	}
+	showStudentInclass(SY, SY.semester.Name+"/Course/"+SLC->ID_course);
 }

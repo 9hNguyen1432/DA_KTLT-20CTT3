@@ -21,75 +21,86 @@ void menuStaff(User &user)
 		showPointer();
 		system("cls");
 		gotoxy(0, 7);
-		string MenuStaff[] = { "0. Log out",
-	"1. Profile info",
- "2. Change password",
- "3. Create school-year",
+		string MenuStaff[] = {
+			"YOUR INFO","NEW","CLASS INFO","COURSE INFO","RESULT OF STUDENTS","LOG OUT"
+		};
+			/*{ 
+
  "4. CLASS",
- "5. Create course",
- "6. Create course registration session",
+
  "7. Add student to class",
- "8. Create semester ",
+,
  "9. Edit student's marks",
  "10. View list of course\, Delete a course\, update course information",
  "11. Export student list",
  "12. Import student list",
  "13. View score board of a course",
- "14. View score board of a class" };
-		drawMenu(MenuStaff, 15, 28, 7, 0,&drawASCIIStaffMenu);
-		option = MoveAndChoose(15, MenuStaff, 28, 7, 0);
+ "14. View score board of a class" };*/
+		drawMenu(MenuStaff, 6, 50, 10, 1,&drawASCIIStaffMenu);
+		option = MoveAndChoose(6, MenuStaff, 50, 10, 1);
 		switch (option)
 		{
-		case 1:
-			// lenh show thong tin 
-			Output_info(user);
-			break;
-		case 2:
-			// lenh thay mat khau
-			change_password(user);
-			break;
-		case 3:
-			// lenh them nam hoc
-			addSchoolYear(SY);
-			break;
-		case 4:
+		case 0: {
 			system("cls");
-			RunMenuViewListClass();
-			break;
-		case 5:
-			// lenh them khoa hoc
-			addCourse();
-			break;
-		case 6:
-			// Create course registration session
-			createRegistrationCourse();
-			break;
-		case 7:
-			//them sinh vien vao lop
-			system("cls");
-			//AddStudentToClass();
-			RunMenuAddInfoStudentToClass();
-			break;
-		case 8: 
-			//lenh them hoc ki
-			addSemester(SY.year, SY.semester.Name);
-			break;
-		case 9:
-			//edit diem sinh vien
-		{
-			system("cls");
-			string edit[] = { "1. From List Class.","2. From List Course.","3. Exit to Menu." };
-			drawMenu(edit, 3, 45, 20, 2, &drawASCIIeditscore);
-			int choose = MoveAndChoose(3, edit, 45, 20, 2);
-			switch (choose)
+			string MenuStaff1[] = {
+			"1. Profile info",
+		 "2. Change password","3.Back to Menu"
+			};
+			drawMenu(MenuStaff1, 3, 50, 11, 2, &drawASCIIStaffMenu);
+			int option1 = MoveAndChoose(3, MenuStaff1, 50, 11, 2);
+			switch (option1)
 			{
 			case 0: {
-				listClass(SY, &showScoreOfClass);
+				// lenh show thong tin 
+				Output_info(user);
 				break;
 			}
 			case 1: {
-				Course* SLC = select_course(user, SY, &read_file_List_course, &drawASCIIlistCourse);
-				edit_score_in_list_course(user, SY, SLC->ID_course);
+				// lenh thay mat khau
+				change_password(user);
+				break;
+			}
+			case 2: {
+				break;
+			}
+			}
+			break;
+		}
+		case 1:
+		{
+			system("cls");
+			string MenuStaff2[] = {
+			"1. Create school - year",
+		 "2. Create semester ", "3. Create course registration session", "4. Create course",
+		 "5. Create Class","6. Back to Menu"
+			};
+			drawMenu(MenuStaff2, 6, 40, 10, 1, &drawASCIIStaffMenu);
+			int option1 = MoveAndChoose(6, MenuStaff2, 40, 10, 1);
+			switch (option1)
+			{
+			case 0: {
+				// lenh tao nam
+				addSchoolYear(SY);
+				break;
+			}
+			case 1: {
+				//lenh them hoc ki
+				addSemester(SY.year, SY.semester.Name);
+				break;
+			}
+			case 2: {
+				// tao phien dang ki khoa hoc
+				createRegistrationCourse();
+				break;
+			}
+			case 3: {
+				// lenh them khoa hoc
+				addCourse();
+				break;
+			}
+			case 4: {
+				// lenh them lop hoc
+				CreateNewClass();
 				break;
 			}
 			default:
@@ -97,33 +108,107 @@ void menuStaff(User &user)
 			}
 			break;
 		}
-		case 10:
-			//view danh sachs hoc phan
-			listCourse(SY.year, SY.semester.Name);
-			break;
-		case 11:
-			//xuat diem hoc sinh vao file
-			exportScoreboardInterface(SY.year, SY.semester.Name, 2, 2, 1);
-			break;
-		case 12:
-			//xuat diem hoc sinh vao file
-			importScoreBoardUI();
-			break;
-		case 13:
+		case 2:
 		{
-			int n = 0;
-			view_score_of_course_in_year(read_file_score_of_course(SY, "ABC4", n), n);
-			textBgColor(0, 15);
+			system("cls");
+			//xem danh sach lop hoc va danh sach sinh vien trong lop
+			listClass(SY, &showStudentInclass);
 			break;
 		}
+		case 3: {
+			system("cls");
+			string MenuStaff4[] = {
+				"1. View List Course And List Student in Course",
+			 "2. Delete or Edit Course info","3.Back to Menu"};
+			drawMenu(MenuStaff4, 3, 45, 10, 2, &drawASCIIStaffMenu);
+			int option1 = MoveAndChoose(3, MenuStaff4, 45, 10, 2);
+			switch (option1)
+			{
+			case 0: {
+				system("cls");
+				//xem danh sach khoa hoc va danh sach sinh vien trong khoa
+				viewStudentInCourse(SY);
+				textBgColor(0, 15);
+				break;
+			}
+			case 1: {
+				//view danh sachs hoc phan
+				listCourse(SY.year, SY.semester.Name);
+				break;
+			}
+			case 2: {
+				break;
+			}
+			}
+			break;
+		}
+		case 4:
+			/*system("cls");
+			RunMenuViewListClass();
+			break;*/
+		{
+			system("cls");
+			string MenuStaff5[] = {
+			"1. View and edit student's marks", "2. Export student list mark", "3. Import student list mark", "4. Back to Menu"};
+			drawMenu(MenuStaff5, 4, 40, 10, 2, &drawASCIIStaffMenu);
+			int option1 = MoveAndChoose(4, MenuStaff5, 40, 10, 2);
+			switch (option1)
+			{
+			case 0: //edit diem sinh vien
+			{
+				system("cls");
+				string edit[] = { "1. From List Class.","2. From List Course.","3. Exit to Menu." };
+				drawMenu(edit, 3, 45, 20, 2, &drawASCIIeditscore);
+				int choose = MoveAndChoose(3, edit, 45, 20, 2);
+				switch (choose)
+				{
+				case 0: {
+					listClass(SY, &showScoreOfClass);
+					break;
+				}
+				case 1: {
+					Course* SLC = select_course(user, SY, &read_file_List_course, &drawASCIIlistCourse);
+					if (SLC == NULL) {
+						break;
+					}
+					edit_score_in_list_course(user, SY, SLC->ID_course);
+					break;
+				}
+				default:
+					break;
+				}
+				break;
+			}
+			case 1: {
+				//xuat diem hoc sinh vao file
+				exportScoreboardInterface(SY.year, SY.semester.Name, 2, 2, 1);
+				break;
+			}
+			case 2: {
+				//xuat diem hoc sinh vao file
+				importScoreBoardUI();
+				break;
+			}
+			default:
+				break;
+			}
+			break;
+		}
+		case 7:
+			//them sinh vien vao lop
+			system("cls");
+			//AddStudentToClass();
+			RunMenuAddInfoStudentToClass();
+			break;
+
 		case 14:
 			//view diem cua lop hoc
 			listClassUseFor14(SY);
 			break;
-		case 0:
+		case 5:
 			isExit = true;
 			break;
-		default: std::cout << "your choice is invalid!!!\n";
+		//default: std::cout << "your choice is invalid!!!\n";
 		}
 	} while (!isExit);
 	repeatLogin(user);
@@ -142,7 +227,6 @@ void menuStudent(User &user)
 	}
 	read_info(user,SY);
 	init_List_Mark(user.info.phead);
-	get_course(user,SY);
 	bool isExit = false;
 	int option;
 	do
@@ -175,7 +259,6 @@ void menuStudent(User &user)
 			int check = checkCourseSession();
 			if (check == 1) {
 				enroll_course(user, SY);
-				system("pause");
 			}
 			else {
 				drawRectangle(40, 15, 25, 5, 4);
