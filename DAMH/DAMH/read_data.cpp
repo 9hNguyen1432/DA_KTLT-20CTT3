@@ -203,7 +203,16 @@ int get_course(User& A, SchoolYear s_y, int flag) {
 			}
 		}
 		int length = f.tellg();
-		f.seekg(length - temp1.length() - 2);
+		if (length == -1) {
+			f.close();
+			f.open(fileName, ios::in);
+			f.seekg(0,ios::end);
+			int a = f.tellg();
+			f.seekg(a - temp1.length(), ios::beg);
+		}
+		else {
+			f.seekg(length - temp1.length() - 2, ios::beg);
+		}
 		string temp;
 		getline(f, temp, ',');
 		if (temp.compare(A.info.IDstd) != 0) {

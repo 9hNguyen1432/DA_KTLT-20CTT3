@@ -2031,7 +2031,7 @@ void showScoreOfClass(SchoolYear Y, string classname) {
                 drawRectangle(8, 10, 100, 15, 15);
                 drawRectangle(8, 10, 100, 15, 11);
                 drawListStudent(6, Y, filename, y, a, b, lineNum, currentLine - 11);
-                    (filename, Y, currentLine, column, 6);
+                getLineInfoForStudent(filename, Y, currentLine, column, 6);
                 drawRectangle(8, y + lineInConsole, 100, 1, 14);
                 textBgColor(0, 14);
                 for (int i = 0; i < 6; i++) {
