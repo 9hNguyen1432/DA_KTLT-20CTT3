@@ -20,7 +20,7 @@ struct Database {
 Database Imput();
 void AddStudentToClass();
 void CreateNewClass();
-int RunMenuViewListClass();
+int RunMenuViewListClass(User user);
 void AddRandomInfoStudentToClass();
 int CheckRowInFile(string filename);
 void drawASCIIMenuView();

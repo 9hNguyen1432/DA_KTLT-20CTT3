@@ -112,7 +112,7 @@ void menuStaff(User &user)
 		{
 			system("cls");
 			//xem danh sach lop hoc va danh sach sinh vien trong lop
-			listClass(SY, &showStudentInclass);
+			listClass(user,SY, &showStudentInclass);
 			break;
 		}
 		case 3: {
@@ -127,13 +127,13 @@ void menuStaff(User &user)
 			case 0: {
 				system("cls");
 				//xem danh sach khoa hoc va danh sach sinh vien trong khoa
-				viewStudentInCourse(SY);
+				viewStudentInCourse(user,SY);
 				textBgColor(0, 15);
 				break;
 			}
 			case 1: {
 				//view danh sachs hoc phan
-				listCourse(SY.year, SY.semester.Name);
+				listCourse(user,SY.year, SY.semester.Name);
 				break;
 			}
 			case 2: {
@@ -163,7 +163,7 @@ void menuStaff(User &user)
 				switch (choose)
 				{
 				case 0: {
-					listClass(SY, &showScoreOfClass);
+					listClass(user,SY, &showScoreOfClass);
 					break;
 				}
 				case 1: {
@@ -181,7 +181,7 @@ void menuStaff(User &user)
 			}
 			case 1: {
 				//xuat diem hoc sinh vao file
-				exportScoreboardInterface(SY.year, SY.semester.Name, 2, 2, 1);
+				exportScoreboardInterface(user,SY.year, SY.semester.Name,2, 1);
 				break;
 			}
 			case 2: {

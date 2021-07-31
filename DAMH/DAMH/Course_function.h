@@ -16,6 +16,6 @@ void edit_score(User& A, SchoolYear SY, Mark* M);
 void DisPlay_Mark_Of_Student(SchoolYear Y, User A);
 void edit_score_in_list_course(User& A, SchoolYear SY, string IDcourse);
 void delete_course(User& A, SchoolYear s_y);
-void viewStudentInCourse(SchoolYear SY);
+void viewStudentInCourse(User user, SchoolYear SY);
 #endif // !course_h
 

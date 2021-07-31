@@ -188,7 +188,7 @@ void drawASCIIMenuView()
 	printtext("\\____/   /______/ /_/      \\_\\ /____/   /____/   ", 40, 8);
 	printtext("                                                 ", 40, 9);
 }
-int RunMenuViewListClass()
+int RunMenuViewListClass(User user)
 {
 	char ch;
 	int command;
@@ -217,7 +217,7 @@ int RunMenuViewListClass()
 			SchoolYear SY;
 			determineYearSemesterNow(SY.year, SY.semester.Name);
 			system("cls");
-			listClass(SY, &showStudentInclass);
+			listClass(user,SY, &showStudentInclass);
 			system("cls");
 			break;
 		}

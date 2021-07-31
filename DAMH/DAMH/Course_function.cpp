@@ -813,7 +813,7 @@ void delete_course(User& A, SchoolYear s_y) {
 	Sleep(1800);
 	return;
 }
-void viewStudentInCourse(SchoolYear SY) {
+void viewStudentInCourse(User user,SchoolYear SY) {
 	User A;
 	Course* SLC = select_course(A,SY, &read_file_List_course, &drawASCIIlistCourse);
 	if (SLC == NULL) {
@@ -823,5 +823,5 @@ void viewStudentInCourse(SchoolYear SY) {
 		Sleep(1800);
 		return;
 	}
-	showStudentInclass(SY, SY.semester.Name+"/Course/"+SLC->ID_course);
+	showStudentInclass(user,SY, SY.semester.Name+"/Course/"+SLC->ID_course);
 }
