@@ -814,14 +814,22 @@ void delete_course(User& A, SchoolYear s_y) {
 	return;
 }
 void viewStudentInCourse(User user,SchoolYear SY) {
-	User A;
-	Course* SLC = select_course(A,SY, &read_file_List_course, &drawASCIIlistCourse);
-	if (SLC == NULL) {
+	try {
+		while (true) {
+			User A;
+			Course* SLC = select_course(A, SY, &read_file_List_course, &drawASCIIlistCourse);
+			if (SLC == NULL) {
+				return;
+			}
+			int n = 0;
+			Data* M = read_file_student_info_of_course(SY, SLC->ID_course, n);
+			view_student_info_of_course(M, n);
+		}
+	}
+	catch (const char* err) {
 		drawRectangle(3, 14, 115, 3, 4);
-		printtext("There isn't course now.", 50, 15);
+		printtext(err, 50, 15);
 		textBgColor(0, 15);
 		Sleep(1800);
-		return;
 	}
-	showStudentInclass(user,SY, SY.semester.Name+"/Course/"+SLC->ID_course);
 }

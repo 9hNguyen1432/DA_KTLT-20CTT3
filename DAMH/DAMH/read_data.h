@@ -47,4 +47,8 @@ void drawASCIIeditscore();
 void drawASCIIchangeSemester();
 void drawASCIImenuStudent();
 Course* get_course_of_student(User A, SchoolYear SY, int& n);
+Data* read_file_student_info_of_course(SchoolYear SY, string IDcourse, int& n);
+void view_1_student_info_of_course(Data M, int x, int y);
+void view_10_student_info_of_course(Data* M, int i, int n, int x, int y);
+void view_student_info_of_course(Data* M, int n);
 #endif
