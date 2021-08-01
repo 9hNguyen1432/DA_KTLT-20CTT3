@@ -1860,6 +1860,7 @@ void showStudentInclass(User user,SchoolYear Y, string classname) {
         if (ch == 27) {
             textBgColor(0, 15);
             listClass(user, Y, &showStudentInclass);
+            return;
         }
         if (ch == 72 && currentLine > 2) //up
         {
@@ -1898,20 +1899,6 @@ void showStudentInclass(User user,SchoolYear Y, string classname) {
             }
             else
                 moveDown(filename, currentLine, 6, b, y, column, lineInConsole, 100, 8);
-        }
-        if (ch == 13) {
-            User A;
-            A.ID = column[1];
-            A.info.IDstd = column[1];
-            A.info.Class = classname;
-            A.info.IDsocial = column[5];
-            A.info.Bir = column[3];
-            A.info.name = column[2];
-            A.info.sex = column[4];
-            get_course(A, Y);
-            textBgColor(0, 15);
-            edit_score(A, Y, view_all_score_of_1_student(A, Y));
-            showStudentInclass(user,Y, classname);
         }
     } while (true);
     textBgColor(0, 15);

@@ -833,3 +833,374 @@ void viewStudentInCourse(User user,SchoolYear SY) {
 		Sleep(1800);
 	}
 }
+void Output_info(User A) {
+	system("cls");
+	printtext(" _            ___                                     _               ", 20, 2);
+	printtext("(_)          / __)                               _   (_)              ", 20, 3);
+	printtext(" _  ____   _| |__   ___    ____  ____   _____  _| |_  _   ___   ____  ", 20, 4);
+	printtext("| ||  _  \\(_   __) / _ \\  / ___)|    \\ (____ |(_   _)| | / _ \\ |  _ \\ ", 20, 5);
+	printtext("| || | | |  | |   | |_| || |    | | | |/ ___ |  | |_ | || |_| || | | |", 20, 6);
+	printtext("|_||_| |_|  |_|    \\___/ |_|    |_|_|_|\\_____|  \\___)|_| \\___/ |_| |_|", 20, 7);
+
+
+	int a = 0;
+	if (A.role == 1) {
+		drawRectangle(30, 12, 50, 16, 11);
+		printtext("Ma so sinh vien: " + A.info.IDstd, 35, 15);
+		printtext("Lop: " + A.info.Class, 35, 17);
+		a = 2;
+		printtext("Chuc vu: Hoc sinh", 35, 21 + a);
+	}
+	else {
+		drawRectangle(30, 12, 50, 13, 11);
+		printtext("Email : " + A.info.IDstd + "@hcmus.edu.vn", 35, 15);
+		printtext("Chuc vu: Admin", 35, 21 + a);
+	}
+	printtext("Ho va ten: " + A.info.name, 35, 13);
+	printtext("Ngay sinh: " + A.info.Bir, 35, 17 + a);
+	printtext("Gioi tinh: " + A.info.sex, 35, 19 + a);
+
+	printtext("CMND/CCCD: " + A.info.IDsocial, 35, 23 + a);
+	textBgColor(0, 15);
+	system("pause");
+}
+void view_1_line(Mark M, int x, int y) {
+	printtext(M.ID, x, y);
+	printtext(M.Name, x + 12, y);//12 ki tu cho id
+	printtext(to_string(M.Midterm_Mark), x + 42, y);//30 ki tu cho ten
+	printtext(to_string(M.Final_Mark), x + 56, y);//14 ki tu cho 1 diem
+	printtext(to_string(M.Other_Mark), x + 70, y);//14 ki tu cho 1 diem
+	printtext(to_string(M.Total_Mark), x + 84, y);//14 ki tu cho 1 diem
+}
+Mark* view_all_score_of_1_student(User A, SchoolYear Y) {
+	system("cls");
+	int n;
+	get_score(A, Y, n);
+	int x = 15;
+	int y = 14;
+	textBgColor(4, 6);
+	printtext("    __     _            __           _____                            ", 25, 3);
+	printtext("   / /    (_)   _____  / /_         / ___/  _____  ____    _____  ___ ", 25, 4);
+	printtext("  / /    / /   / ___/ / __/         \\__ \\  / ___/ / __ \\  / ___/ / _ \\", 25, 5);
+	printtext(" / /___ / /   (__  ) / /_          ___/ / / /__  / /_/ / / /    /  __/", 25, 6);
+	printtext("/_____//_/   /____/  \\__/         /____/  \\___/  \\____/ /_/     \\___/ ", 25, 7);
+	printtext("                                                                      ", 25, 8);
+	drawRectangle(0, 13, 120, n + 3, 11);
+	textBgColor(0, 11);
+	printtext("ID", x, y);
+	printtext("Name of Course", x + 12, y);//12 ki tu cho id
+	printtext("Midterm Mark", x + 42, y);//30 ki tu cho ten
+	printtext("Final Mark", x + 56, y);//14 ki tu cho 1 diem
+	printtext("Other Mark", x + 70, y);//14 ki tu cho 1 diem
+	printtext("Total Mark", x + 84, y);//14 ki tu cho 1 diem
+	y++;
+	Mark* M = new Mark[n];
+	MarkNode* temp = A.info.phead;
+	for (int i = 0; i < n; i++) {
+		M[i] = temp->data;
+		view_1_line(M[i], x, y + i);
+		temp = temp->pNext;
+	}
+	textBgColor(0, 15);
+	return M;
+}
+void view_1_score_of_course(Mark M, int x, int y) {
+	printtext(M.ID, x, y);
+	printtext(M.Name, x + 12, y);//12 ki tu cho id
+	printtext(M.C, x + 42, y);
+	printtext(to_string(M.Midterm_Mark), x + 52, y);//30 ki tu cho ten
+	printtext(to_string(M.Final_Mark), x + 66, y);//14 ki tu cho 1 diem
+	printtext(to_string(M.Other_Mark), x + 80, y);//14 ki tu cho 1 diem
+	printtext(to_string(M.Total_Mark), x + 94, y);//14 ki tu cho 1 diem
+}
+void view_10_score_of_course(Mark* M, int i, int n, int x, int y) {
+	if (n - i >= 10) {
+		for (int j = 0; j < 10; j++) {
+			view_1_score_of_course(M[i + j], x, y + j);
+		}
+	}
+	else {
+		for (int j = 0; j < n - i; j++) {
+			view_1_score_of_course(M[i + j], x, y + j);
+		}
+	}
+
+}
+int view_score_of_course_in_year(Mark* M, int n) {
+	textBgColor(0, 15);
+	system("cls");
+	int x = 10;
+	int y = 14;
+	textBgColor(4, 6);
+	printtext("    __     _            __           _____                            ", 25, 3);
+	printtext("   / /    (_)   _____  / /_         / ___/  _____  ____    _____  ___ ", 25, 4);
+	printtext("  / /    / /   / ___/ / __/         \\__ \\  / ___/ / __ \\  / ___/ / _ \\", 25, 5);
+	printtext(" / /___ / /   (__  ) / /_          ___/ / / /__  / /_/ / / /    /  __/", 25, 6);
+	printtext("/_____//_/   /____/  \\__/         /____/  \\___/  \\____/ /_/     \\___/ ", 25, 7);
+	printtext("                                                                      ", 25, 8);
+	drawRectangle(0, y - 2, 120, 13, 11);
+	textBgColor(0, 11);
+	printtext("ID", x, y - 1);
+	printtext("Name", x + 12, y - 1);//12 ki tu cho id
+	printtext("Class", x + 42, y - 1);
+	printtext("Midterm Mark", x + 52, y - 1);//30 ki tu cho ten
+	printtext("Final Mark", x + 66, y - 1);//14 ki tu cho 1 diem
+	printtext("Other Mark", x + 80, y - 1);//14 ki tu cho 1 diem
+	printtext("Total Mark", x + 94, y - 1);//14 ki tu cho 1 diem
+	char ch;
+	int tab_now = 0;
+	view_10_score_of_course(M, tab_now * 10, n, x, y);
+	do {
+		hidePointer();
+		ch = _getch();
+		//[ESC]
+		if (ch == 27) {
+			return-1;
+		}
+		else {
+			//Control Up down 
+			if (ch == 72 && tab_now > 0) //up
+			{
+				tab_now--;
+				drawRectangle(0, y, 120, 11, 11);
+				view_10_score_of_course(M, tab_now * 10, n, x, y);
+			}
+			if (ch == 80 && tab_now < (n - 1) / 10) //down
+			{
+				tab_now++;
+				drawRectangle(0, y, 120, 11, 11);
+				view_10_score_of_course(M, tab_now * 10, n, x, y);
+			}
+			if (ch == 13) {
+				return tab_now;
+			}
+		}
+	} while (true);
+}
+void view_1_course_of_list_course(Course M, int x, int y) {
+	printtext(M.ID_course, x, y);
+	printtext(M.name, x + 8, y);//12 ki tu cho id
+	printtext(M.teacher, x + 33, y);
+	printtext(to_string(M.Num_of_creadit), x + 59, y);//30 ki tu cho ten
+	printtext(to_string(M.Max_student), x + 75, y);//14 ki tu cho 1 diem
+	printtext(M.DayOfWeek, x + 87, y);//14 ki tu cho 1 diem
+	printtext(M.session[0], x + 97, y);//14 ki tu cho 1 diem
+	printtext(M.session[1], x + 107, y);
+}
+void view_10_course_of_list_course(Course* M, int i, int n, int x, int y) {
+	if (n - i >= 10) {
+		for (int j = 0; j < 10; j++) {
+			view_1_course_of_list_course(M[i + j], x, y + j);
+		}
+	}
+	else {
+		for (int j = 0; j < n - i; j++) {
+			view_1_course_of_list_course(M[i + j], x, y + j);
+		}
+	}
+
+}
+int view_course_in_year(Course* M, int n, drawASCII fun) {
+	if (M == NULL) {
+		return -1;
+	}
+	textBgColor(0, 15);
+	system("cls");
+	int x = 1;
+	int y = 14;
+	fun();
+	drawRectangle(0, y - 2, 120, 13, 11);
+	textBgColor(0, 11);
+	printtext("ID COURSE", x + 2, y - 1);
+	printtext("COURSE NAME", x + 12, y - 1);//12 ki tu cho id
+	printtext("TEACHER NAME", x + 35, y - 1);
+	printtext("NUMBER OF CREDITS", x + 50, y - 1);//30 ki tu cho ten
+	printtext("MAX STUDENT", x + 72, y - 1);
+	printtext("DAY", x + 87, y - 1);//14 ki tu cho 1 diem
+	printtext("SESSION 1", x + 94, y - 1);//14 ki tu cho 1 diem
+	printtext("SESSION 2", x + 104, y - 1);//14 ki tu cho 1 diem
+	char ch;
+	int tab_now = 0;
+	view_10_course_of_list_course(M, tab_now * 10, n, x, y);
+	do {
+		hidePointer();
+		ch = _getch();
+		//[ESC]
+		if (ch == 27) {
+			return-1;
+		}
+		else {
+			//Control Up down 
+			if (ch == 72 && tab_now > 0) //up
+			{
+				tab_now--;
+				drawRectangle(0, y, 120, 11, 11);
+				view_10_course_of_list_course(M, tab_now * 10, n, x, y);
+			}
+			if (ch == 80 && tab_now < (n - 1) / 10) //down
+			{
+				tab_now++;
+				drawRectangle(0, y, 120, 11, 11);
+				view_10_course_of_list_course(M, tab_now * 10, n, x, y);
+			}
+			if (ch == 13) {
+				return tab_now;
+			}
+		}
+	} while (true);
+}
+Course* select_course(User A, SchoolYear SY, func_Get_course fun, drawASCII fundraw) {
+	int n = 0;
+	Course* M = fun(A, SY, n);
+	if (M == NULL) {
+		throw "There isn't course.";
+	}
+	char ch;
+	int line_now = 0;
+	int x = 1, y = 14;
+	int tab_now = view_course_in_year(M, n, fundraw);
+	if (tab_now == -1) {
+		textBgColor(0, 15);
+		return NULL;
+	}
+	drawRectangle(1, y + line_now, 115, 1, 14);
+	textBgColor(0, 14);
+	view_1_course_of_list_course(M[tab_now * 10], x, y);
+	int count = tab_now * 10;
+	do {
+		if (tab_now == -1) {
+			textBgColor(0, 15);
+			return NULL;
+		}
+		hidePointer();
+		ch = _getch();
+		//[ESC]
+		if (ch == 27) {
+			tab_now = view_course_in_year(M, n, fundraw);
+			if (tab_now == -1) {
+				textBgColor(0, 15);
+				return NULL;
+			}
+			line_now = 0;
+			count = tab_now * 10;
+			drawRectangle(1, y + line_now, 115, 1, 14);
+			textBgColor(0, 14);
+			view_1_course_of_list_course(M[tab_now * 10], x, y);
+		}
+		else {
+			//Control Up down 
+			if (ch == 72 && line_now > 0) //up
+			{
+				drawRectangle(1, y + line_now, 115, 1, 11);
+				textBgColor(0, 11);
+				view_1_course_of_list_course(M[count], x, y + line_now);
+
+				line_now--;
+				count--;
+				drawRectangle(1, y + line_now, 115, 1, 14);
+				textBgColor(0, 14);
+				view_1_course_of_list_course(M[count], x, y + line_now);
+			}
+			else if (ch == 72 && line_now == 0 && count > 0) {
+				count--;
+				drawRectangle(0, y, 120, 11, 11);
+				view_10_course_of_list_course(M, count, n, x, y);
+				drawRectangle(1, y + line_now, 115, 1, 14);
+				textBgColor(0, 14);
+				view_1_course_of_list_course(M[count], x, y + line_now);
+			}
+			else if (ch == 80 && line_now < 9 && count < n - 1) //down
+			{
+				drawRectangle(1, y + line_now, 115, 1, 11);
+				textBgColor(0, 11);
+				view_1_course_of_list_course(M[count], x, y + line_now);
+
+				line_now++;
+				count++;
+				drawRectangle(1, y + line_now, 115, 1, 14);
+				textBgColor(0, 14);
+				view_1_course_of_list_course(M[count], x, y + line_now);
+			}
+			else if (ch == 80 && line_now == 9 && count < n - 1) {
+				count++;
+				drawRectangle(0, y, 120, 11, 11);
+				view_10_course_of_list_course(M, count - 9, n, x, y);
+				drawRectangle(1, y + line_now, 115, 1, 14);
+				textBgColor(0, 14);
+				view_1_course_of_list_course(M[count], x, y + line_now);
+			}
+			if (ch == 13) {
+				return &M[count];
+			}
+		}
+	} while (true);
+	textBgColor(0, 15);
+}
+void view_1_student_info_of_course(Data M, int x, int y) {
+	printtext(to_string(M.NO_inclass), x, y);
+	printtext(M.IDstd, x + 7, y);
+	printtext(M.name, x + 35, y);
+	printtext(M.Bir, x + 57, y);
+	printtext(M.sex, x + 80, y);
+	printtext(M.IDsocial, x + 90, y);
+}
+void view_10_student_info_of_course(Data* M, int i, int n, int x, int y) {
+	if (n - i >= 10) {
+		for (int j = 0; j < 10; j++) {
+			view_1_student_info_of_course(M[i + j], x, y + j);
+		}
+	}
+	else {
+		for (int j = 0; j < n - i; j++) {
+			view_1_student_info_of_course(M[i + j], x, y + j);
+		}
+	}
+
+}
+void view_student_info_of_course(Data* M, int n) {
+	textBgColor(0, 15);
+	system("cls");
+	int x = 10;
+	int y = 14;
+	textBgColor(4, 6);
+	printtext("   _____   __                __                 __            ____            ____       ", 10, 3);
+	printtext("  / ___/  / /_  __  __  ____/ /  ___    ____   / /_          /  _/   ____    / __/  ____ ", 10, 4);
+	printtext("  \\__ \\  / __/ / / / / / __  /  / _ \\  / __ \\ / __/          / /    / __ \\  / /_   / __ \\", 10, 5);
+	printtext(" ___/ / / /_  / /_/ / / /_/ /  /  __/ / / / // /_          _/ /    / / / / / __/  / /_/ /", 10, 6);
+	printtext("/____/  \\__/  \\__,_/  \\__,_/   \\___/ /_/ /_/ \\__/         /___/   /_/ /_/ /_/     \\____/ ", 10, 7);
+	printtext("                                                                                         ", 10, 8);
+	drawRectangle(0, y - 2, 120, 13, 11);
+	textBgColor(0, 11);
+	printtext("NO", x, y - 1);
+	printtext("ID", x + 7, y - 1);//12 ki tu cho id
+	printtext("Name", x + 35, y - 1);
+	printtext("Birthday", x + 57, y - 1);//30 ki tu cho ten
+	printtext("Sex", x + 80, y - 1);//14 ki tu cho 1 diem
+	printtext("ID Social", x + 90, y - 1);//14 ki tu cho 1 diem
+	char ch;
+	int tab_now = 0;
+	view_10_student_info_of_course(M, tab_now * 10, n, x, y);
+	do {
+		hidePointer();
+		ch = _getch();
+		//[ESC]
+		if (ch == 27) {
+			return;
+		}
+		else {
+			//Control Up down 
+			if (ch == 72 && tab_now > 0) //up
+			{
+				tab_now--;
+				drawRectangle(0, y, 120, 11, 11);
+				view_10_student_info_of_course(M, tab_now * 10, n, x, y);
+			}
+			if (ch == 80 && tab_now < (n - 1) / 10) //down
+			{
+				tab_now++;
+				drawRectangle(0, y, 120, 11, 11);
+				view_10_student_info_of_course(M, tab_now * 10, n, x, y);
+			}
+		}
+	} while (true);
+}
