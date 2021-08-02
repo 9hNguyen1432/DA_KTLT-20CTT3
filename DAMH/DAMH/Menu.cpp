@@ -167,11 +167,19 @@ void menuStaff(User &user)
 					break;
 				}
 				case 1: {
-					Course* SLC = select_course(user, SY, &read_file_List_course, &drawASCIIlistCourse);
-					if (SLC == NULL) {
-						break;
+					try {
+						Course* SLC = select_course(user, SY, &read_file_List_course, &drawASCIIlistCourse);
+						if (SLC == NULL) {
+							break;
+						}
+						edit_score_in_list_course(user, SY, SLC->ID_course);
 					}
-					edit_score_in_list_course(user, SY, SLC->ID_course);
+					catch (const char* err) {
+						drawRectangle(3, 14, 115, 3, 4);
+						printtext(err, 50, 15);
+						textBgColor(0, 15);
+						Sleep(1800);
+					}
 					break;
 				}
 				default:
@@ -229,82 +237,125 @@ void menuStudent(User &user)
 	init_List_Mark(user.info.phead);
 	bool isExit = false;
 	int option;
+	string menuStudent[] = { "YOUR INFO", "COURSE" , "YOUR RESULTS","LOG OUT" };
+	string MenuStd1[] = {"1. Profile info","2. Change password","3.Back to Menu" };
+	string MenuStd2[] = { "1. Enroll courses","2. Remove course","3. View your list of course","4.Back to Menu" };
+ //, "3. Score board"
+ //, "4. Enroll courses"
+ //, "5. List of enrolled courses"
+ //, "6. Remove courses"
+ //, "7. View your list of course" };
 	do
 	{
 		system("cls");
-		string menuStudent[]= { "0. Log out", "1. Profile info"
-		 , "2. Change password"
-		 , "3. Score board"
-		 , "4. Enroll courses"
-		 , "5. List of enrolled courses"
-		 , "6. Remove courses"
-		 , "7. View your list of course" };
-		drawMenu(menuStudent, 8, 45, 10, 0, &drawASCIImenuStudent);
-		option = MoveAndChoose(8, menuStudent, 45, 10, 0);
+		drawMenu(menuStudent, 4, 50, 10, 2, &drawASCIImenuStudent);
+		option = MoveAndChoose(4, menuStudent, 50, 10, 2);
 		switch (option)
 		{
-		case 1:
-			Output_info(user);
+		case 0: {
+			system("cls");
+			drawMenu(MenuStd1, 3, 50, 11, 2, &drawASCIIStaffMenu);
+			int option1 = MoveAndChoose(3, MenuStd1, 50, 11, 2);
+			switch (option1)
+			{
+			case 0: {
+				// lenh show thong tin 
+				Output_info(user);
+				break;
+			}
+			case 1: {
+				// lenh thay mat khau
+				change_password(user);
+				break;
+			}
+			case 2: {
+				break;
+			}
+			}
 			break;
-		case 2:
-			change_password(user);
+		}
+		case 1: {
+			system("cls");
+			drawMenu(MenuStd2, 4, 45, 10, 2, &drawASCIImenuStudent);
+			int option1 = MoveAndChoose(4, MenuStd2, 45, 10, 2);
+			switch (option1)
+			{
+			case 0: {
+				//enroll_course(user, SY);
+				try {
+					int check = checkCourseSession();
+					if (check == 1) {
+						enroll_course(user, SY);
+					}
+					else {
+						drawRectangle(35, 15, 50, 5, 4);
+						textBgColor(15, 4);
+						if (check == 0) printtext("NOT OPEN REGISTER COURSE YET", 45, 17);
+						else if (check == -1) printtext("IT'S NOT THE TIME TO START YET", 45, 17);
+						else printtext("It was late to register the course", 45, 17);
+						Sleep(1800);
+						textBgColor(0, 15);
+					}
+				}
+				catch (const char* err) {
+					string s = string(err);
+					s.pop_back();
+					s += " to enroll.";
+					drawRectangle(3, 14, 115, 3, 4);
+					printtext(s, 45, 15);
+					textBgColor(0, 15);
+					Sleep(1800);
+				}
+				break;
+			}
+			case 1: {
+				//lenh xoa bot khoa hoc da dang ki
+				try {
+					int check = checkCourseSession();
+					if (check == 1) {
+						delete_course(user, SY);
+						system("pause");
+					}
+					else {
+						drawRectangle(35, 15, 50, 5, 4);
+						textBgColor(15, 4);
+						if (check == 0) printtext("NOT OPEN REGISTER COURSE YET", 45, 17);
+						else if (check == -1) printtext("IT'S NOT THE TIME TO START YET", 45, 17);
+						else printtext("It was late to register the course", 45, 17);
+						Sleep(1800);
+						textBgColor(0, 15);
+					}
+				}
+				catch (const char* err) {
+					string s = string(err);
+					s.pop_back();
+					s += " to delete.";
+					drawRectangle(3, 14, 115, 3, 4);
+					printtext(s, 45, 15);
+					textBgColor(0, 15);
+					Sleep(1800);
+				}
+				break;
+			}
+			case 2: {
+				DisPlay_Course_Of_Student(SY, user);
+				break;
+			}
+			default: {
+				break;
+			}
+			}
 			break;
-		case 3:
+		}
+		case 2: {
 			// lenh show bang diem
-			DisPlay_Mark_Of_Student( SY, user);
-			break;
-		case 4:
-		{
-			//enroll_course(user, SY);
-			int check = checkCourseSession();
-			if (check == 1) {
-				enroll_course(user, SY);
-			}
-			else {
-				drawRectangle(40, 15, 25, 5, 4);
-				textBgColor(15, 4);
-				if (check == 0) printtext("NOT OPEN REGISTER COURSE YET", 41, 17);
-				else if (check == -1) printtext("IT'S NOT THE TIME TO START YET", 41, 17);
-				else printtext("It was late to register the course", 41, 17);
-				Sleep(1000);
-				textBgColor(0, 15);
-			}
-			break;
-
-		}
-		case 5: 
-			DisPlay_Course_Of_Student(SY, user);
-			//edit_score(user, SY, view_all_score_of_1_student(user, SY));
-			//edit_score_in_list_course(user, SY);
-			break;
-		case 6:
-		{
-			//lenh xoa bot khoa hoc da dang ki
-			int check = checkCourseSession();
-			if (check == 1) {
-				delete_course(user, SY);
-				system("pause");
-			}
-			else {
-				drawRectangle(40, 15, 25, 5, 4);
-				textBgColor(15, 4);
-				if (check == 0) printtext("NOT OPEN REGISTER COURSE YET", 41, 17);
-				else if (check == -1) printtext("IT'S NOT THE TIME TO START YET", 41, 17);
-				else printtext("It was late to register the course", 41, 17);
-				Sleep(1000);
-				textBgColor(0, 15);
-			}
-
+			DisPlay_Mark_Of_Student(SY, user);
 			break;
 		}
-		case 7:
-			DisPlay_Course_Of_Student(SY, user);
-			break;
-		case 0:
+		case 3:	{
 			isExit = true;
 			break;
-		default: std::cout << "option is invalid!!!\n";
-			break;
+		}
 		}
 	} while (!isExit);
 	repeatLogin(user);

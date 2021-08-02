@@ -59,6 +59,12 @@ void read_course(User A, SchoolYear y)
 	MarkNode* tempo = new MarkNode;
 	tempo = A.info.phead;
 	int i = 1;
+	if (tempo == NULL) {
+		drawRectangle(1, 17, 115, 3, 2);
+		printtext("You has not registered for any courses this semester ", 30, 18);
+		textBgColor(0, 15);
+		return;
+	}
 	while (tempo != NULL)
 	{
 		string fl;
@@ -470,10 +476,6 @@ Course* read_file_List_course(User A, SchoolYear SY, int& n) {
 	}
 	n = countLine(fileName) - 1;
 	if (n == 0) {
-		drawRectangle(3, 14, 115, 3, 4);
-		printtext("There isn't course now.", 50, 15);
-		textBgColor(0, 15);
-		Sleep(1800);
 		return NULL;
 	}
 	Course* M = new Course[n];

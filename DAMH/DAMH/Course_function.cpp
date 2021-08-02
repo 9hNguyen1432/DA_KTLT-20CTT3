@@ -379,6 +379,13 @@ void edit_score(User& A, SchoolYear SY, Mark* M) {
 		line++;
 		temp = temp->pNext;
 	}
+	if (M == NULL) {
+		drawRectangle(0, 17, 120, 3, 6);
+		printtext("He/she has not registered for any courses this semester ", 30, 18);
+		Sleep(2700);
+		textBgColor(0, 15);
+		return;
+	}
 	drawRectangle(1, y + line_now, 115, 1, 14);
 	textBgColor(0, 14);
 	view_1_line(M[line_now - 1], x, y + line_now);
@@ -876,6 +883,7 @@ Mark* view_all_score_of_1_student(User A, SchoolYear Y) {
 	system("cls");
 	int n;
 	get_score(A, Y, n);
+
 	int x = 15;
 	int y = 14;
 	textBgColor(4, 6);
@@ -894,6 +902,12 @@ Mark* view_all_score_of_1_student(User A, SchoolYear Y) {
 	printtext("Other Mark", x + 70, y);//14 ki tu cho 1 diem
 	printtext("Total Mark", x + 84, y);//14 ki tu cho 1 diem
 	y++;
+	if (n == 0) {
+		drawRectangle(0, 17, 120, 3, 6);
+		printtext("You has not registered for any courses this semester ", 30, 18);
+		textBgColor(0, 15);
+		return NULL;
+	}
 	Mark* M = new Mark[n];
 	MarkNode* temp = A.info.phead;
 	for (int i = 0; i < n; i++) {
