@@ -1504,10 +1504,11 @@ void exportScoreboardInterface(User A,string year, string semester, int currentL
     printtext(" ___) | |__| |_| |  _ <| |___| |_) | |_| / ___ \\|  _ <| |_| |", 30, 8);
     printtext("|____/ \\____\\___/|_| \\_\\_____|____/ \\___/_/   \\_\\_| \\_\\____/", 30, 9);
 
-    drawRectangle(97, 0, 22, 5, 11);
+    drawRectangle(97, 0, 23, 4, 11);
     textBgColor(4, 11);
     printtext("-[c]: CHANGE SCHOOL", 97, 0);
     printtext(" YEAR", 97, 1);
+    printtext("-[a]: EXPORT ALL COURSE", 97, 2);
     printtext("-[ESC]: BACK TO MENU", 97, 3);
 
     if (stoi(semester.substr(8, 1), 0, 10) == 0) {
@@ -1600,6 +1601,30 @@ void exportScoreboardInterface(User A,string year, string semester, int currentL
                     exportScoreboardInterface(A,year, semester, currentLine, lineInConsole);
                 }
 
+                if (ch == 'a') {
+                    fstream file;
+                    file.open("file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv", ios::in);
+                    if (!file.is_open()) {
+                        cout << "Can't open file" << endl;
+                        Sleep(900);
+                        menuStaff(A);
+                    }
+                    string courseID;
+                    getline(file, courseID);
+                    while (!file.eof()) {
+                        if (courseID.size() == 1) break;
+                        getline(file, courseID, ',');
+                        exportSB(year, semester, courseID);
+                        getline(file, courseID);
+                    }
+                    drawRectangle(40, 15, 35, 5, 4);
+                    textBgColor(15, 4);
+                    printtext("EXPORT ALL COURSE SUCCESSFULLY !!!", 41, 17);
+                    ch = getch();
+                    textBgColor(0, 15);
+                    exportScoreboardInterface(A, year, semester, currentLine, lineInConsole);
+                }
+
                 if (ch == 'c') {
                     SchoolYear s;
                     change_Year_Semester(s);
@@ -1614,7 +1639,7 @@ void exportScoreboardInterface(User A,string year, string semester, int currentL
 
 void exportSB(string SchoolYear, string Semester, string CourseID) {
     fstream fileScore, fileList;
-    fileScore.open("Score/Export/" + SchoolYear + "_" + Semester + "_" + CourseID + ".csv", ios::app);
+    fileScore.open("Score/Export/" + SchoolYear + "_" + Semester + "_" + CourseID + ".csv", ios::out);
     fileScore << "NO,STUDENT ID,NAME,TOTAL MARK,FINAL MARK,MIDTERM MARK,OTHER MARK";
     fileList.open("file_save/SchoolYear/" + SchoolYear + "/" + Semester + "/Course/" + CourseID + ".csv", ios::in);
     string data;
@@ -1628,6 +1653,7 @@ void exportSB(string SchoolYear, string Semester, string CourseID) {
         fileScore << "," << data;
         getline(fileList, data);
         i++;
+        if (i >= 300) break;
     }
 }
 
@@ -1646,7 +1672,6 @@ void importScoreBoard(string year, string semester, string courseID,string filen
 
 
 void importScoreBoardUI() {
-
     char ch;
     system("cls");
     textBgColor(13, 15);
@@ -1669,56 +1694,73 @@ void importScoreBoardUI() {
         char ch = getch();
     }
     else {
-        showPointer();
-        drawRectangle(25, 13, 90, 4, 11);
-        textBgColor(0, 11);
-        printtext("ENTER FILE NAME (Filename must have format like: 2020-2021_Semester2_MH370,.....) :", 26, 13);
-        string filename="";
-        drawRectangle(26, 14.5, 50, 1, 15);
-        textBgColor(0, 15);
-        gotoxy(26, 14.5);
-        getline(cin,filename);
-        char ch;
-        /*
-        do
-        {   
-            ch = getch();
-            if (ch == 8) {
-                if (filename.size() > 0) {
-                    filename.pop_back();
-                    gotoxy(ReturnX() - 1, ReturnY());
-                    cout << " ";
-                    gotoxy(ReturnX() - 1, ReturnY());
-                }
-            }
-            if (((ch >= 47 && ch <= 58) || (ch >= 65 && ch <= 90) || (ch >= 97 && ch <= 122) || ch ==95 || ch == 45 || ch == 32)   && filename.size() < 22) {
-                cout << ch;
-                filename.push_back(ch);
-            }
-            if (ch == 27) {
-                return;
-            }
-        } while (ch != 13);
-        */
-        fstream file;
-        file.open(/*"Score/Import/" + filename + ".csv"*/filename+".csv", ios::in);
-        if (!file.is_open()) {
-            drawRectangle(40, 15, 25, 5, 4);
-            textBgColor(15, 4);
-            printtext("FILE DOESN'T EXIST !!!", 41, 17);
-            ch = getch();
+        do {
+            system("cls");
+            textBgColor(13, 15);
+            printtext(" ___ __  __ ____   ___  ____ _____ ", 30, 1);
+            printtext("|_ _|  \\/  |  _ \\ / _ \\|  _ \\_   _|", 30, 2);
+            printtext(" | || |\\/| | |_) | | | | |_) || | ", 30, 3);
+            printtext(" | || |  | |  __/| |_| |  _ < | | ", 30, 4);
+            printtext("|___|_|  |_|_|    \\___/|_| \\_\\|_|  ", 30, 5);
+            printtext(" ____   ____ ___  ____  _____ ____   ___    _    ____  ____ ", 30, 6);
+            printtext("/ ___| / ___/ _ \\|  _ \\| ____| __ ) / _ \\  / \\  |  _ \\|  _ \\ ", 30, 7);
+            printtext("\\___ \\| |  | | | | |_) |  _| |  _ \\| | | |/ _ \\ | |_) | | | |", 30, 8);
+            printtext(" ___) | |__| |_| |  _ <| |___| |_) | |_| / ___ \\|  _ <| |_| |", 30, 9);
+            printtext("|____/ \\____\\___/|_| \\_\\_____|____/ \\___/_/   \\_\\_| \\_\\____/", 30, 10);
+            showPointer();
+            drawRectangle(25, 13, 90, 4, 11);
+            textBgColor(0, 11);
+            printtext("ENTER PATH TO FILE NAME (EX: C:/Users/2020-2021_Semester3_TLDC ) :", 26, 13);
+            string filename = "";
+            drawRectangle(26, 14.5, 50, 1, 15);
             textBgColor(0, 15);
-            importScoreBoardUI();
-        }
-        hidePointer();
-        string info = filename.substr(filename.find_last_of("/")+1,filename.size() - filename.find_last_of("/"));
-        importScoreBoard(info.substr(0, 9), info.substr(10, 9), info.substr(20, info.size() - 1),filename);
-        drawRectangle(40, 15, 25, 5, 4);
-        textBgColor(15, 4);
-        printtext("IMPORT SUCCESSFUL !!!", 41, 17);
-        ch = getch();
+            gotoxy(26, 14.5);
+            //getline(cin,filename);
+
+            char ch;
+            do
+            {
+                ch = getch();
+                if (ch == 8) {
+                    if (filename.size() > 0) {
+                        filename.pop_back();
+                        gotoxy(ReturnX() - 1, ReturnY());
+                        cout << " ";
+                        gotoxy(ReturnX() - 1, ReturnY());
+                    }
+                }
+                if (((ch >= 47 && ch <= 58) || (ch >= 65 && ch <= 90) || (ch >= 97 && ch <= 122) || ch == 95 || ch == 45 || ch == 32) && filename.size() < 50) {
+                    cout << ch;
+                    filename.push_back(ch);
+                }
+                if (ch == 27) {
+                    return;
+                }
+            } while (ch != 13 || filename.size() == 0);
+
+            fstream file;
+            file.open(filename + ".csv", ios::in);
+            if (!file.is_open()) {
+                drawRectangle(40, 15, 25, 5, 4);
+                textBgColor(15, 4);
+                printtext("FILE DOESN'T EXIST !!!", 41, 17);
+                ch = getch();
+                textBgColor(0, 15);
+            }
+            else {
+                hidePointer();
+                string info = filename.substr(filename.find_last_of("/") + 1, filename.size() - filename.find_last_of("/"));
+                importScoreBoard(info.substr(0, 9), info.substr(10, 9), info.substr(20, info.size() - 1), filename);
+                drawRectangle(40, 15, 25, 5, 4);
+                textBgColor(15, 4);
+                printtext("IMPORT SUCCESSFUL !!!", 41, 17);
+                ch = getch();
+                textBgColor(0, 15);
+            }
+        }while (true);
+
+        textBgColor(0, 15);
     }
-    textBgColor(0, 15);
 }
 
 void listClass(User A,SchoolYear Y, fun_show_class Fun) {
@@ -1860,7 +1902,6 @@ void showStudentInclass(User user,SchoolYear Y, string classname) {
         if (ch == 27) {
             textBgColor(0, 15);
             listClass(user, Y, &showStudentInclass);
-            return;
         }
         if (ch == 72 && currentLine > 2) //up
         {
@@ -1899,6 +1940,20 @@ void showStudentInclass(User user,SchoolYear Y, string classname) {
             }
             else
                 moveDown(filename, currentLine, 6, b, y, column, lineInConsole, 100, 8);
+        }
+        if (ch == 13) {
+            User A;
+            A.ID = column[1];
+            A.info.IDstd = column[1];
+            A.info.Class = classname;
+            A.info.IDsocial = column[5];
+            A.info.Bir = column[3];
+            A.info.name = column[2];
+            A.info.sex = column[4];
+            get_course(A, Y);
+            textBgColor(0, 15);
+            edit_score(A, Y, view_all_score_of_1_student(A, Y));
+            showStudentInclass(user,Y, classname);
         }
     } while (true);
     textBgColor(0, 15);
