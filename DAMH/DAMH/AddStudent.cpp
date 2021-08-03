@@ -176,11 +176,13 @@ int RunMenuAddInfoStudentToClass()
 		showPointer();
 		system("cls");
 		gotoxy(40, 12);
+
 		string MenuAdd[] = { "1. Add One Student To Class",
 		"2. Import Info Student From File To Class",
 		"3. Exit" };
 		drawMenu(MenuAdd, 3, 45, 12, 1, &drawASCIIMenuView);
 		command = MoveAndChoose(3, MenuAdd, 45, 12, 1);
+
 		switch (command)
 		{
 		case 0:

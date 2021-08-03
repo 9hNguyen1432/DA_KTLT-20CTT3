@@ -13,6 +13,8 @@
 
 using namespace std;
 
+typedef void (*fun_show_class)(User, SchoolYear, string);
+
 void createFolder(string namefolder);
 
 void CopyContentFileToFile(string src_path, string des_path);
@@ -51,7 +53,7 @@ void moveDown(string filename, int& currentLine, int columnNum, int indexB[], in
 
 void drawList(int columnNum, string filename, int y, int indexA[], int indexB[], int line, int flagLine);
 
-void listCourse(string year, string semester);
+void listCourse(User A, string year, string semester);
 
 void getLineInfo(string filename, int line, string column[], int columnNum);
 
@@ -67,11 +69,11 @@ int insertNum2(string& data, int limit);
 
 int insertString(string& data, int limit);
 
-void editCourse(string year, string semester);
+void editCourse(User A, string year, string semester);
 
-void deleteCourse(string filename, int currentLine, string year, string semester);
+void deleteCourse(string filename, string courseName, int currentLine, string year, string semester);
 
-void viewCourse();
+void viewCourse(string year, string semester);
 
 bool checkTimeEnd(string date, string month, string year);
 
@@ -79,22 +81,30 @@ bool checkTimeStart(string date, string month, string year);
 
 int checkCourseSession();
 
-void exportScoreboardInterface(string year, string semester, int flagLine, int currentLine, int lineInConsole);
+void exportScoreboardInterface(User A,string year, string semester, int currentLine, int lineInConsole);
 
 void exportSB(string SchoolYear, string Semester, string CourseID);
 
-void importScoreBoard(string year, string semester, string courseID);
+void importScoreBoard(string year, string semester, string courseID, string filename);
 
 void importScoreBoardUI();
 
-void listClass(SchoolYear Y);
+void listClass(User A,SchoolYear Y, fun_show_class Fun);
 
-void showStudentInclass(SchoolYear Y, string classname);
+void showStudentInclass(User user,SchoolYear Y, string classname);
 
-void drawListStudent(int columnNum, SchoolYear Y, string filename, int y, int indexA[], int indexB[], int line, int columnNotNeed, int flagLine);
+void drawListStudent(int columnNum, SchoolYear Y, string filename, int y, int indexA[], int indexB[], int line, int flagLine);
 
 void getLineInfoForStudent(string filename, SchoolYear Y, int line, string column[], int columnNum);
 
 void get_all_course_student(User& B, SchoolYear SY, float& overallGPA);
 
-void showScoreOfClass(SchoolYear Y, string classname);
+void showScoreOfClass(User user,SchoolYear Y, string classname);
+
+void listClassUseFor14(SchoolYear Y);
+
+void showScoreOfClassPreventive(SchoolYear Y, string classname);
+
+void deleteFile(string filename);
+
+void renameFile(string oldName, string newName);
