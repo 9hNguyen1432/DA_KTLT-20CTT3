@@ -140,7 +140,7 @@ void CreateNewClass()
 				string filename = "file_save//SchoolYear//" + Year + "//class_info.csv";
 				int count = CheckRowInFile(filename);
 				file.open("file_save//SchoolYear//" + Year + "//class_info.csv", ios::app);
-				file << count << "," << name << "," << NameMajor << "," << numberStudent << "," << yearStudent << endl;
+				file <<endl<< count << "," << name << "," << NameMajor << "," << numberStudent << "," << yearStudent << endl;
 				file.close();
 
 				gotoxy(43, 22);
@@ -172,7 +172,6 @@ void drawASCIIMenuView()
 	printtext("\\____/   /______/ /_/      \\_\\ /____/   /____/   ", 40, 8);
 	printtext("                                                 ", 40, 9);
 }
-
 
 void ImportRandom(string& YearCourse, string& Class)
 {
