@@ -16,14 +16,22 @@ void menuStaff(User &user)
 	determineYearSemesterNow(SY.year, SY.semester.Name);
 	read_info(user, SY);			
 	int option;
+	string MenuStaff[] = { "YOUR INFO","NEW","CLASS INFO","COURSE INFO","RESULT OF STUDENTS","LOG OUT" };
+	string MenuStaff1[] = { "1. Profile info", "2. Change password","3.Back to Menu" };
+	string MenuStaff2[] = {
+	"1. Create school - year",
+	"2. Create semester ", "3. Create course registration session", "4. Create course",
+	"5. Create Class","6. Add Student to class","7. Back to Menu"
+	};
+	string MenuStaff4[] = {
+	"1. View List Course And List Student in Course",
+	 "2. Delete or Edit Course info","3.Back to Menu" };
+	string MenuStaff5[] = { "1. View and edit student's marks", "2. Export student list mark", "3. Import student list mark", "4. Back to Menu" };
 	do
 	{	
 		showPointer();
 		system("cls");
 		gotoxy(0, 7);
-		string MenuStaff[] = {
-			"YOUR INFO","NEW","CLASS INFO","COURSE INFO","RESULT OF STUDENTS","LOG OUT"
-		};
 			/*{ 
 
  "4. CLASS",
@@ -42,10 +50,7 @@ void menuStaff(User &user)
 		{
 		case 0: {
 			system("cls");
-			string MenuStaff1[] = {
-			"1. Profile info",
-		 "2. Change password","3.Back to Menu"
-			};
+
 			drawMenu(MenuStaff1, 3, 50, 11, 2, &drawASCIIStaffMenu);
 			int option1 = MoveAndChoose(3, MenuStaff1, 50, 11, 2);
 			switch (option1)
@@ -66,16 +71,11 @@ void menuStaff(User &user)
 			}
 			break;
 		}
-		case 1:
-		{
+		case 1:	{
 			system("cls");
-			string MenuStaff2[] = {
-			"1. Create school - year",
-		 "2. Create semester ", "3. Create course registration session", "4. Create course",
-		 "5. Create Class","6. Back to Menu"
-			};
-			drawMenu(MenuStaff2, 6, 40, 10, 1, &drawASCIIStaffMenu);
-			int option1 = MoveAndChoose(6, MenuStaff2, 40, 10, 1);
+
+			drawMenu(MenuStaff2, 7, 40, 8, 1, &drawASCIIStaffMenu);
+			int option1 = MoveAndChoose(7, MenuStaff2, 40, 8, 1);
 			switch (option1)
 			{
 			case 0: {
@@ -103,13 +103,18 @@ void menuStaff(User &user)
 				CreateNewClass();
 				break;
 			}
+			case 5: {
+				system("cls");
+				//AddStudentToClass();
+				RunMenuAddInfoStudentToClass();
+				break;
+			}
 			default:
 				break;
 			}
 			break;
 		}
-		case 2:
-		{
+		case 2:	{
 			system("cls");
 			//xem danh sach lop hoc va danh sach sinh vien trong lop
 			listClass(user,SY, &showStudentInclass);
@@ -117,9 +122,6 @@ void menuStaff(User &user)
 		}
 		case 3: {
 			system("cls");
-			string MenuStaff4[] = {
-				"1. View List Course And List Student in Course",
-			 "2. Delete or Edit Course info","3.Back to Menu"};
 			drawMenu(MenuStaff4, 3, 45, 10, 2, &drawASCIIStaffMenu);
 			int option1 = MoveAndChoose(3, MenuStaff4, 45, 10, 2);
 			switch (option1)
@@ -148,8 +150,7 @@ void menuStaff(User &user)
 			break;*/
 		{
 			system("cls");
-			string MenuStaff5[] = {
-			"1. View and edit student's marks", "2. Export student list mark", "3. Import student list mark", "4. Back to Menu"};
+
 			drawMenu(MenuStaff5, 4, 40, 10, 2, &drawASCIIStaffMenu);
 			int option1 = MoveAndChoose(4, MenuStaff5, 40, 10, 2);
 			switch (option1)
@@ -204,10 +205,7 @@ void menuStaff(User &user)
 		}
 		case 7:
 			//them sinh vien vao lop
-			system("cls");
-			//AddStudentToClass();
-			RunMenuAddInfoStudentToClass();
-			break;
+			
 
 		case 14:
 			//view diem cua lop hoc
@@ -314,7 +312,6 @@ void menuStudent(User &user)
 					int check = checkCourseSession();
 					if (check == 1) {
 						delete_course(user, SY);
-						system("pause");
 					}
 					else {
 						drawRectangle(35, 15, 50, 5, 4);
@@ -479,5 +476,14 @@ void drawASCIImenuStudent() {
 	printtext("\\ \\ \\-./\\ \\  \\ \\  __\\   \\ \\ \\-.  \\  \\ \\ \\_\\ \\ ", 35, 25);
 	printtext(" \\ \\_\\ \\ \\_\\  \\ \\_____\\  \\ \\_\\\\\"\\_\\  \\ \\_____\\ ", 35, 26);
 	printtext("  \\/_/  \\/_/   \\/_____/   \\/_/ \\/_/   \\/_____/ ", 35, 27);
+	textBgColor(0, 15);
+}
+void drawASCIIImport() {
+	textBgColor(6, 0);
+	printtext(" ___ __  __ ____   ___  ____ _____    ____   ____ ___  ____  _____ ____   ___    _    ____  ____  ", 10, 1);
+	printtext("|_ _|  \\/  |  _ \\ / _ \\|  _ \\_   _|  / ___| / ___/ _ \\|  _ \\| ____| __ ) / _ \\  / \\  |  _ \\|  _ \\ ", 10, 2);
+	printtext(" | || |\\/| | |_) | | | | |_) || |    \\___ \\| |  | | | | |_) |  _| |  _ \\| | | |/ _ \\ | |_) | | | |", 10, 3);
+	printtext(" | || |  | |  __/| |_| |  _ < | |     ___) | |__| |_| |  _ <| |___| |_) | |_| / ___ \\|  _ <| |_| |", 10, 4);
+	printtext("|___|_|  |_|_|    \\___/|_| \\_\\|_|    |____/ \\____\\___/|_| \\_\\_____|____/ \\___/_/   \\_\\_| \\_\\____/ ", 10, 5);
 	textBgColor(0, 15);
 }

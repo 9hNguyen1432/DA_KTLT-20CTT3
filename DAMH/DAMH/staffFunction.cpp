@@ -1660,7 +1660,7 @@ void exportSB(string SchoolYear, string Semester, string CourseID) {
 void importScoreBoard(string year, string semester, string courseID,string filename) {
     fstream file, fileScore;
     file.open(filename+".csv", ios::in);
-    fileScore.open("file_save//SchoolYear//" + year + "//" + semester + "//Course//score//" + courseID + ".csv", ios::app);
+    fileScore.open("file_save//SchoolYear//" + year + "//" + semester + "//Course//score//" + courseID + ".csv", ios::out);
     string data;
     getline(file, data);
     fileScore << data;
@@ -1668,24 +1668,51 @@ void importScoreBoard(string year, string semester, string courseID,string filen
         getline(file, data);
         fileScore << endl << data;
     }
+    file.close();
+    fileScore.close();
 }
+string InputFileName() {
+    showPointer();
+    drawRectangle(25, 13, 90, 4, 11);
+    textBgColor(0, 11);
+    printtext("ENTER PATH TO FILE NAME (EX: C:/Users/2020-2021_Semester3_TLDC ) :", 26, 13);
+    string filename = "";
+    drawRectangle(26, 14.5, 50, 1, 15);
+    textBgColor(0, 15);
+    gotoxy(26, 14.5);
+    //getline(cin,filename);
 
+    char ch;
+    do
+    {
+        ch = getch();
+        if (ch == 8) {
+            if (filename.size() > 0) {
+                filename.pop_back();
+                gotoxy(ReturnX() - 1, ReturnY());
+                cout << " ";
+                gotoxy(ReturnX() - 1, ReturnY());
+            }
+        }
+        if (((ch >= 47 && ch <= 58) || (ch >= 65 && ch <= 90) || (ch >= 97 && ch <= 122) || ch == 95 || ch == 45 || ch == 32) && filename.size() < 50) {
+            cout << ch;
+            filename.push_back(ch);
+        }
+        if (ch == 27) {
+            return "";
+        }
+    } while (ch != 13 || filename.size() == 0);
+    return filename;
+}
 
 void importScoreBoardUI() {
     char ch;
     system("cls");
-    textBgColor(13, 15);
-    printtext(" ___ __  __ ____   ___  ____ _____ ", 30, 1);
-    printtext("|_ _|  \\/  |  _ \\ / _ \\|  _ \\_   _|", 30, 2);
-    printtext(" | || |\\/| | |_) | | | | |_) || | ", 30, 3);
-    printtext(" | || |  | |  __/| |_| |  _ < | | ", 30, 4);
-    printtext("|___|_|  |_|_|    \\___/|_| \\_\\|_|  ", 30, 5);
-    printtext(" ____   ____ ___  ____  _____ ____   ___    _    ____  ____ ", 30, 6);
-    printtext("/ ___| / ___/ _ \\|  _ \\| ____| __ ) / _ \\  / \\  |  _ \\|  _ \\ ", 30, 7);
-    printtext("\\___ \\| |  | | | | |_) |  _| |  _ \\| | | |/ _ \\ | |_) | | | |", 30, 8);
-    printtext(" ___) | |__| |_| |  _ <| |___| |_) | |_| / ___ \\|  _ <| |_| |", 30, 9);
-    printtext("|____/ \\____\\___/|_| \\_\\_____|____/ \\___/_/   \\_\\_| \\_\\____/", 30, 10);
-
+    drawASCIIImport();
+    User user;
+    SchoolYear SY;
+    string filename;
+    determineYearSemesterNow(SY.year, SY.semester.Name);
     string year, semester;
     determineYearSemesterNow(year, semester);
     if (stoi(semester.substr(8, 1), 0, 10) == 0) {
@@ -1694,50 +1721,68 @@ void importScoreBoardUI() {
         char ch = getch();
     }
     else {
+        string ImportMenu[] = { "1. Import from file library.", "2. Import file by path.", "3.Back to Menu" };
+        int option;
         do {
-            system("cls");
-            textBgColor(13, 15);
-            printtext(" ___ __  __ ____   ___  ____ _____ ", 30, 1);
-            printtext("|_ _|  \\/  |  _ \\ / _ \\|  _ \\_   _|", 30, 2);
-            printtext(" | || |\\/| | |_) | | | | |_) || | ", 30, 3);
-            printtext(" | || |  | |  __/| |_| |  _ < | | ", 30, 4);
-            printtext("|___|_|  |_|_|    \\___/|_| \\_\\|_|  ", 30, 5);
-            printtext(" ____   ____ ___  ____  _____ ____   ___    _    ____  ____ ", 30, 6);
-            printtext("/ ___| / ___/ _ \\|  _ \\| ____| __ ) / _ \\  / \\  |  _ \\|  _ \\ ", 30, 7);
-            printtext("\\___ \\| |  | | | | |_) |  _| |  _ \\| | | |/ _ \\ | |_) | | | |", 30, 8);
-            printtext(" ___) | |__| |_| |  _ <| |___| |_) | |_| / ___ \\|  _ <| |_| |", 30, 9);
-            printtext("|____/ \\____\\___/|_| \\_\\_____|____/ \\___/_/   \\_\\_| \\_\\____/", 30, 10);
-            showPointer();
-            drawRectangle(25, 13, 90, 4, 11);
-            textBgColor(0, 11);
-            printtext("ENTER PATH TO FILE NAME (EX: C:/Users/2020-2021_Semester3_TLDC ) :", 26, 13);
-            string filename = "";
-            drawRectangle(26, 14.5, 50, 1, 15);
-            textBgColor(0, 15);
-            gotoxy(26, 14.5);
-            //getline(cin,filename);
 
-            char ch;
-            do
+            bool flagout = false;
+            system("cls");
+            drawMenu(ImportMenu, 3, 45, 10, 2, &drawASCIIImport);
+            option= MoveAndChoose(3, ImportMenu, 45, 10, 2);
+            switch (option)
             {
-                ch = getch();
-                if (ch == 8) {
-                    if (filename.size() > 0) {
-                        filename.pop_back();
-                        gotoxy(ReturnX() - 1, ReturnY());
-                        cout << " ";
-                        gotoxy(ReturnX() - 1, ReturnY());
+            case 0: {
+                system("cls");
+                while (true) {
+                    try {
+                        Course* SLC = select_course(user, SY, &read_file_List_course, &drawASCIIImport);
+                        if (SLC == NULL) {
+                            flagout = true;
+                            break;
+                        }
+                        filename = "Score/Import/" + SY.year + "_" + SY.semester.Name + "_" + SLC->ID_course;
+                        ifstream f;
+                        f.open(filename+".csv");
+                        if (!f.is_open()) {
+                            drawRectangle(3, 14, 115, 4, 4);
+                            printtext("The score file for this course is not in the file library. ", 35, 15);
+                            printtext("Please pass it in file library or import by path. ", 40, 16);
+                            Sleep(4500);
+                            f.close();
+                            continue;
+                        }
+                        else {
+                            f.close();
+                            break;
+                        }
+                    }
+                    catch (const char* err) {
+                        string s = string(err);
+                        s.pop_back();
+                        s += " to import.";
+                        drawRectangle(3, 14, 115, 3, 4);
+                        printtext(err, 45, 15);
+                        textBgColor(0, 15);
+                        Sleep(1800);
                     }
                 }
-                if (((ch >= 47 && ch <= 58) || (ch >= 65 && ch <= 90) || (ch >= 97 && ch <= 122) || ch == 95 || ch == 45 || ch == 32) && filename.size() < 50) {
-                    cout << ch;
-                    filename.push_back(ch);
+                break;
+            }
+            case 1: {
+                system("cls");
+                drawASCIIImport();
+                filename = InputFileName();
+                if (filename == "") {
+                    continue;
                 }
-                if (ch == 27) {
-                    return;
-                }
-            } while (ch != 13 || filename.size() == 0);
-
+                break;
+            }
+            case 2:
+                return;
+            }
+            if (flagout == true) {
+                continue;
+            }
             fstream file;
             file.open(filename + ".csv", ios::in);
             if (!file.is_open()) {
@@ -1757,8 +1802,8 @@ void importScoreBoardUI() {
                 ch = getch();
                 textBgColor(0, 15);
             }
+            file.close();
         }while (true);
-
         textBgColor(0, 15);
     }
 }

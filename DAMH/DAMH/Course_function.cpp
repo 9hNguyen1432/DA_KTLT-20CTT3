@@ -799,7 +799,7 @@ void enroll_course(User& A, SchoolYear s_y) {
 	string file_cousre = course_path + course_input->ID_course;
 	rewrite_course_file(A, file_cousre, 1);
 	drawASCIIsuccessful();
-	Sleep(1800);
+	Sleep(3000);
 }
 void delete_course(User& A, SchoolYear s_y) {
 	string semester_path = "file_save/SchoolYear/" + s_y.year + '/' + s_y.semester.Name + '/';
@@ -817,7 +817,7 @@ void delete_course(User& A, SchoolYear s_y) {
 	string file_cousre = course_path + course_input->ID_course;
 	rewrite_course_file(A, file_cousre, -1);
 	drawASCIIsuccessful();
-	Sleep(1800);
+	Sleep(3000);
 	return;
 }
 void viewStudentInCourse(User user,SchoolYear SY) {

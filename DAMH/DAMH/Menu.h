@@ -34,4 +34,6 @@ void drawASCIIeditscore();
 void drawASCIIchangeSemester();
 //
 void drawASCIImenuStudent();
+//
+void drawASCIIImport();
 #endif

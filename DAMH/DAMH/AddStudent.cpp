@@ -289,8 +289,8 @@ int RunMenuAddInfoStudentToClass()
 		string MenuAdd[] = { "0. Add One Student To Class",
 		"1. Import Info Student From File To Class",
 		"2. Exit" };
-		drawMenu(MenuAdd, 3, 45, 12, 0, &drawASCIIMenuView);
-		command = MoveAndChoose(3, MenuAdd, 45, 12, 0);
+		drawMenu(MenuAdd, 3, 45, 12, 2, &drawASCIIMenuView);
+		command = MoveAndChoose(3, MenuAdd, 45, 12, 2);
 		switch (command)
 		{
 		case 0:

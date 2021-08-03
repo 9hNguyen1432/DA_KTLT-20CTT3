@@ -158,7 +158,7 @@ void CreateNewClass()
 				string filename = "file_save//SchoolYear//" + Year + "//class_info.csv";
 				int count = CheckRowInFile(filename);
 				file.open("file_save//SchoolYear//" + Year + "//class_info.csv", ios::app);
-				file << count << "," << name << "," << NameMajor << "," << numberStudent << "," << yearStudent << endl;
+				file <<endl<< count << "," << name << "," << NameMajor << "," << numberStudent << "," << yearStudent << endl;
 				file.close();
 				gotoxy(43, 23);
 				cout << "CREATE CLASS SUCCESSFUL,PRESS ENTER TO BACK TO MENU !!!" << endl;
