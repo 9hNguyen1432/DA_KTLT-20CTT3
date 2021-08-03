@@ -991,22 +991,9 @@ void editInforCourse(int y, int currentLine, string column[], string year, strin
 
         //[ENTER]
         if (ch == 13) {
-            //drawRectangle(pos[currentColumn], y, limit[currentColumn], 1, 15);
-            //gotoxy(pos[currentColumn], y);
             showPointer();
             textBgColor(0, 15);
-            /*
-            if (currentColumn == 0) {
-                string ID;
-                insertString(ID, 5);
-                column[0] = ID;
-            }
-            else if (currentColumn == 1) {
-                string NameC;
-                insertString(NameC, 21);
-                column[1] = NameC;
-            }
-            */
+            
             if (currentColumn == 2) {
                 gotoxy(pos[currentColumn] + column[currentColumn].size(), y);
                 insertString(column[2], limit[currentColumn]);
@@ -1177,12 +1164,6 @@ void editCourse(User A,string year, string semester) {
         ch = getch();
         //[ESC]
         if (ch == 27) {
-            /*
-            drawRectangle(1, y + lineInConsole, 110, 1, 11);
-            textBgColor(0, 11);
-            for (int i = 0; i < 8; i++)
-                printtext(column[i], b[i], y + lineInConsole);
-            */
             textBgColor(0, 15);
             menuStaff(A);   
         }
@@ -1251,7 +1232,15 @@ void editCourse(User A,string year, string semester) {
                     else lineInConsole--;
                 }
                 line--;
+                
                 drawRectangle(0, 10, 120, 15, 11);
+                if(line == 1) {
+                    textBgColor(4, 15);
+                    printtext("THERE ISN'T ANY COURSE EXIST, PRESS ENTER TO BACK TO MENU.", 30, 14);
+                    ch = getch();
+                    textBgColor(0, 15);
+                    menuStaff(A);
+                }
                 drawList(8, filename, y, a, b, line, currentLine - lineInConsole + 1);
                 drawRectangle(1, y + lineInConsole, 110, 1, 14);
                 textBgColor(0, 14);
@@ -1290,11 +1279,11 @@ void listCourse(User A,string year, string semester) {
     char ch;
     hidePointer();
     system("cls");
-    textBgColor(13, 15);
-    printtext(" _     ___ ____ _____    ____ ___  _   _ ____  ____  _____", 30, 2);
+    textBgColor(11, 0);
+    printtext(" _     ___ ____ _____    ____ ___  _   _ ____  ____  _____ ", 30, 2);
     printtext("| |   |_ _/ ___|_   _|  / ___/ _ \\| | | |  _ \\/ ___|| ____|", 30, 3);
-    printtext("| |    | |\\___ \\ | |   | |  | | | | | | | |_) \\___ \\|  _|", 30, 4);
-    printtext("| |___ | | ___) || |   | |__| |_| | |_| |  _ < ___) | |___", 30, 5);
+    printtext("| |    | |\\___ \\ | |   | |  | | | | | | | |_) \\___ \\|  _|  ", 30, 4);
+    printtext("| |___ | | ___) || |   | |__| |_| | |_| |  _ < ___) | |___ ", 30, 5);
     printtext("|_____|___|____/ |_|    \\____\\___/ \\___/|_| \\_\\____/|_____|", 30, 6);
 
     drawRectangle(97, 0, 22, 5, 11);
@@ -1315,10 +1304,18 @@ void listCourse(User A,string year, string semester) {
         printtext("YOU HAVEN'T CREATED SEMESTER YET, PRESS ENTER TO BACK TO MENU.", 30, 14);
         ch = getch();
         textBgColor(0, 15);
+        menuStaff(A);
     }
     else {
         string filename = "file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv";
         int lineNum = countLine(filename);
+        if (lineNum == 1) {
+            textBgColor(4, 15);
+            printtext("THERE ISN'T ANY COURSE EXIST, PRESS ENTER TO BACK TO MENU.", 30, 14);
+            ch = getch();
+            textBgColor(0, 15);
+            menuStaff(A);
+        }
         drawRectangle(0, 10, 120, 15, 11);
         int a[8] = { 2,13,32,55,76,91,98,108 };
         int b[8] = { 1,9,32,63,79,91,101,111 };
@@ -1522,6 +1519,13 @@ void exportScoreboardInterface(User A,string year, string semester, int currentL
         string column[8];
         string filename = "file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv";
         int lineNum = countLine(filename);
+        if (lineNum == 1) {
+            textBgColor(4, 15);
+            printtext("THERE ISN'T ANY COURSE EXIST, PRESS ENTER TO BACK TO MENU.", 30, 14);
+            ch = getch();
+            textBgColor(0, 15);
+            menuStaff(A);
+        }
         drawRectangle(0, 10, 120, 15, 11);
         int a[8] = { 2,13,35,52,73,88,95,105 };
         int b[8] = { 1,9,34,60,76,88,98,108 };
@@ -1660,7 +1664,7 @@ void exportSB(string SchoolYear, string Semester, string CourseID) {
 void importScoreBoard(string year, string semester, string courseID,string filename) {
     fstream file, fileScore;
     file.open(filename+".csv", ios::in);
-    fileScore.open("file_save//SchoolYear//" + year + "//" + semester + "//Course//score//" + courseID + ".csv", ios::app);
+    fileScore.open("file_save//SchoolYear//" + year + "//" + semester + "//Course//score//" + courseID + ".csv", ios::out);
     string data;
     getline(file, data);
     fileScore << data;
@@ -1758,7 +1762,6 @@ void importScoreBoardUI() {
                 textBgColor(0, 15);
             }
         }while (true);
-
         textBgColor(0, 15);
     }
 }
