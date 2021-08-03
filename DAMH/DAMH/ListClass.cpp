@@ -78,9 +78,10 @@ void CreateNewClass()
 		Year = tempYear;
 	}
 	{
+		cin.ignore();
 		textBgColor(0, 11);
 		gotoxy(43, 14);
-		cout << "Enter Name Of Class(CTT,HOH,TTH,SHH): ";
+		cout << "Enter Name Of Class(CTT,HOH,TTH,SHH):";
 		drawRectangle(43, 15, 45, 1, 15);
 		gotoxy(43, 15);
 		getline(cin, name);
@@ -109,7 +110,7 @@ void CreateNewClass()
 			{
 				gotoxy(43, 17);
 				cout << "CLASS EXIST! PLEASE TRY AGAIN" << endl;
-				Sleep(5000);
+				Sleep(1000);
 			}
 			if (check == true)
 			{
@@ -125,19 +126,15 @@ void CreateNewClass()
 				drawRectangle(43, 17, 45, 1, 15);
 				gotoxy(43, 17);
 				getline(cin, NameMajor);
-				int numberStudent, yearStudent;
+				int numberStudent;
 				textBgColor(0, 11);
 				gotoxy(43, 18);
 				cout << "Enter Number Of Student: ";
 				drawRectangle(43, 19, 45, 1, 15);
 				gotoxy(43, 19);
 				cin >> numberStudent;
-				textBgColor(0, 11);
-				gotoxy(43, 20);
-				cout << "Enter Year: ";
-				drawRectangle(43, 21, 45, 1, 15);
-				gotoxy(43, 21);
-				cin >> yearStudent;
+				string str = { Year };
+				string yearStudent = { Year[0],Year[1],Year[2],Year[3] };
 
 				fstream file;
 				string filename = "file_save//SchoolYear//" + Year + "//class_info.csv";
@@ -146,8 +143,9 @@ void CreateNewClass()
 				file << count << "," << name << "," << NameMajor << "," << numberStudent << "," << yearStudent << endl;
 				file.close();
 
-				gotoxy(43, 23);
-				cout << "CREATE CLASS SUCCESSFUL,PRESS ENTER TO BACK TO MENU !!!" << endl;
+				gotoxy(43, 22);
+				cout << "CREATE CLASS SUCCESSFUL!!!" << endl;
+				Sleep(1000);
 			}
 
 		}
@@ -155,7 +153,7 @@ void CreateNewClass()
 		{
 			gotoxy(43, 17);
 			cout << "Name class is malformed!! Try again" << endl;
-			system("pause");
+			Sleep(1000);
 		}
 
 	}
@@ -184,10 +182,10 @@ void ImportRandom(string& YearCourse, string& Class)
 	ifs.open("file_save//InforNewStudent.csv", ios::in);
 	string  NameSt, BirthSt, SexSt, IdSocialSt;
 	int count = CheckRowInFile(NameClass);
-	long IDSt;
+	int IDSt;
 	string CheckYear = { YearCourse };
 	string CheckNameYear = { CheckYear[2] , CheckYear[3] };
-	long MasoNam;
+	int MasoNam;
 	MasoNam = atoi(CheckNameYear.c_str()) * 1000000;
 	string str = { Class };
 	string CheckNameClass = { str[2] , str[3] , str[4] };
@@ -235,19 +233,19 @@ void ImportRandom(string& YearCourse, string& Class)
 	{
 		if (CheckSTTClass == "1")
 		{
-			IDSt = MasoNam + 150000;
+			IDSt = MasoNam + 170000;
 		}
 		if (CheckSTTClass == "2")
 		{
-			IDSt = MasoNam + 150100;
+			IDSt = MasoNam + 170100;
 		}
 		if (CheckSTTClass == "3")
 		{
-			IDSt = MasoNam + 150200;
+			IDSt = MasoNam + 170200;
 		}
 		if (CheckSTTClass == "4")
 		{
-			IDSt = MasoNam + 150300;
+			IDSt = MasoNam + 170300;
 		}
 	}
 	if (CheckNameClass == "TTH")
@@ -290,7 +288,7 @@ void ImportRandom(string& YearCourse, string& Class)
 	{
 		fstream finput;
 		finput.open("file_save//login_info.csv", ios::app);
-		long MSSV = IDSt + count;
+		int MSSV = IDSt + count;
 		ofs << count << ",";
 		ofs << MSSV << ",";
 		finput << MSSV << "," << MSSV << "," << "1" << "," << Class << endl;
@@ -307,7 +305,26 @@ void ImportRandom(string& YearCourse, string& Class)
 	}
 	ifs.close();
 	ofs.close();
+	int countFile = CheckRowInFile("file_save//InforNewStudent.csv");
+	string arr[10000];
+	fstream f1;
+	f1.open("file_save//InforNewStudent.csv", ios::in);
 	
+	while (!f1.eof())
+	{
+		for (int i = 1; i <= countFile; i++)
+		{
+			getline(f1, arr[i]);
+		}
+	}
+	f1.close();
+	fstream f2;
+	f2.open("file_save//InforNewStudent.csv", ios::out);
+	for (int i = CheckNumberOfStudent+1; i <= 450; i++)
+	{
+		f2 << arr[i] << endl;
+	}
+	f2.close();
 }
 
 void CreateAutoClassAndImportRandomInfo()
@@ -329,17 +346,17 @@ void CreateAutoClassAndImportRandomInfo()
 		Year = tempYear;
 	}
 	{
+		cin.ignore();
 		textBgColor(0, 11);
-		gotoxy(43, 12);
-		cout << "Enter Name Abbreviations Of Class(CTT,HOH,TTH,SHH): ";
-		drawRectangle(43, 13, 45, 1, 15);
 		gotoxy(43, 13);
+		cout << "Enter Name Abbreviations Of Class(CTT,HOH,TTH,SHH): ";
+		drawRectangle(43, 14, 45, 1, 15);
+		gotoxy(43, 14);
 		getline(cin, name);
 
 		if (name == "CTT" || name == "HOH"
 			|| name == "TTH" || name == "SHH")
 		{
-			
 			fstream file1;
 			bool check = true;
 			file1.open("file_save//SchoolYear//" + Year + "//class_info.csv", ios::in);
@@ -365,25 +382,25 @@ void CreateAutoClassAndImportRandomInfo()
 			{
 				string NameMajor;
 				textBgColor(0, 11);
-				gotoxy(43, 14);
-				cout << "Enter Name Of Major: ";
-				drawRectangle(43, 15, 45, 1, 15);
 				gotoxy(43, 15);
+				cout << "Enter Name Of Major: ";
+				drawRectangle(43, 16, 45, 1, 15);
+				gotoxy(43, 16);
 				getline(cin, NameMajor);
 				int numberStudent;
 				textBgColor(0, 11);
-				gotoxy(43, 16);
-				cout << "Enter Number Of Student: ";
-				drawRectangle(43, 17, 45, 1, 15);
 				gotoxy(43, 17);
+				cout << "Enter Number Of Student: ";
+				drawRectangle(43, 18, 45, 1, 15);
+				gotoxy(43, 18);
 				cin >> numberStudent;
 
 				int NumberOfClass;
 				textBgColor(0, 11);
-				gotoxy(43, 18);
-				cout << "Enter Number Of Class(Max = 4): ";
-				drawRectangle(43, 19, 45, 1, 15);
 				gotoxy(43, 19);
+				cout << "Enter Number Of Class(Max = 4): ";
+				drawRectangle(43, 20, 45, 1, 15);
+				gotoxy(43, 20);
 				cin >> NumberOfClass;
 				if (NumberOfClass <= 4)
 				{
@@ -410,16 +427,15 @@ void CreateAutoClassAndImportRandomInfo()
 					}
 
 
-
-					gotoxy(43, 21);
+					gotoxy(43, 22);
 					cout << "CREATE CLASS AND IMPORT RANDOM INFO SUCCESSFUL" << endl;
-					system("pause");
+					Sleep(1000);
 				}
 				else
 				{
 					gotoxy(43, 21);
 					cout << "Max Number Of Class is 4! Try Again!!!" << endl;
-					system("pause");
+					Sleep(1000);
 				}
 				
 			}
@@ -429,7 +445,7 @@ void CreateAutoClassAndImportRandomInfo()
 		{
 			gotoxy(43, 17);
 			cout << "Name abbreviations class is malformed!! Try again" << endl;
-			system("pause");
+			Sleep(1000);
 		}
 
 	}
@@ -443,12 +459,13 @@ int RunMenuCreateClass()
 	{
 		showPointer();
 		system("cls");
+		
 		gotoxy(40, 12);
 		string MenuView[] = { "1. Create 1 Class",
-			"2. Create Auto Classes",
+			"2. Create Auto Classes And Import Info",
 			"3. Exit" };
-		drawMenu(MenuView, 3, 53, 12, 1, &drawASCIIMenuView);
-		command = MoveAndChoose(3, MenuView, 53, 12, 1);
+		drawMenu(MenuView, 3, 47, 12, 1, &drawASCIIMenuView);
+		command = MoveAndChoose(3, MenuView, 47, 12, 1);
 		switch (command)
 		{
 		case 0:

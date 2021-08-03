@@ -42,7 +42,7 @@ void AddStudentToClass()
 	{
 		gotoxy(43, 13);
 		cout << "Don't Find School Year " << endl;
-		system("pause");
+		Sleep(3000);
 	}
 	if (check == true)
 	{
@@ -72,13 +72,12 @@ void AddStudentToClass()
 		{
 			gotoxy(43, 15);
 			cout << "Don't Find Class" << endl;
-			system("pause");
+			Sleep(3000);
 		}
 		else
 		{
 			Database data;
 			data = Imput();
-			system("pause");
 			string ClassSem = "file_save//SchoolYear//" + YearCourse + "//" + Class + csv_tail;
 			fstream file2;
 			int count = CheckRowInFile(ClassSem);
@@ -89,7 +88,8 @@ void AddStudentToClass()
 			file3.open("file_save//login_info.csv", ios::app);
 			file3 << data.ID << "," << data.ID << "," << "1" << "," << Class << endl;
 			file3.close();
-
+			gotoxy(43, 24);
+			cout << "IMPORT INFO STUDENT SUCCESSFUL!!!" << endl;
 		}
 	}
 }
@@ -125,7 +125,7 @@ void AddRandomInfoStudentToClass()
 	{
 		gotoxy(43, 13);
 		cout << "Don't Find School Year" << endl;
-		system("pause");
+		Sleep(3000);
 	}
 	if (check == true)
 	{
@@ -155,11 +155,13 @@ void AddRandomInfoStudentToClass()
 		{
 			gotoxy(43, 15);
 			cout << "Don't Find Class" << endl;
-			system("pause");
+			Sleep(3000);
 		}
 		else
 		{
 			ImportRandom(YearCourse, Class);
+			gotoxy(43, 16);
+			cout << "IMPORT INFO STUDENT SUCCESSFUL!!!" << endl;
 		}
 	}
 }
@@ -185,7 +187,6 @@ int RunMenuAddInfoStudentToClass()
 		{
 			system("cls");
 			AddStudentToClass();
-			system("pause");
 			system("cls");
 			break;
 		}
@@ -193,7 +194,6 @@ int RunMenuAddInfoStudentToClass()
 		{
 			system("cls");
 			AddRandomInfoStudentToClass();
-			system("pause");
 			system("cls");
 			break;
 		}
