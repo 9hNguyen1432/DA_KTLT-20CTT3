@@ -291,7 +291,7 @@ void ImportRandom(string& YearCourse, string& Class)
 		int MSSV = IDSt + count;
 		ofs << count << ",";
 		ofs << MSSV << ",";
-		finput << MSSV << "," << MSSV << "," << "1" << "," << Class << endl;
+		finput << endl << MSSV << "," << MSSV << "," << "1" << "," << Class;
 		getline(ifs, NameSt, ',');
 		ofs << NameSt << ",";
 		getline(ifs, BirthSt, ',');
