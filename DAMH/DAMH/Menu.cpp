@@ -50,7 +50,6 @@ void menuStaff(User &user)
 		{
 		case 0: {
 			system("cls");
-
 			drawMenu(MenuStaff1, 3, 50, 11, 2, &drawASCIIStaffMenu);
 			int option1 = MoveAndChoose(3, MenuStaff1, 50, 11, 2);
 			switch (option1)
@@ -71,6 +70,7 @@ void menuStaff(User &user)
 			}
 			break;
 		}
+
 		case 1:	{
 			system("cls");
 
@@ -100,10 +100,12 @@ void menuStaff(User &user)
 			}
 			case 4: {
 				// lenh them lop hoc
-				CreateNewClass();
+				RunMenuCreateClass();
 				break;
 			}
-			case 5: {
+			case 5:
+			{
+
 				system("cls");
 				//AddStudentToClass();
 				RunMenuAddInfoStudentToClass();
@@ -114,7 +116,9 @@ void menuStaff(User &user)
 			}
 			break;
 		}
-		case 2:	{
+
+		case 2:
+		{
 			system("cls");
 			//xem danh sach lop hoc va danh sach sinh vien trong lop
 			listClass(user,SY, &showStudentInclass);
@@ -150,7 +154,6 @@ void menuStaff(User &user)
 			break;*/
 		{
 			system("cls");
-
 			drawMenu(MenuStaff5, 4, 40, 10, 2, &drawASCIIStaffMenu);
 			int option1 = MoveAndChoose(4, MenuStaff5, 40, 10, 2);
 			switch (option1)
@@ -203,14 +206,6 @@ void menuStaff(User &user)
 			}
 			break;
 		}
-		case 7:
-			//them sinh vien vao lop
-			
-
-		case 14:
-			//view diem cua lop hoc
-			listClassUseFor14(SY);
-			break;
 		case 5:
 			isExit = true;
 			break;

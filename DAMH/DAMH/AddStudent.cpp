@@ -42,7 +42,7 @@ void AddStudentToClass()
 	{
 		gotoxy(43, 13);
 		cout << "Don't Find School Year " << endl;
-		system("pause");
+		Sleep(3000);
 	}
 	if (check == true)
 	{
@@ -72,13 +72,12 @@ void AddStudentToClass()
 		{
 			gotoxy(43, 15);
 			cout << "Don't Find Class" << endl;
-			system("pause");
+			Sleep(3000);
 		}
 		else
 		{
 			Database data;
 			data = Imput();
-			system("pause");
 			string ClassSem = "file_save//SchoolYear//" + YearCourse + "//" + Class + csv_tail;
 			fstream file2;
 			int count = CheckRowInFile(ClassSem);
@@ -89,10 +88,12 @@ void AddStudentToClass()
 			file3.open("file_save//login_info.csv", ios::app);
 			file3 << data.ID << "," << data.ID << "," << "1" << "," << Class << endl;
 			file3.close();
-
+			gotoxy(43, 24);
+			cout << "IMPORT INFO STUDENT SUCCESSFUL!!!" << endl;
 		}
 	}
 }
+
 
 void AddRandomInfoStudentToClass()
 {
@@ -124,7 +125,7 @@ void AddRandomInfoStudentToClass()
 	{
 		gotoxy(43, 13);
 		cout << "Don't Find School Year" << endl;
-		system("pause");
+		Sleep(3000);
 	}
 	if (check == true)
 	{
@@ -154,124 +155,13 @@ void AddRandomInfoStudentToClass()
 		{
 			gotoxy(43, 15);
 			cout << "Don't Find Class" << endl;
-			system("pause");
+			Sleep(3000);
 		}
 		else
 		{
+			ImportRandom(YearCourse, Class);
 			gotoxy(43, 16);
-			cout << "Random Info Student Has Been Imported To Class" << endl;
-			fstream ofs, ifs;
-			string NameClass = "file_save//SchoolYear//" + YearCourse + "//" + Class + csv_tail;
-			ofs.open(NameClass, ios::app);
-			ifs.open("file_save//InforNewStudent.csv", ios::in);
-			string  NameSt, BirthSt, SexSt, IdSocialSt;
-			int count = CheckRowInFile(NameClass);
-			int IDSt;
-			string CheckYear = { YearCourse };
-			string CheckNameYear = { CheckYear[2] , CheckYear[3] };
-			long MasoNam;
-			MasoNam = atoi(CheckNameYear.c_str()) * 1000000;
-			string str = { Class };
-			string CheckNameClass = { str[2] , str[3] , str[4] };
-			string CheckSTTClass = { str[5] };
-			if (CheckNameClass == "CTT")
-			{
-				if (CheckSTTClass == "1")
-				{
-					IDSt = MasoNam + 120000;
-				}
-				if (CheckSTTClass == "2")
-				{
-					IDSt = MasoNam + 120100;
-				}
-				if (CheckSTTClass == "3")
-				{
-					IDSt = MasoNam + 120200;
-				}
-				if (CheckSTTClass == "4")
-				{
-					IDSt = MasoNam + 120300;
-				}
-
-			}
-			if (CheckNameClass == "SHH")
-			{
-				if (CheckSTTClass == "1")
-				{
-					IDSt = MasoNam + 150000;
-				}
-				if (CheckSTTClass == "2")
-				{
-					IDSt = MasoNam + 150100;
-				}
-				if (CheckSTTClass == "3")
-				{
-					IDSt = MasoNam + 150200;
-				}
-				if (CheckSTTClass == "4")
-				{
-					IDSt = MasoNam + 150300;
-				}
-			}
-			if (CheckNameClass == "HOH")
-			{
-				if (CheckSTTClass == "1")
-				{
-					IDSt = MasoNam + 150000;
-				}
-				if (CheckSTTClass == "2")
-				{
-					IDSt = MasoNam + 150100;
-				}
-				if (CheckSTTClass == "3")
-				{
-					IDSt = MasoNam + 150200;
-				}
-				if (CheckSTTClass == "4")
-				{
-					IDSt = MasoNam + 150300;
-				}
-			}
-			if (CheckNameClass == "TTH")
-			{
-				if (CheckSTTClass == "1")
-				{
-					IDSt = MasoNam + 110000;
-				}
-				if (CheckSTTClass == "2")
-				{
-					IDSt = MasoNam + 110100;
-				}
-				if (CheckSTTClass == "3")
-				{
-					IDSt = MasoNam + 110200;
-				}
-				if (CheckSTTClass == "4")
-				{
-					IDSt = MasoNam + 110300;
-				}
-			}
-			while (count != 31)
-			{
-				fstream finput;
-				finput.open("file_save//login_info.csv", ios::app);
-				long MSSV = IDSt + count;
-				ofs << count << ",";
-				ofs << MSSV << ",";
-				finput << MSSV << "," << MSSV << "," << "1" << "," << Class << endl;
-				getline(ifs, NameSt, ',');
-				ofs << NameSt << ",";
-				getline(ifs, BirthSt, ',');
-				ofs << BirthSt << ",";
-				getline(ifs, SexSt, ',');
-				ofs << SexSt << ',';
-				getline(ifs, IdSocialSt);
-				ofs << IdSocialSt << endl;
-				count++;
-				finput.close();
-			}
-			ifs.close();
-			ofs.close();
+			cout << "IMPORT INFO STUDENT SUCCESSFUL!!!" << endl;
 		}
 	}
 }
@@ -286,18 +176,19 @@ int RunMenuAddInfoStudentToClass()
 		showPointer();
 		system("cls");
 		gotoxy(40, 12);
-		string MenuAdd[] = { "0. Add One Student To Class",
-		"1. Import Info Student From File To Class",
-		"2. Exit" };
-		drawMenu(MenuAdd, 3, 45, 12, 2, &drawASCIIMenuView);
-		command = MoveAndChoose(3, MenuAdd, 45, 12, 2);
+
+		string MenuAdd[] = { "1. Add One Student To Class",
+		"2. Import Info Student From File To Class",
+		"3. Exit" };
+		drawMenu(MenuAdd, 3, 45, 12, 1, &drawASCIIMenuView);
+		command = MoveAndChoose(3, MenuAdd, 45, 12, 1);
+
 		switch (command)
 		{
 		case 0:
 		{
 			system("cls");
 			AddStudentToClass();
-			system("pause");
 			system("cls");
 			break;
 		}
@@ -305,7 +196,6 @@ int RunMenuAddInfoStudentToClass()
 		{
 			system("cls");
 			AddRandomInfoStudentToClass();
-			system("pause");
 			system("cls");
 			break;
 		}

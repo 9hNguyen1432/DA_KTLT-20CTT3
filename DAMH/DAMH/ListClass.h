@@ -18,9 +18,9 @@ struct Database {
 	string IDsocial;
 };
 Database Imput();
-void AddStudentToClass();
 void CreateNewClass();
-int RunMenuViewListClass(User user);
-void AddRandomInfoStudentToClass();
+int RunMenuCreateClass();
 int CheckRowInFile(string filename);
 void drawASCIIMenuView();
+void CreateAutoClassAndImportRandomInfo();
+void ImportRandom(string& YearCourse, string& Class);
