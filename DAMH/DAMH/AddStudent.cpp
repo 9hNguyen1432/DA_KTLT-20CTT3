@@ -19,6 +19,7 @@ void AddStudentToClass()
 	string YearCourse;
 	string Class;
 	drawRectangle(35, 11, 60, 5, 11);
+	cin.ignore();
 	gotoxy(43, 11);
 	cout << "Enter School Year:";
 	drawRectangle(43, 12, 45, 1, 15);
@@ -42,7 +43,7 @@ void AddStudentToClass()
 	{
 		gotoxy(43, 13);
 		cout << "Don't Find School Year " << endl;
-		Sleep(3000);
+		Sleep(1000);
 	}
 	if (check == true)
 	{
@@ -72,7 +73,7 @@ void AddStudentToClass()
 		{
 			gotoxy(43, 15);
 			cout << "Don't Find Class" << endl;
-			Sleep(3000);
+			Sleep(1000);
 		}
 		else
 		{
@@ -90,6 +91,7 @@ void AddStudentToClass()
 			file3.close();
 			gotoxy(43, 24);
 			cout << "IMPORT INFO STUDENT SUCCESSFUL!!!" << endl;
+			Sleep(1000);
 		}
 	}
 }
@@ -102,6 +104,7 @@ void AddRandomInfoStudentToClass()
 	string YearCourse;
 	string Class;
 	drawRectangle(35, 11, 60, 7, 11);
+	cin.ignore();
 	gotoxy(43, 11);
 	cout << "Enter School Year:";
 	drawRectangle(43, 12, 45, 1, 15);
@@ -125,7 +128,7 @@ void AddRandomInfoStudentToClass()
 	{
 		gotoxy(43, 13);
 		cout << "Don't Find School Year" << endl;
-		Sleep(3000);
+		Sleep(1000);
 	}
 	if (check == true)
 	{
@@ -155,13 +158,14 @@ void AddRandomInfoStudentToClass()
 		{
 			gotoxy(43, 15);
 			cout << "Don't Find Class" << endl;
-			Sleep(3000);
+			Sleep(1000);
 		}
 		else
 		{
 			ImportRandom(YearCourse, Class);
 			gotoxy(43, 16);
 			cout << "IMPORT INFO STUDENT SUCCESSFUL!!!" << endl;
+			Sleep(1000);
 		}
 	}
 }

@@ -288,6 +288,7 @@ void ImportRandom(string& YearCourse, string& Class)
 		fstream finput;
 		finput.open("file_save//login_info.csv", ios::app);
 		int MSSV = IDSt + count;
+		ofs << endl;
 		ofs << count << ",";
 		ofs << MSSV << ",";
 		finput << endl << MSSV << "," << MSSV << "," << "1" << "," << Class;
@@ -298,7 +299,7 @@ void ImportRandom(string& YearCourse, string& Class)
 		getline(ifs, SexSt, ',');
 		ofs << SexSt << ',';
 		getline(ifs, IdSocialSt);
-		ofs << IdSocialSt << endl;
+		ofs << IdSocialSt;
 		count++;
 		finput.close();
 	}
