@@ -19,7 +19,6 @@ void AddStudentToClass()
 	string YearCourse;
 	string Class;
 	drawRectangle(35, 11, 60, 5, 11);
-	cin.ignore();
 	gotoxy(43, 11);
 	cout << "Enter School Year:";
 	drawRectangle(43, 12, 45, 1, 15);
@@ -83,15 +82,69 @@ void AddStudentToClass()
 			fstream file2;
 			int count = CheckRowInFile(ClassSem);
 			file2.open(ClassSem, ios::app);
-			file2 << count << "," << data.ID << "," << data.name << "," << data.Birth << "," << data.sex << "," << data.IDsocial << endl;
+			file2 <<endl<< count+1 << "," << data.ID << "," << data.name << "," << data.Birth << "," << data.sex << "," << data.IDsocial;
 			file2.close();
 			fstream file3;
 			file3.open("file_save//login_info.csv", ios::app);
-			file3 << data.ID << "," << data.ID << "," << "1" << "," << Class << endl;
+			file3 <<endl<< data.ID << "," << data.ID << "," << "1" << "," << Class;
 			file3.close();
+
+			string CheckSe = CheckSem();
+			fstream F, FILE;
+			string S = "file_save//SchoolYear//" + YearCourse + "//Semester" + CheckSe + "//Class//" + Class + csv_tail;
+			F.open(S, ios::app);
+			F << data.ID << endl;
+			int countFile = CheckRowInFile("file_save//InforNewStudent.csv");
+			string checkName[1000], checkBirth[1000], checkSex[1000], checkIDso[1000];
+			fstream File;
+			File.open("file_save//InforNewStudent.csv", ios::in);
+			int countRow = 1;
+			int Dem = 0;
+			while (!File.eof())
+			{
+				for (int i = 1; i <= countFile; i++)
+				{
+					getline(File, checkName[i], ',');
+					getline(File, checkBirth[i], ',');
+					getline(File, checkSex[i], ',');
+					File >> checkIDso[i];
+					countRow++;
+					if (data.IDsocial == checkIDso[i])
+					{
+						Dem = countRow;
+					}
+				}
+				
+			}
+			string arr[1000];
+			fstream FIle;
+			FIle.open("file_save//InforNewStudent.csv", ios::in);
+			while (!FIle.eof())
+			{
+				for (int i = 0; i <= countFile; i++)
+				{
+					getline(FIle, arr[i]);
+				}
+			}
+			FIle.close();;
+			if (Dem != countFile)
+			{
+				fstream FIle;
+				FIle.open("file_save//InforNewStudent.csv", ios::out);
+				for (int i = 0; i < Dem-2; i++)
+				{
+					FIle << arr[i] << endl;
+				}
+				for (int i = Dem-1 ; i <= countFile; i++)
+				{
+					FIle << arr[i] << endl;
+				}
+				FIle.close();
+			}
 			gotoxy(43, 24);
 			cout << "IMPORT INFO STUDENT SUCCESSFUL!!!" << endl;
 			Sleep(1000);
+
 		}
 	}
 }
@@ -104,7 +157,6 @@ void AddRandomInfoStudentToClass()
 	string YearCourse;
 	string Class;
 	drawRectangle(35, 11, 60, 7, 11);
-	cin.ignore();
 	gotoxy(43, 11);
 	cout << "Enter School Year:";
 	drawRectangle(43, 12, 45, 1, 15);
@@ -163,9 +215,6 @@ void AddRandomInfoStudentToClass()
 		else
 		{
 			ImportRandom(YearCourse, Class);
-			gotoxy(43, 16);
-			cout << "IMPORT INFO STUDENT SUCCESSFUL!!!" << endl;
-			Sleep(1000);
 		}
 	}
 }

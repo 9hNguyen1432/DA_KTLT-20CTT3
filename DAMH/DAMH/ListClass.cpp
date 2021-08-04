@@ -59,6 +59,42 @@ int CheckRowInFile(string filename)
 	return count;
 }
 
+
+string CheckSem()
+{
+	fstream Fclass;
+	Fclass.open("file_save//year-semester.csv");
+	string YearTem, SemTem;
+	string CheckSem;
+	while (!Fclass.eof())
+	{
+		getline(Fclass, YearTem, ',');
+		Fclass >> SemTem;
+		CheckSem = SemTem;
+	}
+	Fclass.close();
+	return CheckSem;
+}
+void CreateClassInSemester(string& Year, string& name)
+{
+	string CheckSe = CheckSem();
+	if (CheckSe == "0")
+	{
+		return;
+	}
+	else
+	{
+		string CreateClass = "file_save//SchoolYear//" + Year + "//Semester" + CheckSe + "//Class//" + name + csv_tail;
+		fstream fCreate;
+		fCreate.open(CreateClass, ios::out);
+		/*fstream fRead;
+		string S = "file_save//SchoolYear//" + Year + "//" + name + csv_tail;
+		fRead.open(S, ios::in);
+		int count = CheckRowInFile(S);*/
+		
+		fCreate.close();
+	}
+}
 void CreateNewClass()
 {
 	string name;
@@ -78,7 +114,6 @@ void CreateNewClass()
 		Year = tempYear;
 	}
 	{
-		cin.ignore();
 		textBgColor(0, 11);
 		gotoxy(43, 14);
 		cout << "Enter Name Of Class(CTT,HOH,TTH,SHH):";
@@ -87,67 +122,104 @@ void CreateNewClass()
 		getline(cin, name);
 		string str = { name };
 		string CheckNameClass = { str[2] , str[3] , str[4] };
+		string CheckSTTClass = { str[5] };
 		if (CheckNameClass == "CTT" || CheckNameClass == "HOH"
 			|| CheckNameClass == "TTH" || CheckNameClass == "SHH")
 		{
-			fstream file1;
-			bool check = true;
-			file1.open("file_save//SchoolYear//" + Year + "//class_info.csv", ios::in);
-			string stt, NameClass, major, number, year;
-			while (!file1.eof())
+			if (CheckSTTClass == "1" || CheckSTTClass == "2"
+				|| CheckSTTClass == "3" || CheckSTTClass == "4")
 			{
-				getline(file1, stt, ',');
-				getline(file1, NameClass, ',');
-				getline(file1, major, ',');
-				getline(file1, number, ',');
-				file1 >> year;
-				if (name == NameClass)
+				fstream file1;
+				bool check = true;
+				file1.open("file_save//SchoolYear//" + Year + "//class_info.csv", ios::in);
+				string stt, NameClass, major, number, year;
+				while (!file1.eof())
 				{
-					check = false;
+					getline(file1, stt, ',');
+					getline(file1, NameClass, ',');
+					getline(file1, major, ',');
+					getline(file1, number, ',');
+					file1 >> year;
+					if (name == NameClass)
+					{
+						check = false;
+					}
 				}
+				if (check == false)
+				{
+					gotoxy(43, 17);
+					cout << "CLASS EXIST! PLEASE TRY AGAIN" << endl;
+					Sleep(1000);
+				}
+				if (check == true)
+				{
+
+					string NameMajor;
+					textBgColor(0, 11);
+					gotoxy(43, 16);
+					cout << "Enter Name Of Major: ";
+					drawRectangle(43, 17, 45, 1, 15);
+					gotoxy(43, 17);
+					getline(cin, NameMajor);
+					if (NameMajor == "")
+					{
+						gotoxy(43, 19);
+						cout << "Name Major is malformed!! Try again" << endl;
+						Sleep(1000);
+					}
+					else
+					{
+						int numberStudent;
+						textBgColor(0, 11);
+						gotoxy(43, 18);
+						cout << "Enter Number Of Student(Max=100): ";
+						drawRectangle(43, 19, 45, 1, 15);
+						gotoxy(43, 19);
+						cin >> numberStudent;
+
+						if (numberStudent <= 100)
+						{
+							string str = { Year };
+							string yearStudent = { Year[0],Year[1],Year[2],Year[3] };
+
+							fstream file;
+							string filename = "file_save//SchoolYear//" + Year + "//class_info.csv";
+							int count = CheckRowInFile(filename);
+							file.open("file_save//SchoolYear//" + Year + "//class_info.csv", ios::app);
+							file << endl << count + 1 << "," << name << "," << NameMajor << "," << numberStudent << "," << yearStudent;
+							file.close();
+
+							string FileName = "file_save//SchoolYear//" + Year + "//" + name + csv_tail;
+							fstream f1;
+							f1.open(FileName, ios::out);
+							f1 << "No" << "," << "ID" << "," << "Name" << "," << "Birth" << "," << "Sex" << "," << "IDSocial";
+							f1.close();
+
+							gotoxy(43, 23);
+							cout << "CREATE CLASS SUCCESSFUL!!!" << endl;
+							CreateClassInSemester(Year, name);
+							Sleep(1000);
+						}
+						else
+						{
+							gotoxy(43, 21);
+							cout << "Max Number Of Student is 100! Try again" << endl;
+							Sleep(1000);
+						}
+						
+						
+					}
+
+				}
+				
 			}
-			if (check == false)
+			else
 			{
 				gotoxy(43, 17);
-				cout << "CLASS EXIST! PLEASE TRY AGAIN" << endl;
+				cout << "Name class is malformed!! Try again" << endl;
 				Sleep(1000);
 			}
-			if (check == true)
-			{
-				string FileName = "file_save//SchoolYear//" + Year + "//" + name + csv_tail;
-				fstream f1;
-				f1.open(FileName, ios::out);
-				f1 << "No" << "," << "ID" << "," << "Name" << "," << "Birth" << "," << "Sex" << "," << "IDSocial" << endl;
-				f1.close();
-				string NameMajor;
-				textBgColor(0, 11);
-				gotoxy(43, 16);
-				cout << "Enter Name Of Major: ";
-				drawRectangle(43, 17, 45, 1, 15);
-				gotoxy(43, 17);
-				getline(cin, NameMajor);
-				int numberStudent;
-				textBgColor(0, 11);
-				gotoxy(43, 18);
-				cout << "Enter Number Of Student: ";
-				drawRectangle(43, 19, 45, 1, 15);
-				gotoxy(43, 19);
-				cin >> numberStudent;
-				string str = { Year };
-				string yearStudent = { Year[0],Year[1],Year[2],Year[3] };
-
-				fstream file;
-				string filename = "file_save//SchoolYear//" + Year + "//class_info.csv";
-				int count = CheckRowInFile(filename);
-				file.open("file_save//SchoolYear//" + Year + "//class_info.csv", ios::app);
-				file <<endl<< count << "," << name << "," << NameMajor << "," << numberStudent << "," << yearStudent << endl;
-				file.close();
-
-				gotoxy(43, 22);
-				cout << "CREATE CLASS SUCCESSFUL!!!" << endl;
-				Sleep(1000);
-			}
-
+		
 		}
 		else
 		{
@@ -155,9 +227,7 @@ void CreateNewClass()
 			cout << "Name class is malformed!! Try again" << endl;
 			Sleep(1000);
 		}
-
 	}
-
 }
 
 
@@ -283,48 +353,81 @@ void ImportRandom(string& YearCourse, string& Class)
 		}
 	}
 	int CheckNumberOfStudent = atoi(NumberOfStudent.c_str());
-	while (count != (CheckNumberOfStudent + 1))
-	{
-		fstream finput;
-		finput.open("file_save//login_info.csv", ios::app);
-		int MSSV = IDSt + count;
-		ofs << endl;
-		ofs << count << ",";
-		ofs << MSSV << ",";
-		finput << endl << MSSV << "," << MSSV << "," << "1" << "," << Class;
-		getline(ifs, NameSt, ',');
-		ofs << NameSt << ",";
-		getline(ifs, BirthSt, ',');
-		ofs << BirthSt << ",";
-		getline(ifs, SexSt, ',');
-		ofs << SexSt << ',';
-		getline(ifs, IdSocialSt);
-		ofs << IdSocialSt;
-		count++;
-		finput.close();
-	}
-	ifs.close();
-	ofs.close();
 	int countFile = CheckRowInFile("file_save//InforNewStudent.csv");
-	string arr[10000];
-	fstream f1;
-	f1.open("file_save//InforNewStudent.csv", ios::in);
-	
-	while (!f1.eof())
+	if (countFile < CheckNumberOfStudent)
 	{
-		for (int i = 1; i <= countFile; i++)
+		gotoxy(43, 21);
+		cout << "FILE INPUT IS FAIL, DON'T IMPORT INFO TO CLASS" << endl;
+		Sleep(1000);
+	}
+	else
+	{
+		
+		while (count != (CheckNumberOfStudent))
 		{
-			getline(f1, arr[i]);
+			fstream finput;
+			finput.open("file_save//login_info.csv", ios::app);
+			int MSSV = IDSt + count;
+			ofs << endl;
+			ofs << count + 1 << ",";
+			ofs << MSSV << ",";
+			finput << endl << MSSV << "," << MSSV << "," << "1" << "," << Class;
+			getline(ifs, NameSt, ',');
+			ofs << NameSt << ",";
+			getline(ifs, BirthSt, ',');
+			ofs << BirthSt << ",";
+			getline(ifs, SexSt, ',');
+			ofs << SexSt << ',';
+			getline(ifs, IdSocialSt);
+			ofs << IdSocialSt;
+			count++;
+			finput.close();
+		}
+		ifs.close();
+		ofs.close();
+		string arr[10000];
+		fstream f1;
+		f1.open("file_save//InforNewStudent.csv", ios::in);
+
+		while (!f1.eof())
+		{
+			for (int i = 0; i <= countFile; i++)
+			{
+				getline(f1, arr[i]);
+			}
+		}
+		f1.close();
+		fstream f2;
+		f2.open("file_save//InforNewStudent.csv", ios::out);
+		for (int i = CheckNumberOfStudent; i < countFile; i++)
+		{
+			f2 << arr[i] << endl;
+		}
+		f2.close();
+	}
+	string CheckSe = CheckSem();
+	fstream F, FILE;
+	string S = "file_save//SchoolYear//" + YearCourse + "//Semester" + CheckSe + "//Class//" + Class + csv_tail;
+	F.open(S, ios::app);
+	string SS = "file_save//SchoolYear//" + YearCourse + "//" + Class + csv_tail;
+	FILE.open(SS, ios::in);
+	string CheckNo, CheckID, CheckName, CheckBirth, CheckSex, CheckIDso;
+	while (!FILE.eof())
+	{
+		getline(FILE, CheckNo, ',');
+		getline(FILE, CheckID, ',');
+		getline(FILE, CheckName, ',');
+		getline(FILE, CheckBirth, ',');
+		getline(FILE, CheckSex, ',');
+		FILE >> CheckIDso;
+		int AtoiID = atoi(CheckID.c_str());
+		if (AtoiID != 0)
+		{
+			F << CheckID << endl;
 		}
 	}
-	f1.close();
-	fstream f2;
-	f2.open("file_save//InforNewStudent.csv", ios::out);
-	for (int i = CheckNumberOfStudent+1; i <= 450; i++)
-	{
-		f2 << arr[i] << endl;
-	}
-	f2.close();
+	
+
 }
 
 void CreateAutoClassAndImportRandomInfo()
@@ -346,7 +449,6 @@ void CreateAutoClassAndImportRandomInfo()
 		Year = tempYear;
 	}
 	{
-		cin.ignore();
 		textBgColor(0, 11);
 		gotoxy(43, 13);
 		cout << "Enter Name Abbreviations Of Class(CTT,HOH,TTH,SHH): ";
@@ -390,56 +492,63 @@ void CreateAutoClassAndImportRandomInfo()
 				int numberStudent;
 				textBgColor(0, 11);
 				gotoxy(43, 17);
-				cout << "Enter Number Of Student: ";
+				cout << "Enter Number Of Student(Max=100): ";
 				drawRectangle(43, 18, 45, 1, 15);
 				gotoxy(43, 18);
 				cin >> numberStudent;
-
-				int NumberOfClass;
-				textBgColor(0, 11);
-				gotoxy(43, 19);
-				cout << "Enter Number Of Class(Max = 4): ";
-				drawRectangle(43, 20, 45, 1, 15);
-				gotoxy(43, 20);
-				cin >> NumberOfClass;
-				if (NumberOfClass <= 4)
+				if (numberStudent <= 100)
 				{
-					string str = { Year };
-					string YearStudent = { Year[0],Year[1],Year[2],Year[3] };
-
-					fstream file;
-					string filename = "file_save//SchoolYear//" + Year + "//class_info.csv";
-					string CheckYear = { Year[2], Year[3] };
-					for (int i = 1; i <= NumberOfClass; i++)
+					int NumberOfClass;
+					textBgColor(0, 11);
+					gotoxy(43, 19);
+					cout << "Enter Number Of Class(Max = 4): ";
+					drawRectangle(43, 20, 45, 1, 15);
+					gotoxy(43, 20);
+					cin >> NumberOfClass;
+					if (NumberOfClass <= 4)
 					{
-						string s = to_string(i);
-						string NameClasses = CheckYear + name + s;
-						string FileName = "file_save//SchoolYear//" + Year + "//" + NameClasses + csv_tail;
-						fstream f1;
-						f1.open(FileName, ios::out);
-						f1 << "No" << "," << "ID" << "," << "Name" << "," << "Birth" << "," << "Sex" << "," << "IDSocial" << endl;
-						f1.close();
-						int count = CheckRowInFile(filename);
-						file.open("file_save//SchoolYear//" + Year + "//class_info.csv", ios::app);
-						file << count << "," << CheckYear << name << i << "," << NameMajor << "," << numberStudent << "," << YearStudent << endl;
-						file.close();
-						ImportRandom(Year, NameClasses);
+						string str = { Year };
+						string YearStudent = { Year[0],Year[1],Year[2],Year[3] };
+
+						fstream file;
+						string filename = "file_save//SchoolYear//" + Year + "//class_info.csv";
+						string CheckYear = { Year[2], Year[3] };
+						for (int i = 1; i <= NumberOfClass; i++)
+						{
+							string s = to_string(i);
+							string NameClasses = CheckYear + name + s;
+							string FileName = "file_save//SchoolYear//" + Year + "//" + NameClasses + csv_tail;
+							fstream f1;
+							f1.open(FileName, ios::out);
+							f1 << "No" << "," << "ID" << "," << "Name" << "," << "Birth" << "," << "Sex" << "," << "IDSocial";;
+							f1.close();
+							int count = CheckRowInFile(filename);
+							file.open("file_save//SchoolYear//" + Year + "//class_info.csv", ios::app);
+							file << endl << count << "," << CheckYear << name << i << "," << NameMajor << "," << numberStudent << "," << YearStudent;
+							file.close();
+							ImportRandom(Year, NameClasses);
+						}
+
+						gotoxy(43, 23);
+						cout << "CREATE CLASS SUCCESSFUL" << endl;
+						Sleep(1000);
 					}
-
-
-					gotoxy(43, 22);
-					cout << "CREATE CLASS AND IMPORT RANDOM INFO SUCCESSFUL" << endl;
-					Sleep(1000);
+					else
+					{
+						gotoxy(43, 21);
+						cout << "Max Number Of Class is 4! Try Again!!!" << endl;
+						Sleep(1000);
+					}
 				}
 				else
 				{
-					gotoxy(43, 21);
-					cout << "Max Number Of Class is 4! Try Again!!!" << endl;
+					gotoxy(43, 20);
+					cout << "Max Number Of Student is 100! Try Again!!!" << endl;
 					Sleep(1000);
 				}
 				
-			}
 
+			}
 		}
 		else
 		{
@@ -459,7 +568,7 @@ int RunMenuCreateClass()
 	{
 		showPointer();
 		system("cls");
-		
+
 		gotoxy(40, 12);
 		string MenuView[] = { "1. Create 1 Class",
 			"2. Create Auto Classes And Import Info",
