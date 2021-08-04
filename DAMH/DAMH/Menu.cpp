@@ -74,8 +74,8 @@ void menuStaff(User &user)
 		case 1:	{
 			system("cls");
 
-			drawMenu(MenuStaff2, 7, 40, 8, 1, &drawASCIIStaffMenu);
-			int option1 = MoveAndChoose(7, MenuStaff2, 40, 8, 1);
+			drawMenu(MenuStaff2, 7, 40, 9, 1, &drawASCIIStaffMenu);
+			int option1 = MoveAndChoose(7, MenuStaff2, 40, 9, 1);
 			switch (option1)
 			{
 			case 0: {
@@ -126,8 +126,8 @@ void menuStaff(User &user)
 		}
 		case 3: {
 			system("cls");
-			drawMenu(MenuStaff4, 3, 45, 10, 2, &drawASCIIStaffMenu);
-			int option1 = MoveAndChoose(3, MenuStaff4, 45, 10, 2);
+			drawMenu(MenuStaff4, 3, 40, 12, 2, &drawASCIIStaffMenu);
+			int option1 = MoveAndChoose(3, MenuStaff4, 40, 12, 2);
 			switch (option1)
 			{
 			case 0: {
@@ -404,8 +404,11 @@ void drawASCIIdeleteCourse() {
 	printtext("Choose the course you want to delete. Enter to choose.", 35, 28);
 }
 void drawASCIIStaffMenu() {
+	SchoolYear SY;
+	determineYearSemesterNow(SY.year, SY.semester.Name);
 	drawRectangle(3, 1, 115, 5, 0);
 	drawRectangle(3, 24, 115, 5, 0);
+	drawRectangle(3, 7, 115, 1, 0);
 	textBgColor(6, 0);
 	printtext(" __    __     ______     __   __     __  __    ", 35, 1);
 	printtext("/\\ \"-./  \\   /\\  ___\\   /\\ \"-.\\ \\   /\\ \\/\\ \\   ", 35, 2);
@@ -417,7 +420,7 @@ void drawASCIIStaffMenu() {
 	printtext("\\ \\___  \\  \\/_/\\ \\/ \\ \\  __ \\  \\ \\  __\\ \\ \\  __\\ ", 35, 26);
 	printtext(" \\/\\_____\\    \\ \\_\\  \\ \\_\\ \\_\\  \\ \\_\\    \\ \\_\\   ", 35, 27);
 	printtext("  \\/_____/     \\/_/   \\/_/\\/_/   \\/_/     \\/_/   ", 35, 28);
-	//printtext("                                                 ", 30, 29);
+	printtext("     "+SY.semester.Name+" - " +SY.year+"     ", 43 , 7);
 	textBgColor(0, 15);
 }
 void drawASCIIchangeYear() {
@@ -457,9 +460,11 @@ void drawASCIIeditscore() {
 	textBgColor(0, 15);
 }
 void drawASCIImenuStudent() {
-
+	SchoolYear SY;
+	determineYearSemesterNow(SY.year, SY.semester.Name);
 	drawRectangle(3, 1, 115, 5, 0);
 	drawRectangle(3, 23, 115, 5, 0);
+	drawRectangle(3, 7, 115, 1, 0);
 	textBgColor(6, 0);
 	printtext(" ______     ______   __  __     _____     ______     __   __     ______  ", 23, 1);
 	printtext("/\\  ___\\   /\\__  _\\ /\\ \\/\\ \\   /\\  __-.  /\\  ___\\   /\\ \"-.\\ \\   /\\__  _\\ ", 23, 2);
@@ -471,6 +476,7 @@ void drawASCIImenuStudent() {
 	printtext("\\ \\ \\-./\\ \\  \\ \\  __\\   \\ \\ \\-.  \\  \\ \\ \\_\\ \\ ", 35, 25);
 	printtext(" \\ \\_\\ \\ \\_\\  \\ \\_____\\  \\ \\_\\\\\"\\_\\  \\ \\_____\\ ", 35, 26);
 	printtext("  \\/_/  \\/_/   \\/_____/   \\/_/ \\/_/   \\/_____/ ", 35, 27);
+	printtext("     " + SY.semester.Name + " - " + SY.year + "     ", 43, 7);
 	textBgColor(0, 15);
 }
 void drawASCIIImport() {
