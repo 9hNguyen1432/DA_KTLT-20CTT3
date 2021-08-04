@@ -409,6 +409,7 @@ void ImportRandom(string& YearCourse, string& Class)
 	fstream F, FILE;
 	string S = "file_save//SchoolYear//" + YearCourse + "//Semester" + CheckSe + "//Class//" + Class + csv_tail;
 	F.open(S, ios::app);
+	int countF = CheckRowInFile(S);
 	string SS = "file_save//SchoolYear//" + YearCourse + "//" + Class + csv_tail;
 	FILE.open(SS, ios::in);
 	string CheckNo, CheckID, CheckName, CheckBirth, CheckSex, CheckIDso;
@@ -423,7 +424,15 @@ void ImportRandom(string& YearCourse, string& Class)
 		int AtoiID = atoi(CheckID.c_str());
 		if (AtoiID != 0)
 		{
-			F << CheckID << endl;
+			if (countF == 0)
+			{
+				F << CheckID;
+				countF++;
+			}
+			else
+			{
+				F << endl << CheckID;
+			}
 		}
 	}
 	
