@@ -24,3 +24,5 @@ int CheckRowInFile(string filename);
 void drawASCIIMenuView();
 void CreateAutoClassAndImportRandomInfo();
 void ImportRandom(string& YearCourse, string& Class);
+void CreateClassInSemester(string& Year, string& name);
+string CheckSem();
