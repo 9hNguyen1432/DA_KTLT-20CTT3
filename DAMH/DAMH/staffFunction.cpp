@@ -1553,7 +1553,7 @@ void exportScoreboardInterface(User A,string year, string semester, int currentL
                 //[ESC]
                 if (ch == 27) {
                     textBgColor(0, 15);
-                    menuStaff(A);
+                    return;
                 }
                 if (ch == 72 && currentLine > 2) //up
                 {
@@ -1781,7 +1781,7 @@ void importScoreBoardUI() {
                 }
                 break;
             }
-            case 2:
+            default:
                 return;
             }
             if (flagout == true) {
@@ -1854,7 +1854,7 @@ void listClass(User A,SchoolYear Y, fun_show_class Fun) {
         //[ESC]
         if (ch == 27) {
             textBgColor(0, 15);
-            menuStaff(A);
+            return;
         }
         if (ch == 72 && currentLine > 2) //up
         {
@@ -1990,7 +1990,7 @@ void showStudentInclass(User user,SchoolYear Y, string classname) {
             else
                 moveDown(filename, currentLine, 6, b, y, column, lineInConsole, 100, 8);
         }
-        if (ch == 13) {
+        /*if (ch == 13) {
             User A;
             A.ID = column[1];
             A.info.IDstd = column[1];
@@ -2003,7 +2003,7 @@ void showStudentInclass(User user,SchoolYear Y, string classname) {
             textBgColor(0, 15);
             edit_score(A, Y, view_all_score_of_1_student(A, Y));
             showStudentInclass(user,Y, classname);
-        }
+        }*/
     } while (true);
     textBgColor(0, 15);
 }
