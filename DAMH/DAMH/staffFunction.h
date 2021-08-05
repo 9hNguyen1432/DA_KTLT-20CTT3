@@ -69,7 +69,7 @@ int insertNum2(string& data, int limit);
 
 int insertString(string& data, int limit);
 
-void editCourse(User A, string year, string semester);
+int editCourse(User A, string &year, string &semester);
 
 void deleteCourse(string filename, string courseName, int currentLine, string year, string semester);
 
