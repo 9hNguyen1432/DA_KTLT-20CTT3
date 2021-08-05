@@ -1547,6 +1547,7 @@ void exportScoreboardInterface(User A, string year, string semester, int current
                 getLineInfo(filename, 1, column, 8);
                 for (int i = 0; i < 8; i++) {
                     printtext(column[i], a[i], 11);
+
                 }
                 ch = getch();
             }
@@ -1802,7 +1803,7 @@ void importScoreBoardUI() {
                 }
                 break;
             }
-            case 2:
+            default:
                 return;
             }
             if (flagout == true) {
@@ -2040,6 +2041,7 @@ void showStudentInclass(User user, SchoolYear Y, string classname) {
         } while (true);
         textBgColor(0, 15);
     } while (checkOut==false);
+
 }
 
 void drawListStudent(int columnNum, SchoolYear Y, string filename, int y, int indexA[], int indexB[], int line, int flagLine) {
