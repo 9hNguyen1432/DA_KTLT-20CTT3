@@ -1326,7 +1326,7 @@ void listCourse(User A,string year, string semester) {
             printtext("THERE ISN'T ANY COURSE EXIST, PRESS ENTER TO BACK TO MENU.", 30, 14);
             ch = getch();
             textBgColor(0, 15);
-            return;
+            break;
         }
         drawRectangle(0, 10, 120, 15, 11);
         int a[8] = { 2,13,32,55,76,91,98,108 };
@@ -1499,171 +1499,170 @@ int checkCourseSession() {
 }
 
 void exportScoreboardInterface(User A, string year, string semester, int currentLine, int lineInConsole) {
+    bool checkOut = false;
+    do {
+        char ch;
+        system("cls");
+        textBgColor(13, 15);
+        printtext(" _______  ______   ___  ____ _____ ", 30, 0);
+        printtext("| ____\\ \\/ /  _ \\ / _ \\|  _ \\_   _|", 30, 1);
+        printtext("|  _|  \\  /| |_) | | | | |_) || |", 30, 2);
+        printtext("| |___ /  \\|  __/| |_| |  _ < | |", 30, 3);
+        printtext("|_____/_/\\_\\_|    \\___/|_| \\_\\|_|", 30, 4);
+        printtext(" ____   ____ ___  ____  _____ ____   ___    _    ____  ____ ", 30, 5);
+        printtext("/ ___| / ___/ _ \\|  _ \\| ____| __ ) / _ \\  / \\  |  _ \\|  _ \\ ", 30, 6);
+        printtext("\\___ \\| |  | | | | |_) |  _| |  _ \\| | | |/ _ \\ | |_) | | | |", 30, 7);
+        printtext(" ___) | |__| |_| |  _ <| |___| |_) | |_| / ___ \\|  _ <| |_| |", 30, 8);
+        printtext("|____/ \\____\\___/|_| \\_\\_____|____/ \\___/_/   \\_\\_| \\_\\____/", 30, 9);
 
-    char ch;
-    system("cls");
-    textBgColor(13, 15);
-    printtext(" _______  ______   ___  ____ _____ ", 30, 0);
-    printtext("| ____\\ \\/ /  _ \\ / _ \\|  _ \\_   _|", 30, 1);
-    printtext("|  _|  \\  /| |_) | | | | |_) || |", 30, 2);
-    printtext("| |___ /  \\|  __/| |_| |  _ < | |", 30, 3);
-    printtext("|_____/_/\\_\\_|    \\___/|_| \\_\\|_|", 30, 4);
-    printtext(" ____   ____ ___  ____  _____ ____   ___    _    ____  ____ ", 30, 5);
-    printtext("/ ___| / ___/ _ \\|  _ \\| ____| __ ) / _ \\  / \\  |  _ \\|  _ \\ ", 30, 6);
-    printtext("\\___ \\| |  | | | | |_) |  _| |  _ \\| | | |/ _ \\ | |_) | | | |", 30, 7);
-    printtext(" ___) | |__| |_| |  _ <| |___| |_) | |_| / ___ \\|  _ <| |_| |", 30, 8);
-    printtext("|____/ \\____\\___/|_| \\_\\_____|____/ \\___/_/   \\_\\_| \\_\\____/", 30, 9);
+        drawRectangle(97, 0, 23, 4, 11);
+        textBgColor(4, 11);
+        printtext("-[c]: CHANGE SCHOOL", 97, 0);
+        printtext(" YEAR", 97, 1);
+        printtext("-[a]: EXPORT ALL COURSE", 97, 2);
+        printtext("-[ESC]: BACK TO MENU", 97, 3);
 
-    drawRectangle(97, 0, 23, 4, 11);
-    textBgColor(4, 11);
-    printtext("-[c]: CHANGE SCHOOL", 97, 0);
-    printtext(" YEAR", 97, 1);
-    printtext("-[a]: EXPORT ALL COURSE", 97, 2);
-    printtext("-[ESC]: BACK TO MENU", 97, 3);
-
-    if (stoi(semester.substr(8, 1), 0, 10) == 0) {
-        textBgColor(4, 15);
-        printtext("HAVEN'T CREATE SEMESTER YET, PRESS ENTER TO BACK TO MENU.", 40, 10);
-        char ch = getch();
-
-    }
-    else {
-        bool checkOut = false;
-        do {
-            int y = 11;
-            string column[8];
-            string filename = "file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv";
-            int lineNum = countLine(filename);
-            if (lineNum == 1) {
-                textBgColor(4, 15);
-                printtext("THERE ISN'T ANY COURSE EXIST, PRESS ENTER TO BACK TO MENU.", 30, 14);
-                ch = getch();
-                textBgColor(0, 15);
-                checkOut = true;
-                break;
-            }
-            drawRectangle(0, 10, 120, 15, 11);
-            int a[8] = { 2,13,35,52,73,88,95,105 };
-            int b[8] = { 1,9,34,60,76,88,98,108 };
-            if (lineNum == 1) {
+        if (stoi(semester.substr(8, 1), 0, 10) == 0) {
+            textBgColor(4, 15);
+            printtext("HAVEN'T CREATE SEMESTER YET, PRESS ENTER TO BACK TO MENU.", 40, 10);
+            char ch = getch();
+            checkOut = true;
+        }
+        else {
+                int y = 11;
                 string column[8];
-                getLineInfo(filename, 1, column, 8);
-                for (int i = 0; i < 8; i++) {
-                    printtext(column[i], a[i], 11);
-
-                }
-                ch = getch();
-            }
-            else {
-                drawList(8, filename, 11, a, b, lineNum, currentLine - lineInConsole + 1);
-                hidePointer();
-
-                getLineInfo("file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv", currentLine, column, 8);
-                drawRectangle(1, y + lineInConsole, 110, 1, 14);
-                textBgColor(0, 14);
-                for (int i = 0; i < 8; i++)
-                    printtext(column[i], b[i], y + lineInConsole);
-
-                do {
-                    hidePointer();
+                string filename = "file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv";
+                int lineNum = countLine(filename);
+                if (lineNum == 1) {
+                    textBgColor(4, 15);
+                    printtext("THERE ISN'T ANY COURSE EXIST, PRESS ENTER TO BACK TO MENU.", 30, 14);
                     ch = getch();
-                    //[ESC]
-                    if (ch == 27) {
-                        textBgColor(0, 15);
-                        checkOut = true;
-                        break;
-                    }
-                    if (ch == 72 && currentLine > 2) //up
-                    {
-                        currentLine--;
-                        lineInConsole--;
-                        if (lineInConsole + y <= 11) {
-                            lineInConsole = 12;
-                            drawRectangle(0, 10, 120, 15, 15);
-                            drawRectangle(0, 10, 120, 15, 11);
-                            drawList(8, "file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv", y, a, b, lineNum, currentLine - 11);
-                            getLineInfo("file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv", currentLine, column, 8);
-                            drawRectangle(1, y + lineInConsole, 110, 1, 14);
-                            textBgColor(0, 14);
-                            for (int i = 0; i < 8; i++) {
-                                printtext(column[i], b[i], y + lineInConsole);
-                            }
-                        }
-                        else
-                            moveUp("file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv", currentLine, 8, b, y, column, lineInConsole, 110, 1);
+                    textBgColor(0, 15);
+                    checkOut = true;
+                    break;
+                }
+                drawRectangle(0, 10, 120, 15, 11);
+                int a[8] = { 2,13,35,52,73,88,95,105 };
+                int b[8] = { 1,9,34,60,76,88,98,108 };
+                if (lineNum == 1) {
+                    string column[8];
+                    getLineInfo(filename, 1, column, 8);
+                    for (int i = 0; i < 8; i++) {
+                        printtext(column[i], a[i], 11);
 
                     }
-                    if (ch == 80 && currentLine < lineNum) //down
-                    {
-                        currentLine++;
-                        lineInConsole++;
-                        if (lineInConsole + y > 23) {
-                            lineInConsole = 1;
-                            drawRectangle(0, 10, 120, 15, 15);
-                            drawRectangle(0, 10, 120, 15, 11);
-                            drawList(8, "file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv", y, a, b, lineNum, currentLine);
-                            getLineInfo("file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv", currentLine, column, 8);
-                            drawRectangle(1, y + lineInConsole, 110, 1, 14);
-                            textBgColor(0, 14);
-                            for (int i = 0; i < 8; i++) {
-                                printtext(column[i], b[i], y + lineInConsole);
-                            }
-                        }
-                        else
-                            moveDown("file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv", currentLine, 8, b, y, column, lineInConsole, 110, 1);
-                    }
+                    ch = getch();
+                }
+                else {
+                    drawList(8, filename, 11, a, b, lineNum, currentLine - lineInConsole + 1);
+                    hidePointer();
 
-                    if (ch == 13) {
-                        exportSB(year, semester, column[0]);
-                        drawRectangle(40, 15, 25, 5, 4);
-                        textBgColor(15, 4);
-                        printtext("EXPORT SUCCESSFULLY !!!", 41, 17);
+                    getLineInfo("file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv", currentLine, column, 8);
+                    drawRectangle(1, y + lineInConsole, 110, 1, 14);
+                    textBgColor(0, 14);
+                    for (int i = 0; i < 8; i++)
+                        printtext(column[i], b[i], y + lineInConsole);
+
+                    do {
+                        hidePointer();
                         ch = getch();
-                        textBgColor(0, 15);
-                        break;
-                        //exportScoreboardInterface(A, year, semester, currentLine, lineInConsole);
-                    }
-
-                    if (ch == 'a') {
-                        fstream file;
-                        file.open("file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv", ios::in);
-                        if (!file.is_open()) {
-                            cout << "Can't open file" << endl;
-                            Sleep(900);
+                        //[ESC]
+                        if (ch == 27) {
+                            textBgColor(0, 15);
                             checkOut = true;
                             break;
                         }
-                        string courseID;
-                        getline(file, courseID);
-                        while (!file.eof()) {
-                            if (courseID.size() == 1) break;
-                            getline(file, courseID, ',');
-                            exportSB(year, semester, courseID);
-                            getline(file, courseID);
-                        }
-                        drawRectangle(40, 15, 35, 5, 4);
-                        textBgColor(15, 4);
-                        printtext("EXPORT ALL COURSE SUCCESSFULLY !!!", 41, 17);
-                        ch = getch();
-                        textBgColor(0, 15);
-                        break;
-                        //exportScoreboardInterface(A, year, semester, currentLine, lineInConsole);
-                    }
+                        if (ch == 72 && currentLine > 2) //up
+                        {
+                            currentLine--;
+                            lineInConsole--;
+                            if (lineInConsole + y <= 11) {
+                                lineInConsole = 12;
+                                drawRectangle(0, 10, 120, 15, 15);
+                                drawRectangle(0, 10, 120, 15, 11);
+                                drawList(8, "file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv", y, a, b, lineNum, currentLine - 11);
+                                getLineInfo("file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv", currentLine, column, 8);
+                                drawRectangle(1, y + lineInConsole, 110, 1, 14);
+                                textBgColor(0, 14);
+                                for (int i = 0; i < 8; i++) {
+                                    printtext(column[i], b[i], y + lineInConsole);
+                                }
+                            }
+                            else
+                                moveUp("file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv", currentLine, 8, b, y, column, lineInConsole, 110, 1);
 
-                    if (ch == 'c') {
-                        SchoolYear s;
-                        change_Year_Semester(s);
-                        year = s.year;
-                        semester = s.semester.Name;
-                        break;
-                        //exportScoreboardInterface(A, s.year, s.semester.Name, currentLine, lineInConsole);
-                    }
-                    textBgColor(0, 15);
-                } while (true);
-            }
-        } while (checkOut == false);
+                        }
+                        if (ch == 80 && currentLine < lineNum) //down
+                        {
+                            currentLine++;
+                            lineInConsole++;
+                            if (lineInConsole + y > 23) {
+                                lineInConsole = 1;
+                                drawRectangle(0, 10, 120, 15, 15);
+                                drawRectangle(0, 10, 120, 15, 11);
+                                drawList(8, "file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv", y, a, b, lineNum, currentLine);
+                                getLineInfo("file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv", currentLine, column, 8);
+                                drawRectangle(1, y + lineInConsole, 110, 1, 14);
+                                textBgColor(0, 14);
+                                for (int i = 0; i < 8; i++) {
+                                    printtext(column[i], b[i], y + lineInConsole);
+                                }
+                            }
+                            else
+                                moveDown("file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv", currentLine, 8, b, y, column, lineInConsole, 110, 1);
+                        }
+
+                        if (ch == 13) {
+                            exportSB(year, semester, column[0]);
+                            drawRectangle(40, 15, 25, 5, 4);
+                            textBgColor(15, 4);
+                            printtext("EXPORT SUCCESSFULLY !!!", 41, 17);
+                            ch = getch();
+                            textBgColor(0, 15);
+                            break;
+                            //exportScoreboardInterface(A, year, semester, currentLine, lineInConsole);
+                        }
+
+                        if (ch == 'a') {
+                            fstream file;
+                            file.open("file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv", ios::in);
+                            if (!file.is_open()) {
+                                cout << "Can't open file" << endl;
+                                Sleep(900);
+                                checkOut = true;
+                                break;
+                            }
+                            string courseID;
+                            getline(file, courseID);
+                            while (!file.eof()) {
+                                if (courseID.size() == 1) break;
+                                getline(file, courseID, ',');
+                                exportSB(year, semester, courseID);
+                                getline(file, courseID);
+                            }
+                            drawRectangle(40, 15, 35, 5, 4);
+                            textBgColor(15, 4);
+                            printtext("EXPORT ALL COURSE SUCCESSFULLY !!!", 41, 17);
+                            ch = getch();
+                            textBgColor(0, 15);
+                            break;
+                            //exportScoreboardInterface(A, year, semester, currentLine, lineInConsole);
+                        }
+
+                        if (ch == 'c') {
+                            SchoolYear s;
+                            change_Year_Semester(s);
+                            year = s.year;
+                            semester = s.semester.Name;
+                            break;
+                            //exportScoreboardInterface(A, s.year, s.semester.Name, currentLine, lineInConsole);
+                        }
+                        textBgColor(0, 15);
+                    } while (true);
+                }
+        }
         textBgColor(0, 15);
-    }
+    }while (checkOut == false);
 }
 
 void exportSB(string SchoolYear, string Semester, string CourseID) {
