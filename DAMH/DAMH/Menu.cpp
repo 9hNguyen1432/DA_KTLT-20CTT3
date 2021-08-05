@@ -153,57 +153,62 @@ void menuStaff(User &user)
 			RunMenuViewListClass();
 			break;*/
 		{
-			system("cls");
-			drawMenu(MenuStaff5, 4, 40, 10, 2, &drawASCIIStaffMenu);
-			int option1 = MoveAndChoose(4, MenuStaff5, 40, 10, 2);
-			switch (option1)
-			{
-			case 0: //edit diem sinh vien
-			{
+			bool checkMenu = true;
+			do {
 				system("cls");
-				string edit[] = { "1. From List Class.","2. From List Course.","3. Exit to Menu." };
-				drawMenu(edit, 3, 45, 20, 2, &drawASCIIeditscore);
-				int choose = MoveAndChoose(3, edit, 45, 20, 2);
-				switch (choose)
+				drawMenu(MenuStaff5, 4, 40, 10, 2, &drawASCIIStaffMenu);
+				int option1 = MoveAndChoose(4, MenuStaff5, 40, 10, 2);
+				switch (option1)
 				{
-				case 0: {
-					listClass(user,SY, &showScoreOfClass);
+				case 0: //edit diem sinh vien
+				{
+					system("cls");
+					string edit[] = { "1. From List Class.","2. From List Course.","3. Exit to Menu." };
+					drawMenu(edit, 3, 45, 20, 2, &drawASCIIeditscore);
+					int choose = MoveAndChoose(3, edit, 45, 20, 2);
+					switch (choose)
+					{
+					case 0: {
+						listClass(user, SY, &showScoreOfClass);
+						break;
+					}
+					case 1: {
+						try {
+							Course* SLC = select_course(user, SY, &read_file_List_course, &drawASCIIlistCourse);
+							if (SLC == NULL) {
+								break;
+							}
+							edit_score_in_list_course(user, SY, SLC->ID_course);
+						}
+						catch (const char* err) {
+							drawRectangle(3, 14, 115, 3, 4);
+							printtext(err, 50, 15);
+							textBgColor(0, 15);
+							Sleep(1800);
+						}
+						break;
+					}
+					default:
+						break;
+					}
 					break;
 				}
 				case 1: {
-					try {
-						Course* SLC = select_course(user, SY, &read_file_List_course, &drawASCIIlistCourse);
-						if (SLC == NULL) {
-							break;
-						}
-						edit_score_in_list_course(user, SY, SLC->ID_course);
-					}
-					catch (const char* err) {
-						drawRectangle(3, 14, 115, 3, 4);
-						printtext(err, 50, 15);
-						textBgColor(0, 15);
-						Sleep(1800);
-					}
+					//xuat diem hoc sinh vao file
+					exportScoreboardInterface(user, SY.year, SY.semester.Name, 2, 1);
 					break;
 				}
-				default:
+				case 2: {
+					//xuat diem hoc sinh vao file
+					importScoreBoardUI();
 					break;
 				}
-				break;
-			}
-			case 1: {
-				//xuat diem hoc sinh vao file
-				exportScoreboardInterface(user,SY.year, SY.semester.Name,2, 1);
-				break;
-			}
-			case 2: {
-				//xuat diem hoc sinh vao file
-				importScoreBoardUI();
-				break;
-			}
-			default:
-				break;
-			}
+				case 3: {
+					checkMenu = false;
+					break;
+				}
+				}
+			} while (checkMenu == true);
 			break;
 		}
 		case 5:

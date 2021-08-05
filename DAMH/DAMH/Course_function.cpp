@@ -586,7 +586,12 @@ void edit_score_in_list_course(User& A, SchoolYear SY, string IDcourse) {
 	Mark* M = read_file_score_of_course(SY, IDcourse, n);
 	if (M == NULL) {
 		//thong báo mở file thất bại
-		cout << "Fail!! The teacher has not entered the score for this course!! ";
+		textBgColor(0, 15);
+		system("cls");
+		drawRectangle(3, 14, 115, 3, 4);
+		printtext( "Fail!! The teacher has not entered the score for this course!! ",35,15);
+		textBgColor(0, 15);
+		Sleep(1800);
 		return;
 	}
 	char ch;

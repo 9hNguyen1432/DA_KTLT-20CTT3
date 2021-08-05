@@ -531,12 +531,13 @@ Course* get_course_of_student(User A, SchoolYear SY, int& n) {
 			getline(f, M[i].session[1]);
 			i++;
 			count = count->pNext;
+			f.close();
+			f.open(fileName, ios::in);
 		}
 		else {
 			getline(f, temp);
 		}
 	}
-	f.close();
 	return M;
 }
 Data* read_file_student_info_of_course(SchoolYear SY, string IDcourse, int& n) {
