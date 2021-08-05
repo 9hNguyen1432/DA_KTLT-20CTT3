@@ -1145,8 +1145,8 @@ void moveDown(string filename, int& currentLine, int columnNum, int indexB[], in
 }
 
 
-void editCourse(User A,string year, string semester) {
-    bool checkOut = false;
+int editCourse(User A,string &year, string &semester) {
+    int checkOut = -1;
     do {
         char ch;
         int line = countLine("file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv");
@@ -1167,9 +1167,8 @@ void editCourse(User A,string year, string semester) {
             //[ESC]
             if (ch == 27) {
                 textBgColor(0, 15);
-                checkOut = true;
+                checkOut = 1;
                 break;
-                
             }
             else {
                 if (ch == 72 && currentLine > 2) //up
@@ -1225,6 +1224,7 @@ void editCourse(User A,string year, string semester) {
                     change_Year_Semester(s);
                     year = s.year;
                     semester = s.semester.Name;
+                    checkOut = 0;
                     break;
                     //editCourse(A, s.year, s.semester.Name);
                 }
@@ -1246,7 +1246,7 @@ void editCourse(User A,string year, string semester) {
                         printtext("THERE ISN'T ANY COURSE EXIST, PRESS ENTER TO BACK TO MENU.", 30, 14);
                         ch = getch();
                         textBgColor(0, 15);
-                        checkOut = true;
+                        checkOut = 1;
                         break;
                     }
                     drawList(8, filename, y, a, b, line, currentLine - lineInConsole + 1);
@@ -1258,7 +1258,8 @@ void editCourse(User A,string year, string semester) {
                 }
             }
         } while (true);
-    }while (checkOut == false);
+    }while (checkOut == -1);
+    return checkOut;
 }
 
 void drawList(int columnNum, string filename, int y, int indexA[], int indexB[], int line, int flagLine) {
@@ -1285,29 +1286,8 @@ void drawList(int columnNum, string filename, int y, int indexA[], int indexB[],
 }
 
 void listCourse(User A,string year, string semester) {
+
     char ch;
-    hidePointer();
-    system("cls");
-    textBgColor(11, 0);
-    printtext(" _     ___ ____ _____    ____ ___  _   _ ____  ____  _____ ", 30, 2);
-    printtext("| |   |_ _/ ___|_   _|  / ___/ _ \\| | | |  _ \\/ ___|| ____|", 30, 3);
-    printtext("| |    | |\\___ \\ | |   | |  | | | | | | | |_) \\___ \\|  _|  ", 30, 4);
-    printtext("| |___ | | ___) || |   | |__| |_| | |_| |  _ < ___) | |___ ", 30, 5);
-    printtext("|_____|___|____/ |_|    \\____\\___/ \\___/|_| \\_\\____/|_____|", 30, 6);
-
-    drawRectangle(97, 0, 22, 5, 11);
-    textBgColor(4, 11);
-    printtext("-[ESC]: BACK TO MENU", 97, 2);
-    printtext("OR RETURN", 97, 3);
-
-    drawRectangle(0, 0, 26, 5, 11);
-    textBgColor(4, 11);
-    printtext("-[x]: DELETE COURSE", 0, 0.5);
-    printtext("-[ENTER]: EDIT COURSE", 0, 1.5);
-    printtext("-USE UP,DOWN,LEFT,RIGHT", 0, 2.5);
-    printtext("KEY TO MOVE IN EDIT STATUS", 0, 3.5);
-    printtext("-[c]: CHANGE TIME", 0, 4.5);
-
     if (stoi(semester.substr(8, 1), 0, 10) == 0) {
         textBgColor(4, 15);
         printtext("YOU HAVEN'T CREATED SEMESTER YET, PRESS ENTER TO BACK TO MENU.", 30, 14);
@@ -1315,7 +1295,30 @@ void listCourse(User A,string year, string semester) {
         textBgColor(0, 15);
         return;
     }
-    else {
+    int checkOut = -1;
+    do {
+        hidePointer();
+        system("cls");
+        textBgColor(11, 0);
+        printtext(" _     ___ ____ _____    ____ ___  _   _ ____  ____  _____ ", 30, 2);
+        printtext("| |   |_ _/ ___|_   _|  / ___/ _ \\| | | |  _ \\/ ___|| ____|", 30, 3);
+        printtext("| |    | |\\___ \\ | |   | |  | | | | | | | |_) \\___ \\|  _|  ", 30, 4);
+        printtext("| |___ | | ___) || |   | |__| |_| | |_| |  _ < ___) | |___ ", 30, 5);
+        printtext("|_____|___|____/ |_|    \\____\\___/ \\___/|_| \\_\\____/|_____|", 30, 6);
+
+        drawRectangle(97, 0, 22, 5, 11);
+        textBgColor(4, 11);
+        printtext("-[ESC]: BACK TO MENU", 97, 2);
+        printtext("OR RETURN", 97, 3);
+
+        drawRectangle(0, 0, 26, 5, 11);
+        textBgColor(4, 11);
+        printtext("-[x]: DELETE COURSE", 0, 0.5);
+        printtext("-[ENTER]: EDIT COURSE", 0, 1.5);
+        printtext("-USE UP,DOWN,LEFT,RIGHT", 0, 2.5);
+        printtext("KEY TO MOVE IN EDIT STATUS", 0, 3.5);
+        printtext("-[c]: CHANGE TIME", 0, 4.5);
+    
         string filename = "file_save/SchoolYear/" + year + "/" + semester + "/course_info.csv";
         int lineNum = countLine(filename);
         if (lineNum == 1) {
@@ -1330,9 +1333,9 @@ void listCourse(User A,string year, string semester) {
         int b[8] = { 1,9,32,63,79,91,101,111 };
         drawList(8, filename, 11, a, b, lineNum, 2);
         hidePointer();
-        editCourse(A,year, semester);
+        checkOut = editCourse(A, year, semester);
         textBgColor(0, 15);
-    }
+    } while (checkOut == -1 || checkOut == 0);
 }
 
 void viewCourse(string year, string semester) {
